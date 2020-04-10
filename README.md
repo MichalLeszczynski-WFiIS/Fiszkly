@@ -1,6 +1,4 @@
 # Fiszkily
-
-# [Project title]
 ## Participants 
  - Michał Leszczyński - Team Leader
  - Tomasz Rajchel
