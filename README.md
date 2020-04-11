@@ -8,7 +8,7 @@
 ### Do you need more people: No
 ## Short description of the idea
 Aplikacja webowa do rozwoju słownictwa w języku angielskim. Dodajesz listę słów lub losujesz a aplikacja śledzi twój progress częściej pokazując słowa których jeszcze nie umiesz a rzadziej te które już zostały nauczone.
-Feature'y:
+## Feature'y:
  - logowanie/rejestracja
  - rankingi użytkowników
  - poziomy trudności
