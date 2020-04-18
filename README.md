@@ -1,4 +1,4 @@
-# Fiszkily
+# Fiszkly
 
 ## Participants 
  - Michał Leszczyński - Team Leader
@@ -13,7 +13,7 @@
 
 Fiszkily is a web application that helps you broaden your vocabulary by creating a personal training plan with flashcards. You simply add the list of words you’d like to learn and then practice them until you know them by heart.
 
-## Feature'y:
+## Features:
 - sign in/ sign up
 - user ranking
 - custom word lists created and shared by users
