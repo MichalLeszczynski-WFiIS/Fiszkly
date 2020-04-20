@@ -129,3 +129,6 @@ dmypy.json
 .pyre/
 
 .idea
+
+# Persistent local database
+db/ 
