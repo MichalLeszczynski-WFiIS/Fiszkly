@@ -2,7 +2,7 @@
 
 <html lang="en">
 <head>
-  <title>{% block title %}{% endblock %}</title>
+  <title>{% block title %}{{"Fiszkly"}}{% endblock %}</title>
 
   <meta charset="utf-8">
   <meta name="description" content="Fiszkly is a web application that helps you broaden your vocabulary by creating a personal training plan with flashcards. You simply add the list of words you’d like to learn and then practice them until you know them by heart.">
@@ -13,8 +13,35 @@
   <link rel="icon" href="static/learning/favicon.ico" type="image/x-icon">
 </head>
 <body>
+    <header id="header">
+        <div id="top_menu"> test test </div>
+    </header>
     <h1>Fiszkly</h1>
-    {% block content %}
+    <aside id="rightsidebar">
+        <nav id="nav">
+            <ul>
+                <li>test1</li>
+                <li>test2</li>
+            </ul>
+        </nav>
+    </aside>
+
+{#    {% block sidebar %}{% endblock %}#}
+
+    <section id="main">
+        {% block content %}
+    {#        Text to be replaced with page content#}
+        {% endblock %}
+    </section>
+
+    {% block footer %}
+         <footer id="footer">Copyright &copy;
+             <script type="text/JavaScript">
+                 document.write(new Date().getFullYear());
+             </script> PITE
+         </footer>
     {% endblock %}
+
+
 </body>
 </html>
