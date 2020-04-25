@@ -1,13 +1,20 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from 'react';
 import { render } from "react-dom";
 
-class App extends Component {
 
-    render() {
-        return (
-            <div> test test x3 </div>
+function App() {
+
+    useEffect(() => {
+        document.title = `test`;
+    });
+
+    return (
+        <div>
+            <button>
+                Kliknij mnie
+            </button>
+        </div>
     );
-    }
 }
 
 export default App;
