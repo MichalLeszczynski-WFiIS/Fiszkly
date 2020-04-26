@@ -3,12 +3,23 @@ version: '3'
 services:
   db:
     image: postgres
+    container_name: fiszkly_db
+    volumes:
+      - ./db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+
   web:
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    container_name: fiszkly_web
+    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/code
     ports:
       - "8000:8000"
     depends_on:
       - db
+    environment:
+      POSTGRES_HOST: db
