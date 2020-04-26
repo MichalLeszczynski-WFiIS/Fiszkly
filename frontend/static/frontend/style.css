@@ -1,0 +1,20 @@
+body {
+    background: rgba(241, 206, 184, 1);
+    background:
+            -moz-linear-gradient(
+                    -45deg,
+                    #FFE2E2 0%,
+                    #D1FBFF 100%
+            );
+    background:
+            -webkit-linear-gradient(
+                    -45deg,
+                    #FFE2E2 0%,
+                    #D1FBFF 100%
+            );
+    font-family: "helvetica neue", helvetica;
+    height: 100%;
+    margin: 0;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}

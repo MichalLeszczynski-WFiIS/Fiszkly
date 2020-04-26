@@ -1,16 +1,19 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>fiszkly test frontend</title>
-</head>
-<body>
-    <div id="app">
-        <!-- Main content -->
-        test test
-    </div>
-    </body>
-        {% load static %}
-        <script src="{% static 'frontend/main.js' %}"></script>
-</html>
+{% extends "base.html" %}
+
+{% block title %}Fiszkly{% endblock %}
+
+
+{% block content %}
+    <h2>testetsts</h2>
+    <div id="homepage"></div>
+    {% load static %}
+    <script src="{% static 'frontend/home_page.js' %}"></script>
+{% endblock %}
+
+
+{#{% block title %}{{ title }}{% endblock %}#}
+{##}
+{#{% block sidebar %}{% endblock %}#}
+{#{% block content %}#}
+{#    <h3>Let's learn something from your flashcards</h3>#}
+{#{% endblock %}#}

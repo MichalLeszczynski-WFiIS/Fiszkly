@@ -1,47 +1,16 @@
-<!doctype html>
-
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-  <title>{% block title %}{{"Fiszkly"}}{% endblock %}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>fiszkly test frontend</title>
+    <link rel="icon" href="static/frontend/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="static/frontend/style.css">
 
-  <meta charset="utf-8">
-  <meta name="description" content="Fiszkly is a web application that helps you broaden your vocabulary by creating a personal training plan with flashcards. You simply add the list of words you’d like to learn and then practice them until you know them by heart.">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
-  <link rel="stylesheet" href="static/learning/style.css">
-  <link rel="icon" href="static/learning/favicon.ico" type="image/x-icon">
 </head>
 <body>
-    <header id="header">
-        <div id="top_menu"> test test </div>
-    </header>
-    <h1>Fiszkly</h1>
-    <aside id="rightsidebar">
-        <nav id="nav">
-            <ul>
-                <li>test1</li>
-                <li>test2</li>
-            </ul>
-        </nav>
-    </aside>
-
-{#    {% block sidebar %}{% endblock %}#}
-
-    <section id="main">
-        {% block content %}
-    {#        Text to be replaced with page content#}
-        {% endblock %}
-    </section>
-
-    {% block footer %}
-         <footer id="footer">Copyright &copy;
-             <script type="text/JavaScript">
-                 document.write(new Date().getFullYear());
-             </script> PITE
-         </footer>
-    {% endblock %}
-
+    {% block content %}{% endblock %}
 
 </body>
 </html>
+

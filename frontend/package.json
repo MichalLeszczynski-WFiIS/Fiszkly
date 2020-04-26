@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack --mode development ./src/index.js --output ./static/frontend/main.js",
-    "build": "webpack --mode production ./src/index.js --output ./static/frontend/main.js"
+    "build": "webpack --mode production ./src/index.js --output ./static/frontend/main.js",
+    "home_page": "webpack --mode production ./src/index.js --output ./static/frontend/home_page.js"
   },
   "keywords": [],
   "author": "",

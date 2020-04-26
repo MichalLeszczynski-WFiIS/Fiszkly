@@ -1,2 +1,1 @@
-
-import App from "./components/App";
+import Homepage from "./components/Homepage";
