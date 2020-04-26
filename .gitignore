@@ -131,4 +131,8 @@ dmypy.json
 .idea
 
 # Persistent local database
-db/ 
+db/
+
+# Production settings and files
+docker-compose.production.yml
+fiszkly/static/
