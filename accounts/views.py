@@ -25,8 +25,6 @@ def registerPage(request):
             user = form.cleaned_data.get("username")
             messages.success(request, "Account was created for user {}".format(user))
             return redirect("/login")
-        else:
-            messages.info(request, "Wrong data has been passed.")
 
     context = {"form": form}
     return render(request, "register.html", context)
