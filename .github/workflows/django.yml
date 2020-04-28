@@ -38,6 +38,9 @@ jobs:
     
     - name: Run Tests
       env:
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: postgres
+        POSTGRES_DB: postgres
         POSTGRES_HOST: localhost
       run: |
         python manage.py test
