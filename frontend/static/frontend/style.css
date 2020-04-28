@@ -3,14 +3,15 @@ body {
     background:
             -moz-linear-gradient(
                     -45deg,
-                    #FFE2E2 0%,
-                    #D1FBFF 100%
+                    /*#FFE2E2 0%,*/
+                    /*#D1FBFF 100%*/ #f9cfdc 0%,
+                    #d7f8ff 100%
             );
     background:
             -webkit-linear-gradient(
                     -45deg,
-                    #FFE2E2 0%,
-                    #D1FBFF 100%
+                    #f9cfdc 0%,
+                    #d7f8ff 100%
             );
     height: 100%;
     min-height: 100%;
@@ -24,6 +25,10 @@ div {
     display: inline;
 }
 
+#git {
+    box-shadow: 0px 0px 7px #FFFFFF;
+    border-radius: 50%;
+}
 footer {
     position:absolute;
     bottom:0;
@@ -79,13 +84,6 @@ footer {
     -moz-animation-delay: 500ms;
     -o-animation-delay: 1000ms;
     animation-delay: 1000ms;
-}
-
-.animate-third {
-    -webkit-animation-delay: 1000ms;
-    -moz-animation-delay: 1000ms;
-    -o-animation-delay: 1500ms;
-    animation-delay: 1500ms;
 }
 
 @-webkit-keyframes reveal {
