@@ -2,31 +2,26 @@
 {% block page_content %}
 
 
-            <div class="d-flex justify-content-center">
+            <div>
                 <div>
                     <form method="POST" action="">
                         {% csrf_token %}
-                            <div>{{form.username.label}} </div>
                             <div>{{form.username}} </div>
 
-
-                            <div>{{form.email.label}}</div>
                             <div>{{form.email}} </div>
 
-                            <div>{{form.password1.label}}</div>
                             <div>{{form.password1}} </div>
 
-                            <div>{{form.password2.label}}</div>
                             <div>{{form.password2}} </div>
 
-                            <div class="d-flex justify-content-center"><input type="submit" value="Zarejestruj się" name="Create user"> </div> 
+                            <div><input type="submit" value="Register here" name="Create user"> </div> 
                     </form> 
                 </div>
             </div>
             <div>
-                <a href="{% url 'login' %}">Already have an account? Sing in here!<a/>
+                <a href="{% url 'login' %}">Already have an account? Log in here!<a/>
             </div>
-            <div class="d-flex justify-content-center">
+            <div>
             {% if form.errors %}
                 {% for field in form %}
                     {% for error in field.errors %}
