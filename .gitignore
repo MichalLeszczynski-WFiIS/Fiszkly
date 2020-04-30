@@ -136,3 +136,6 @@ db/
 # Production settings and files
 docker-compose.production.yml
 fiszkly/static/
+
+#React
+/frontend/node_modules/
