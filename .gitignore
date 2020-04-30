@@ -133,5 +133,8 @@ dmypy.json
 # Persistent local database
 db/
 
-frontend/node_modules/
+# Production settings and files
+docker-compose.production.yml
+fiszkly/static/
+
 /frontend/node_modules/
