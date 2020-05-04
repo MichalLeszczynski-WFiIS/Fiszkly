@@ -1,15 +1,19 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-    <div id="site-title" class="animate-reveal animate-first">Fiszkly</div>
-    <div id="site-desc" class="animate-reveal animate-second">Let's learn something from your flashcards</div>
-
+    {% if user %}
+        Currently logged user: {{ user.username }}
+        <a href="{% url 'logout' %}">Logout<a/>
+        <div id="site-title" class="animate-reveal animate-first">Fiszkly</div>
+        <div id="site-desc" class="animate-reveal animate-second">Let's learn something from your flashcards</div>
+    {% else %}
+        <div id="site-title" class="animate-reveal animate-first">You are unauthenticated. Please log in.</div>
+        <div id="site-desc" class="animate-reveal animate-second">
+            <a href="{% url 'login' %}">Login<a/>
+        </div>
+    {% endif %}
+    
     <div id="homepage"></div>
-
-
-    {% load static %}
-    <script src="{% static 'frontend/home_page.js' %}"></script>
 
 
 {% endblock %}

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div>
+            
+        <div>
+            <form method="POST" action="">
+                {% csrf_token %}
+                    
+                <div>
+                    <input class="form-control" type="text" name="username" placeholder="Username"> 
+                </div>
+                <div>
+                    <input class="form-control" type="password" name="password" placeholder="Password"> 
+                </div>
+                <div>
+                    <input type="submit" value="Login">
+                </div>
+            </form>
+            <div>
+                <a href="{% url 'register' %}">Don't have an account? Register here!<a/>
+            </div>
+        </div>
+    </div>
+    <div>
+        {% for message in messages %}
+            <p id=''>{{message}}</p>
+        {% endfor %}
+    </div>
+{% endblock %}
+
