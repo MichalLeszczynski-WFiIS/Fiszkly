@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src ="../../static/learning/learning.js"></script>
+<div class="content" style="text-align:center;left:45%; position:absolute; top:40%;">
+    <div class="flashcard" style="padding:50px;width:100px;background-color:yellow;display: inline-block">
+
+            {{word.content}}
+            <br> <br>
+            <button onclick="save_answer(1)">{{answers.1}}</button><br><br>
+            <button onclick="save_answer(2)">{{answers.2}}</button><br><br>
+            <button onclick="save_answer(3)">{{answers.3}}</button>
+    </div>
+        <button class="button" style="display:none;">Next</button>
+</div>
+
+    <div id="homepage"></div>
+
+
+{% endblock %}
