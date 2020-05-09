@@ -14,6 +14,18 @@
     {% endif %}
     
     <div id="homepage"></div>
+    {% if question %}        
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ question.question }} <br>
+            {{ form }}
+            <input type="submit" value="Submit">
+        </form>
+    {% endif %}
+    {% if answer_info %}        
+        Correct: {{answer_info.correct_answers}} <br> <br>
+        Incorrect: {{answer_info.incorrect_answers}} <br> <br>
+    {% endif %}
 
 
 {% endblock %}
