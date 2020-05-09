@@ -30,7 +30,10 @@ def index(request):
             answer.save()
     
     info = Answers.objects.get(user_id = request.user.id, question_id = questions[0].id)
-    context = {"user": user, "question": questions[0], "form": form, "answer_info": info}
+    questions_count = Question.objects.all().count()
+    next_question_position = random.randint(0, questions_count - 1) 
+    next_word_id = Question.objects.all()[next_question_position].id 
+    context = {"user": user, "question": questions[0], "form": form, "answer_info": info, 'question_id':next_word_id}
     return render(request, "index.html", context)
 
 
