@@ -1,6 +1,6 @@
 
-function save_answer(id){
-    var data = {id: id}
+function save_answer(answer_id, word_id){
+    var data = {answer_id: answer_id, word_id: word_id}
         console.log(data);
         $.ajax({
             type: 'POST',
