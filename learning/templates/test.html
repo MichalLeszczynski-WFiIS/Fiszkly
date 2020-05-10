@@ -2,11 +2,12 @@
 {% block content %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src ="../../static/learning/learning.js"></script>
-    {% if answer_info %}        
+<div class="content" style="text-align:center;left:45%; position:absolute; top:40%;">
+    {% if answer_info %}      
+          
         Correct: {{answer_info.correct_answers}} <br> <br>
         Incorrect: {{answer_info.incorrect_answers}} <br> <br>
     {% endif %}
-<div class="content" style="text-align:center;left:45%; position:absolute; top:40%;">
     <div class="flashcard" style="padding:50px;width:100px;background-color:yellow;display: inline-block">
 
             {{word.content}}
@@ -15,6 +16,7 @@
             <button onclick="save_answer(2, '{{word.id}}')">{{answers.2}}</button><br><br>
             <button onclick="save_answer(3, '{{word.id}}')">{{answers.3}}</button>
     </div>
+        <br><br>
         <button class="button" style="display:none;">Next</button>
 </div>
 

@@ -5,14 +5,12 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('learning', '0002_answers'),
-    ]
+    dependencies = [("learning", "0002_answers")]
 
     operations = [
         migrations.AddField(
-            model_name='question',
-            name='right_answer_id',
+            model_name="question",
+            name="right_answer_id",
             field=models.IntegerField(blank=True, null=True),
-        ),
+        )
     ]
