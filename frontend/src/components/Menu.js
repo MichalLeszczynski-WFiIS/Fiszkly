@@ -1,100 +1,37 @@
 import {render} from "react-dom";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import styled from 'styled-components'
 
-const Menu = () => ({
+const Menu = () => {
+    const linksArray =
+        [
+        {name: "let's learn", url: "#"},
+        {name: "ranking", url: "#"},
+        {name: "asd", url: "#"},
+        {name: "settings", url: "#"}
+    ]
 
-    // getInitialState: function () {
-    //     return { open: true };
-    // },
-    //
-    // toggleMenu: function () {
-    //     this.setState({ open: !this.state.open });
-    // },
-
-    render: function () {
-        const linksArray = [
-            { name: "let's learn", url: "#" },
-            { name: "ranking", url: "#" },
-            { name: "asd", url: "#" },
-            { name: "settings", url: "#" }
-        ];
+    console.log("asasdasd")
 
         return (
             <div>
-                <Panel
-                    // open={this.state.open}
-                    links={linksArray}
-                />
-                {/*<Button*/}
-                {/*    // toggle={this.toggleMenu}*/}
-                {/*    // open={this.state.open}*/}
-                {/*/>*/}
+
+                <Links links={linksArray} />
             </div>
         );
-    }
-});
+}
 
-// const Button = () => ({
-//     render: function () {
-//         return (
-//             <button
-//                 className={this.props.open
-//                     ? "menu-toggle close-button"
-//                     : "menu-toggle "}
-//                 onClick={this.props.toggle}
-//             > <i className="fa fa-plus"></i>
-//             </button>
-//         );
-//     }
-// });
-
-const Panel = () => ({
-    render: function () {
-        return (
-            <div
-                className={this.props.open
-                    ? "menu-wrapper menu-open"
-                    : "menu-wrapper"}
-            >
-                <Links
-                    links={this.props.links}
-                    // open={this.props.open}
-                />
-            </div>
-        );
-    }
-});
-
-const Links = () => ({
-    render: function () {
-        const linkList = this.props.links.map((link) => (
+const Links = (props) => {
+    console.log("asasdasd links")
+        props.links.map((link) => (
             <li className="link">
                 <a href={link.url}>{link.name}</a>
             </li>
-        ));
-
-        return (
-            <div
-                className={this.props.open
-                    ? "links-wrapper"
-                    : "links-wrapper links-wrapper-closed"}
-            >
-                <ul className="link-list">
-                {linkList}
-            </ul>
-                {/*<LinkList >*/}
-                {/*    <ul>*/}
-                {/*    {linkList}*/}
-                {/*</ul>*/}
-                {/*</LinkList>*/}
-            </div>
-        );
+            ));
     }
-});
+
 
 export default Menu;
-
 
 const container = document.getElementById("menu");
 render(<Menu />, container);
@@ -103,4 +40,21 @@ const LinkList = styled.ul`
   padding-top: 90px;
   padding-right: 25px;
   padding-left: 25px;
+`
+
+const Panel = styled.div`
+  height: 600px;
+  width: 250px;
+  background-color: rgba(255, 255, 255, .8);
+  margin-left: -450px;
+  margin-top: -10px;
+  opacity: 0;
+  -webkit-box-shadow: 10px 10px 6px -8px rgba(161, 136, 119, .7);
+  transition: all .3s ease-in-out;
+  border-radius: 2px;
+  padding: 0 auto;
+  border-right: 1px solid rgba(0, 0, 0, .2);
+  border-bottom: 1px solid rgba(0, 0, 0, .2);
+  margin-left: 0px;
+  opacity: 1;
 `
