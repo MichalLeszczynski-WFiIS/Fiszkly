@@ -1,19 +1,24 @@
 from django.db import models
 import uuid
 from django.conf import settings
-
-# Create your models here.
-
-
-class Question(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    question = models.CharField(max_length=100)
-    answer = models.CharField(max_length=100)
-    right_answer_id = models.IntegerField(null=True, blank=True)
+from django.contrib.postgres.fields import ArrayField
 
 
-class Answers(models.Model):
-    question_id = models.ForeignKey("Question", on_delete=models.CASCADE)
-    user_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    correct_answers = models.IntegerField()
-    incorrect_answers = models.IntegerField()
+class Flashcard(models.Model):
+
+    original = models.CharField(max_length=30)
+    translated = ArrayField(models.CharField(max_length=100))
+    original_language = models.CharField(max_length=2)
+
+
+class Answer(models.Model):
+
+    correct_count = models.IntegerField()
+    incorrect_count = models.IntegerField()
+
+    flashcard = models.ForeignKey(
+        "learning.Flashcard", on_delete=models.CASCADE, related_name="answers",
+    )
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="answers",
+    )

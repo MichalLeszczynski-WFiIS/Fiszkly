@@ -1,7 +1,17 @@
 from django.contrib import admin
-from .models import Question, Answers
+from django import forms
+from .models import Flashcard, Answer
 
-# Register your models here.
 
-admin.site.register(Question)
-admin.site.register(Answers)
+class FlashcardAdmin(admin.ModelAdmin):
+    list_display = ["original", "translated", "original_language"]
+
+
+admin.site.register(Flashcard, FlashcardAdmin)
+
+
+class AnswerAdmin(admin.ModelAdmin):
+    list_display = ["correct_count", "incorrect_count"]
+
+
+admin.site.register(Answer, AnswerAdmin)
