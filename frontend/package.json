@@ -7,7 +7,8 @@
         "test": "echo ",
         "dev": "webpack --mode development ./src/index.js --output ./static/frontend/main.js",
         "build": "webpack --mode production ./src/index.js --output ./static/frontend/main.js",
-        "home_page": "webpack --mode production ./src/index.js --output ./static/frontend/home_page.js"
+        "home_page": "webpack --mode production ./src/index.js --output ./static/frontend/home_page.js",
+        "menu": "webpack --mode production ./src/menu_index.js --output ./static/frontend/Menu.js"
     },
     "keywords": [],
     "author": "",
@@ -27,6 +28,7 @@
     },
     "dependencies": {
         "@material-ui/core": "^4.9.12",
+        "create-react-class": "^15.6.3",
         "react-delay-render": "^0.1.2",
         "semantic-ui-css": "^2.4.1",
         "semantic-ui-react": "^0.88.2",
