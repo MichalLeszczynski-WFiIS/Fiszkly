@@ -3,6 +3,7 @@ from .flashcard_functions import get_random_flashcard
 import json
 from .models import Flashcard, Answer
 import random
+from django.db.models import Sum
 from django.contrib.auth.decorators import login_required
 
 
@@ -18,11 +19,21 @@ def index(request):
 @login_required(login_url="/login")
 def test(request, id):
     flashcard = get_object_or_404(Flashcard, id=id)
-    info = []
-    answer_count = Answer.objects.all().filter(user=request.user, flashcard=flashcard).count()
-    if answer_count > 0:
-        info = Answer.objects.get(user=request.user, flashcard=flashcard)
-    context = {"flashcard": flashcard}
+    correct_answers = (
+        Answer.objects.all()
+        .filter(user=request.user)
+        .aggregate(Sum("correct_count"))["correct_count__sum"]
+    )
+    incorrect_answers = (
+        Answer.objects.all()
+        .filter(user=request.user)
+        .aggregate(Sum("incorrect_count"))["incorrect_count__sum"]
+    )
+    info = {
+        "correct_answers": correct_answers,
+        "incorrect_answers": incorrect_answers,
+    }
+    context = {"flashcard": flashcard, "info": info}
     return render(request, "test.html", context)
 
 
@@ -44,13 +55,15 @@ def save_answer(request):
             a = Answer(user=request.user, flashcard=flashcard, correct_count=0, incorrect_count=0)
             a.save()
         answer = Answer.objects.get(user=request.user, flashcard=flashcard)
-        if is_correct:
+
+        if is_correct == "true":
             answer.correct_count += 1
-            answer.save()
+
         else:
             answer.incorrect_count += 1
-            answer.save()
-        print(answer.correct_count)
+
+        answer.save()
+
         next_flashcard = get_random_flashcard()
         data = json.dumps({"next_url": "/learning/test/{}".format(next_flashcard.id)})
         return HttpResponse(data)

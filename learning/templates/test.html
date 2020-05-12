@@ -3,10 +3,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src ="../../static/learning/learning.js"></script>
 <div class="content" style="text-align:center;left:45%; position:absolute; top:40%;">
-    {% if answer_info %}      
+    {% if info %}      
           
-        Correct: {{answer_info.correct_answers}} <br> <br>
-        Incorrect: {{answer_info.incorrect_answers}} <br> <br>
+        Correct: {{info.correct_answers}} <br> <br>
+        Incorrect: {{info.incorrect_answers}} <br> <br>
     {% endif %}
     <div class="flashcard" style="padding:50px;width:100px;background-color:yellow;display: inline-block">
 
