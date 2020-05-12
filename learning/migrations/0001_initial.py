@@ -10,28 +10,55 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-    ]
+    dependencies = [migrations.swappable_dependency(settings.AUTH_USER_MODEL)]
 
     operations = [
         migrations.CreateModel(
-            name='Flashcard',
+            name="Flashcard",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('original', models.CharField(max_length=30)),
-                ('translated', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=100), size=None)),
-                ('original_language', models.CharField(max_length=2)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID"
+                    ),
+                ),
+                ("original", models.CharField(max_length=30)),
+                (
+                    "translated",
+                    django.contrib.postgres.fields.ArrayField(
+                        base_field=models.CharField(max_length=100), size=None
+                    ),
+                ),
+                ("original_language", models.CharField(max_length=2)),
             ],
         ),
         migrations.CreateModel(
-            name='Answer',
+            name="Answer",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('correct_count', models.IntegerField()),
-                ('incorrect_count', models.IntegerField()),
-                ('flashcard', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='answers', to='learning.Flashcard')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='answers', to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID"
+                    ),
+                ),
+                ("correct_count", models.IntegerField()),
+                ("incorrect_count", models.IntegerField()),
+                (
+                    "flashcard",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="answers",
+                        to="learning.Flashcard",
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="answers",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
     ]

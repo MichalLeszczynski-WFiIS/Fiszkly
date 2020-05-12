@@ -17,8 +17,8 @@ class Answer(models.Model):
     incorrect_count = models.IntegerField()
 
     flashcard = models.ForeignKey(
-        "learning.Flashcard", on_delete=models.CASCADE, related_name="answers",
+        "learning.Flashcard", on_delete=models.CASCADE, related_name="answers"
     )
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="answers",
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="answers"
     )

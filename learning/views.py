@@ -41,7 +41,7 @@ def save_answer(request):
         flashcard = Flashcard.objects.get(id=request.POST["flashcard_id"])
         answer = Answer.objects.filter(user_id=request.user.id, flashcard=flashcard)
         if len(answer) == 0:
-            a = Answer(user=request.user, flashcard=flashcard, correct_count=0, incorrect_count=0,)
+            a = Answer(user=request.user, flashcard=flashcard, correct_count=0, incorrect_count=0)
             a.save()
         answer = Answer.objects.get(user=request.user, flashcard=flashcard)
         if is_correct:

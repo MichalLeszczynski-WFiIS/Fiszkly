@@ -7,6 +7,4 @@ SECRET_KEY = "hcnuvw0@0v@8g&cr-5-ujsvnx=)0nz&k51m#&u9r)dn7_44fro"
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
