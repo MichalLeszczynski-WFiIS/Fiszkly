@@ -1,6 +1,30 @@
+function get_answer(flashcard_id){
+    var data = {flashcard_id: flashcard_id}
+        console.log(data);
+        $.ajax({
+            type: 'POST',
+            url: "/learning/get_answer/",
+            data: data,
+            headers: { "X-CSRFToken": getCookie("csrftoken") },
+            success: function(data){
+                var parse_data = JSON.parse(data)
+                $(".check_button").css("display", "none");
+                $(".is_correct_answer").css("display", "block");
+                $(".flashcard").html(parse_data.answer);
+            },
+            statusCode:{
+                401: function(responseObject, textStatus, jqXHR) {
+                    $(".flashcard").html("Have to log in ")
+                },
+                500:function(responseObject, textStatus, jqXHR){
+                    $(".flashcard").html("Server error")
+                }
+            },
+        });
+}
 
-function save_answer(answer_id, word_id){
-    var data = {answer_id: answer_id, word_id: word_id}
+function save_answer(is_correct, flashcard_id){
+    var data = {is_correct: is_correct, flashcard_id: flashcard_id}
         console.log(data);
         $.ajax({
             type: 'POST',
@@ -9,21 +33,7 @@ function save_answer(answer_id, word_id){
             headers: { "X-CSRFToken": getCookie("csrftoken") },
             success: function(data){
                 var parse_data = JSON.parse(data)
-                if(parse_data.is_correct)
-                {
-                    $(".flashcard").html("Correct answer")
-                    $(".flashcard").css("background-color", "green");
-                }
-                else
-                {
-                    $(".flashcard").html("Wrong answer")
-                    $(".flashcard").css("background-color", "red");
-                }
-                $(".button").show()
-                $(".button").css("display", "block");
-                $(".button").click(function(){
-                    window.location.href = "/learning/test/" + parse_data.next_word_id;
-                  });
+                window.location.href = parse_data.next_url
             },
             statusCode:{
                 401: function(responseObject, textStatus, jqXHR) {

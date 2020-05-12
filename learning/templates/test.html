@@ -10,14 +10,17 @@
     {% endif %}
     <div class="flashcard" style="padding:50px;width:100px;background-color:yellow;display: inline-block">
 
-            {{word.content}}
-            <br> <br>
-            <button onclick="save_answer(1, '{{word.id}}')">{{answers.1}}</button><br><br>
-            <button onclick="save_answer(2, '{{word.id}}')">{{answers.2}}</button><br><br>
-            <button onclick="save_answer(3, '{{word.id}}')">{{answers.3}}</button>
-    </div>
-        <br><br>
-        <button class="button" style="display:none;">Next</button>
+            {{flashcard.original}}
+    </div><br><br>
+    <div>
+        <button class="check_button" onclick="get_answer('{{flashcard.id}}')">Check answer</button>
+    </div>        
+        <div class="is_correct_answer" style="display:none;">
+            Is your answer correct?
+            <br>
+            <button class="save_button_true" onclick="save_answer(true, '{{flashcard.id}}')">True</button>
+            <button class="save_button_false" onclick="save_answer(false, '{{flashcard.id}}')">False</button>
+        </div>
 </div>
 
     <div id="homepage"></div>
