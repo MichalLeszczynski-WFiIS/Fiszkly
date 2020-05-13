@@ -31,10 +31,7 @@ def check_user_skills(request, id):
     )
     correct_answers = 0 if correct_answers == None else correct_answers
     incorrect_answers = 0 if incorrect_answers == None else incorrect_answers
-    info = {
-        "correct_answers": correct_answers,
-        "incorrect_answers": incorrect_answers,
-    }
+    info = {"correct_answers": correct_answers, "incorrect_answers": incorrect_answers}
     context = {"flashcard": flashcard, "info": info}
     return render(request, "check_user_skills.html", context)
 
