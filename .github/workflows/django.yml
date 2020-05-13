@@ -43,7 +43,7 @@ jobs:
         POSTGRES_DB: postgres
         POSTGRES_HOST: localhost
       run: |
-        coverage run --source='.' manage.py test
+        coverage run --source='.' manage.py test -v1
         coverage xml
         
     - name: Upload coverage to Codecov
