@@ -5,9 +5,9 @@ from django.db import migrations
 
 def create_flashcards(apps, schema_editor):
     Flashcard = apps.get_model("learning", "Flashcard")
-    Flashcard.objects.create(translated=["miły"], original="nice", original_language="en")
-    Flashcard.objects.create(translated=["hojny"], original="generous", original_language="en")
-    Flashcard.objects.create(translated=["możliwe"], original="possible", original_language="en")
+    Flashcard.objects.create(translated=["miły","ładny","przyjemny"], original="nice", original_language="en")
+    Flashcard.objects.create(translated=["hojny","szczodry"], original="generous", original_language="en")
+    Flashcard.objects.create(translated=["możliwy","prawdopodobny"], original="possible", original_language="en")
     Flashcard.objects.create(
         translated=["niezależny"], original="independent", original_language="en"
     )

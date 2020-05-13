@@ -1,3 +1,18 @@
 body {
     font-family: 'sans-serif';
 }
+.is_correct_answer{
+    display:none;
+}
+.flashcard{
+    padding:50px;
+    width:100px;
+    background-color:yellow;
+    display: inline-block
+}
+.content{
+    text-align:center;
+    left:45%; 
+    position:absolute; 
+    top:40%;
+}

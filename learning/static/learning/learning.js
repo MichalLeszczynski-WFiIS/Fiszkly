@@ -10,7 +10,12 @@ function get_answer(flashcard_id){
                 var parse_data = JSON.parse(data)
                 $(".check_button").css("display", "none");
                 $(".is_correct_answer").css("display", "block");
-                $(".flashcard").html(parse_data.answer);
+                text = "";
+                for (var key in parse_data.answer)
+                {
+                    text += parse_data.answer[key] + '<br>';
+                }
+                $(".flashcard").html(text);
             },
             statusCode:{
                 401: function(responseObject, textStatus, jqXHR) {

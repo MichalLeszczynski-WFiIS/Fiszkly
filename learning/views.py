@@ -1,23 +1,23 @@
 from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
-from .flashcard_functions import get_random_flashcard
 import json
 from .models import Flashcard, Answer
 import random
 from django.db.models import Sum
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_http_methods
 
 
 def index(request):
     user = None
     if request.user.is_authenticated:
         user = request.user
-    next_flashcard = get_random_flashcard()
+    next_flashcard = random.choice(Flashcard.objects.all())
     context = {"user": user, "flashcard": next_flashcard}
     return render(request, "index.html", context)
 
 
 @login_required(login_url="/login")
-def test(request, id):
+def check_user_skills(request, id):
     flashcard = get_object_or_404(Flashcard, id=id)
     correct_answers = (
         Answer.objects.all()
@@ -29,41 +29,43 @@ def test(request, id):
         .filter(user=request.user)
         .aggregate(Sum("incorrect_count"))["incorrect_count__sum"]
     )
+    correct_answers = 0 if correct_answers == None else correct_answers
+    incorrect_answers = 0 if incorrect_answers == None else incorrect_answers
     info = {
         "correct_answers": correct_answers,
         "incorrect_answers": incorrect_answers,
     }
     context = {"flashcard": flashcard, "info": info}
-    return render(request, "test.html", context)
+    return render(request, "check_user_skills.html", context)
 
 
+@require_http_methods(["POST"])
 @login_required
 def get_answer(request):
-    if request.method == "POST":
-        flashcard_id = request.POST["flashcard_id"]
-        flashcard = Flashcard.objects.get(id=flashcard_id)
-        data = json.dumps({"answer": flashcard.translated})
-        return HttpResponse(data)
+    flashcard_id = request.POST["flashcard_id"]
+    flashcard = Flashcard.objects.get(id=flashcard_id)
+    data = json.dumps({"answer": flashcard.translated})
+    return HttpResponse(data)
 
 
+@require_http_methods(["POST"])
 def save_answer(request):
-    if request.method == "POST":
-        is_correct = request.POST["is_correct"]
-        flashcard = Flashcard.objects.get(id=request.POST["flashcard_id"])
-        answer = Answer.objects.filter(user_id=request.user.id, flashcard=flashcard)
-        if len(answer) == 0:
-            a = Answer(user=request.user, flashcard=flashcard, correct_count=0, incorrect_count=0)
-            a.save()
-        answer = Answer.objects.get(user=request.user, flashcard=flashcard)
+    is_correct = request.POST["is_correct"]
+    flashcard = Flashcard.objects.get(id=request.POST["flashcard_id"])
+    answer = Answer.objects.filter(user_id=request.user.id, flashcard=flashcard)
+    if len(answer) == 0:
+        a = Answer(user=request.user, flashcard=flashcard, correct_count=0, incorrect_count=0)
+        a.save()
+    answer = Answer.objects.get(user=request.user, flashcard=flashcard)
 
-        if is_correct == "true":
-            answer.correct_count += 1
+    if is_correct == "true":
+        answer.correct_count += 1
 
-        else:
-            answer.incorrect_count += 1
+    else:
+        answer.incorrect_count += 1
 
-        answer.save()
+    answer.save()
 
-        next_flashcard = get_random_flashcard()
-        data = json.dumps({"next_url": "/learning/test/{}".format(next_flashcard.id)})
-        return HttpResponse(data)
+    next_flashcard = random.choice(Flashcard.objects.all())
+    data = json.dumps({"next_url": "/learning/check_user_skills/{}".format(next_flashcard.id)})
+    return HttpResponse(data)
