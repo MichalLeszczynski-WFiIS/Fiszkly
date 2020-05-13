@@ -46,8 +46,11 @@ jobs:
         coverage run --source='.' manage.py test
         coverage xml
         
-    - uses: codecov/codecov-action@v1
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v1
       with:
         file: ./coverage.xml
         flags: unittests
-        fail_ci_if_error: true 
+        env_vars: OS,PYTHON
+        name: codecov-umbrella
+        fail_ci_if_error: true
