@@ -1,5 +1,7 @@
 # Fiszkly
 
+[![codecov](https://codecov.io/gh/MichalLeszczynski-WFiIS/Fiszkly/branch/master/graph/badge.svg)](https://codecov.io/gh/MichalLeszczynski-WFiIS/Fiszkly)
+
 ## Participants 
  - Michał Leszczyński - Team Leader
  - Tomasz Rajchel
