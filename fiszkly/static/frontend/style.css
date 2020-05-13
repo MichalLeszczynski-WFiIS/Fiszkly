@@ -25,6 +25,13 @@ div {
     display: inline;
 }
 
+#menu{
+    position: fixed;
+    bottom:0;
+    top: 0;
+    text-align: left;
+}
+
 #git {
     box-shadow: 0px 0px 7px #FFFFFF;
     border-radius: 50%;

@@ -9,13 +9,20 @@ import { withStyles } from '@material-ui/core/styles';
 
 const StyledMenu = withStyles({
     root: {
-        height: "600px",
-        width: "250px",
+        height: "100%",
+        width: "200px",
         background: "rgba(255, 255, 255, .8)",
         boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+        padding: '200px 0 0 40px'
     },
 })(MenuList);
 
+
+const StyledMenuItem = withStyles({
+    root: {
+        margin: '20px 0 0 0'
+    }
+})(MenuItem);
 
 const Menu = () => {
 
@@ -24,25 +31,25 @@ const Menu = () => {
         <Paper>
             <StyledMenu>
 
-                <MenuItem onClick={(e) => {
+                <StyledMenuItem onClick={(e) => {
                     e.preventDefault();
                     window.location.href = 'http://localhost:8000/';
-                }}> Learning</MenuItem>
+                }}> Learning</StyledMenuItem>
 
-                <MenuItem onClick={(e) => {
+                <StyledMenuItem onClick={(e) => {
                     e.preventDefault();
-                    window.location.href = 'http://localhost:8000/register';
-                }}> My account </MenuItem>
+                    window.location.href = 'http://localhost:8000/account';
+                }}> My account </StyledMenuItem>
 
-                <MenuItem onClick={(e) => {
+                <StyledMenuItem onClick={(e) => {
                     e.preventDefault();
-                    window.location.href = 'http://localhost:8000/register';
-                }} > Ranking </MenuItem>
+                    window.location.href = 'http://localhost:8000/ranking';
+                }} > Ranking </StyledMenuItem>
 
-                <MenuItem onClick={(e) => {
+                <StyledMenuItem onClick={(e) => {
                     e.preventDefault();
                     window.location.href = 'http://localhost:8000/logout';
-                }} > Logout </MenuItem>
+                }} > Logout </StyledMenuItem>
 
             </StyledMenu>
         </Paper>

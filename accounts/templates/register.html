@@ -1,23 +1,46 @@
 {% extends "base.html" %}
+{% load static %}
+
 {% block content %}
+    <head>
+        <link rel="stylesheet" href="{% static 'css/accounts.css' %}">
+    </head>
+
             <div>
                 <div>
                     <form method="POST" action="">
                         {% csrf_token %}
-                            <div>{{form.username}} </div>
 
-                            <div>{{form.email}} </div>
+                        <div class="box">
+                            <form>
+                                <span class="text-center">login</span>
 
-                            <div>{{form.password1}} </div>
+                                <div class="input-container">
+                                    {{form.username}}
+                                </div>
 
-                            <div>{{form.password2}} </div>
+                                <div class="input-container">
+                                    {{form.email}}
+                                </div>
 
-                            <div><input type="submit" value="Register here" name="Create user"> </div> 
+                                <div class="input-container">
+                                    {{form.password1}}
+                                </div>
+
+                                <div class="input-container">
+                                    {{form.password2}}
+                                </div>
+
+
+                                <div><input class="btn" type="submit" value="Register here" name="Create user"> </div>
+
+                                <p>
+                                    <a class="message" href="{% url 'login' %}">Already have an account? Log in here!<a/>
+                                </p>
+
+                            </form>
                     </form> 
                 </div>
-            </div>
-            <div>
-                <a href="{% url 'login' %}">Already have an account? Log in here!<a/>
             </div>
             <div>
             {% if form.errors %}

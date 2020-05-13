@@ -1,0 +1,81 @@
+
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans:400,400i,700,700i&subset=greek-ext');
+
+body{
+    font-family: 'Noto Sans', sans-serif;
+}
+.text-center{
+    color: #6a6e74;
+    text-transform:uppercase;
+    font-size: 23px;
+    margin: -50px 0 80px 0;
+    display: block;
+    text-align: center;
+}
+.box{
+    align-content: center;
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform: translate(-50%,-50%);
+    background-color: rgba(255, 255, 255, 0.89);
+    border-radius:3px;
+    padding:70px 100px;
+    opacity: 0.5;
+}
+.input-container{
+    position:relative;
+    margin-bottom:25px;
+}
+.input-container label{
+    position:absolute;
+    top:0px;
+    left:0px;
+    font-size:16px;
+    color: #6a6e74;
+    pointer-event:none;
+    transition: all 0.5s ease-in-out;
+}
+.input-container input{
+    border:0;
+    border-bottom:1px solid #555;
+    background:transparent;
+    width:100%;
+    padding:8px 0 5px 0;
+    font-size:16px;
+    color: #6a6e74;
+}
+.input-container input:focus{
+    border:none;
+    outline:none;
+    border-bottom:1px solid #b7bfc9;
+}
+.btn{
+    background-color: #eeeced;
+    outline: none;
+    color: #7d7d7d;
+    font-size: 0.8em;
+     text-align:center;
+    border:0.1em solid #bbc3cd;
+    padding:10px 20px;
+    text-transform:uppercase;
+    margin: 50px -40% 30px 40%;
+    border-radius:0.4em;
+    cursor:pointer;
+    position:relative;
+}
+
+.input-container input:focus ~ label,
+.input-container input:valid ~ label{
+    top:-12px;
+    font-size:12px;
+}
+
+.message{
+    text-decoration: none;
+    margin-top: 30px;
+    margin-left: 25%;
+    margin-right: -25%;
+    display: block;
+    color: #555555;
+}
