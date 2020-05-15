@@ -5,6 +5,13 @@
 
         <div id="menu"></div>
         <script src="/static/frontend/nav.js"></script>
+        <link rel="stylesheet" href="/static/learning/style.css">
+
+        <div class="content">
+            <button type="button">
+                <a href="{% url 'check_user_skills' id=flashcard.id%}">Check your skills</a>
+            </button>
+        </div>
 
 
     {% else %}
@@ -14,6 +21,6 @@
     
         <div id="homepage"></div>
         <script src="/static/frontend/home_page.js"></script>
-        {% endif %}
+    {% endif %}
 
 {% endblock %}
