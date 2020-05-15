@@ -1,0 +1,20 @@
+| ROADMAP                                                                           |                                                                  |                                                   |
+|-----------------------------------------------------------------------------------|------------------------------------------------------------------|---------------------------------------------------|
+|                                                                                   |                                                                  | Half of deadline                                  |
+| 05.05                                                                             | 05.12                                                            | 05.19                                             |
+| Testing & production environment                                                  | Frontend for login/register page                                 | Chosen external API translation                   |
+| Template for the project                                                          | Main functionality prototype (flashcard guessing)                | User can check, how many words he/she has learned |
+| Working login/register system                                                     | Site navigation                                                  |                                                   |
+| Page template designed                                                            |                                                                  |                                                   |
+|                                                                                   |                                                                  |                                                   |
+| 05.26                                                                             | 06.02                                                            | 06.09                                             |
+| User can add their own words that they want to learn to the dictionary.           | Progress charts & other analytics                                | User can check his/her position in the ranking    |
+| User can create groups of words, and practice words from specific group           | User can see some statistics and charts that show their progress | User can see, who has learned the most words      |
+| User adds own words so they can be listed and shared with other users             | User can choose rarity level of flashcards that he will be using | User can see, who has added the most words        |
+| Application checks if the word is correct before it is added to the list.         | User gets more points for learning uncommon words                | Bonuses for logging in in the streak              |
+|                                                                                   |                                                                  | E-mail notifications                              |
+| FINAL DEADLINE                                                                    |                                                                  |                                                   |
+| 06.17                                                                             |                                                                  |                                                   |
+| Social media integration:                                                         |                                                                  |                                                   |
+| User can publish their results to social media like Facebook, Instagram, Twitter. |                                                                  |                                                   |
+| User sometimes can solve a quiz to get more ranking points (optional).            |                                                                  |                                                   |
