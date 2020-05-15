@@ -17,29 +17,33 @@
 
                                 <div class="input-container">
                                     {{form.username}}
+                                    <label>Username</label>
                                 </div>
 
                                 <div class="input-container">
                                     {{form.email}}
+                                    <label id="email">Email</label>
                                 </div>
 
                                 <div class="input-container">
                                     {{form.password1}}
+                                    <label>Password</label>
                                 </div>
 
                                 <div class="input-container">
                                     {{form.password2}}
+                                    <label>Confirm password</label>
                                 </div>
 
 
-                                <div><input class="btn" type="submit" value="Register here" name="Create user"> </div>
+                                <div><input class="btn" type="submit" value="Register" name="Create user"> </div>
 
                                 <p>
                                     <a class="message" href="{% url 'login' %}">Already have an account? Log in here!<a/>
                                 </p>
 
                             </form>
-                    </form> 
+                    </form>
                 </div>
             </div>
             <div>
