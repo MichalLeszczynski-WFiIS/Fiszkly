@@ -2,19 +2,25 @@
 
 {% block content %}
     {% if user %}
-        Currently logged user: {{ user.username }}
-        <a href="{% url 'logout' %}">Logout<a/>
+
+        <div id="menu"></div>
+        <script src="/static/frontend/nav.js"></script>
+        <link rel="stylesheet" href="/static/learning/style.css">
+
+        <div class="content">
+            <button type="button">
+                <a href="{% url 'check_user_skills' id=flashcard.id%}">Check your skills</a>
+            </button>
+        </div>
+
+
+    {% else %}
+
         <div id="site-title" class="animate-reveal animate-first">Fiszkly</div>
         <div id="site-desc" class="animate-reveal animate-second">Let's learn something from your flashcards</div>
-    {% else %}
-        <div id="site-title" class="animate-reveal animate-first">You are unauthenticated. Please log in.</div>
-        <div id="site-desc" class="animate-reveal animate-second">
-            <a href="{% url 'login' %}">Login<a/>
-        </div>
+    
+        <div id="homepage"></div>
+        <script src="/static/frontend/home_page.js"></script>
     {% endif %}
-    
-    <div id="homepage"></div>
-    
-    <a href="{% url 'check_user_skills' id=flashcard.id%}">Check your skills</a>
 
 {% endblock %}

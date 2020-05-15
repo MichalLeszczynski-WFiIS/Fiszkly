@@ -9,7 +9,7 @@ class CreateUserForm(UserCreationForm):
         widget=forms.PasswordInput(attrs={"placeholder": "Password"}), required=True
     )
     password2 = forms.CharField(
-        widget=forms.PasswordInput(attrs={"placeholder": "Confirm Password"}), required=True
+        widget=forms.PasswordInput(attrs={"placeholder": "Confirm password"}), required=True,
     )
 
     class Meta:
@@ -17,5 +17,5 @@ class CreateUserForm(UserCreationForm):
         fields = ["username", "email", "password1", "password2"]
         widgets = {
             "username": forms.fields.TextInput(attrs={"placeholder": "Username"}),
-            "email": forms.fields.TextInput(attrs={"placeholder": "Email"}),
+            "email": forms.fields.TextInput(attrs={"placeholder": "E-mail"}),
         }

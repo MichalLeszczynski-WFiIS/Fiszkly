@@ -34,7 +34,7 @@ def loginPage(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect("../learning")
+            return redirect("../")
         else:
             messages.info(request, "Username or password is incorect.")
 
@@ -44,4 +44,4 @@ def loginPage(request):
 
 def logoutUser(request):
     logout(request)
-    return redirect("login")
+    return redirect("../")

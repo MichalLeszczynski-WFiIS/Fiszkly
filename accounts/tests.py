@@ -8,7 +8,7 @@ class LogInTest(TestCase):
     def setUp(self):
         self.credentials = {"username": "testuser", "password": "secret"}
         User.objects.create_user(
-            username=self.credentials.get("username"), password=self.credentials.get("password")
+            username=self.credentials.get("username"), password=self.credentials.get("password"),
         )
 
     def test_login(self):

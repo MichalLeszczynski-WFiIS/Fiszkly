@@ -3,8 +3,8 @@ body {
     background:
             -moz-linear-gradient(
                     -45deg,
-                    /*#FFE2E2 0%,*/
-                    /*#D1FBFF 100%*/ #f9cfdc 0%,
+                        /*#FFE2E2 0%,*/
+                        /*#D1FBFF 100%*/ #f9cfdc 0%,
                     #d7f8ff 100%
             );
     background:
@@ -23,6 +23,13 @@ body {
 
 div {
     display: inline;
+}
+
+#menu{
+    position: fixed;
+    bottom:0;
+    top: 0;
+    text-align: left;
 }
 
 #git {
