@@ -21,5 +21,5 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("learning.urls")),
     path("", include("accounts.urls")),
-    path("", lambda request: redirect('learning/', permanent=True))
+    path("", lambda request: redirect("learning/", permanent=True)),
 ]

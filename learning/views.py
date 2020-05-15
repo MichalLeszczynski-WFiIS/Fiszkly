@@ -51,7 +51,9 @@ def save_answer(request):
     flashcard = Flashcard.objects.get(id=request.POST["flashcard_id"])
     answer = Answer.objects.filter(user_id=request.user.id, flashcard=flashcard)
     if len(answer) == 0:
-        a = Answer(user=request.user, flashcard=flashcard, correct_count=0, incorrect_count=0)
+        a = Answer(
+            user=request.user, flashcard=flashcard, correct_count=0, incorrect_count=0
+        )
         a.save()
     answer = Answer.objects.get(user=request.user, flashcard=flashcard)
 
@@ -64,5 +66,7 @@ def save_answer(request):
     answer.save()
 
     next_flashcard = random.choice(Flashcard.objects.all())
-    data = json.dumps({"next_url": "/learning/check_user_skills/{}".format(next_flashcard.id)})
+    data = json.dumps(
+        {"next_url": "/learning/check_user_skills/{}".format(next_flashcard.id)}
+    )
     return HttpResponse(data)
