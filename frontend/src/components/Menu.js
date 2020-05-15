@@ -33,7 +33,7 @@ const Menu = () => {
 
                 <StyledMenuItem onClick={(e) => {
                     e.preventDefault();
-                    window.location.href = 'http://localhost:8000/';
+                    window.location.href = 'http://localhost:8000/check_user_skills';
                 }}> Learning</StyledMenuItem>
 
                 <StyledMenuItem onClick={(e) => {
