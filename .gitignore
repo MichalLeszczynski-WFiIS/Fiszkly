@@ -139,3 +139,6 @@ frontend/static/
 
 #React
 /frontend/node_modules/
+
+# vs code
+.vscode/

@@ -36,8 +36,8 @@ def check_user_skills(request, id):
     return render(request, "check_user_skills.html", context)
 
 
+@login_required(login_url="/login")
 @require_http_methods(["POST"])
-@login_required
 def get_answer(request):
     flashcard_id = request.POST["flashcard_id"]
     flashcard = Flashcard.objects.get(id=flashcard_id)
@@ -45,6 +45,7 @@ def get_answer(request):
     return HttpResponse(data)
 
 
+@login_required(login_url="/login")
 @require_http_methods(["POST"])
 def save_answer(request):
     is_correct = request.POST["is_correct"]
