@@ -33,22 +33,20 @@ const Menu = () => {
 
                 <StyledMenuItem onClick={(e) => {
                     e.preventDefault();
-                    window.location.href = 'http://localhost:8000/check_user_skills';
+                    window.location.href = location.protocol + '//' + location.host + '/learning/check_user_skills/1';
                 }}> Learning</StyledMenuItem>
 
                 <StyledMenuItem onClick={(e) => {
-                    e.preventDefault();
-                    window.location.href = 'http://localhost:8000/account';
+                    // TODO
                 }}> My account </StyledMenuItem>
 
                 <StyledMenuItem onClick={(e) => {
-                    e.preventDefault();
-                    window.location.href = 'http://localhost:8000/ranking';
+                    // TODO
                 }} > Ranking </StyledMenuItem>
 
                 <StyledMenuItem onClick={(e) => {
                     e.preventDefault();
-                    window.location.href = 'http://localhost:8000/logout';
+                    window.location.href = location.protocol + '//' + location.host + '/logout';
                 }} > Logout </StyledMenuItem>
 
             </StyledMenu>

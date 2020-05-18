@@ -11,7 +11,7 @@ const LoggingPanel = () => {
             className="button-log"
             onClick={(e) => {
                 e.preventDefault();
-                window.location.href = 'http://localhost:8000/login';
+                window.location.href = location.protocol + '//' + location.host + '/login';
             }}>
             Log In
         </Button>
@@ -22,7 +22,7 @@ const LoggingPanel = () => {
             className="button-log"
             onClick={(e) => {
                 e.preventDefault();
-                window.location.href = 'http://localhost:8000/register';
+                window.location.href = location.protocol + '//' + location.host + '/register';
             }}>
             Register
         </Button>
