@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
 from .models import Flashcard, Answer
+from datetime import datetime
 import json
 
 # Create your tests here.
@@ -52,42 +53,18 @@ class LearningTest(TestCase):
         )
         self.flashcard_id = 1
         logged_in = self.client.login(**self.credentials)
+        self.current_date = datetime.date(datetime.now())
 
     def test_create_new_answer_if_not_exists(self):
         data = {"is_correct": "true", "flashcard_id": self.flashcard_id}
         flashcard = Flashcard.objects.get(id=self.flashcard_id)
         response = self.client.post("/learning/save_answer/", data=data, follow=True)
         self.assertEquals(response.status_code, 200)
-        self.assertTrue(Answer.objects.filter(user_id=self.user.id, flashcard=flashcard).exists())
-
-    def save_user_answer(self, answer):
-        Answer.objects.create(
-            correct_count=0,
-            incorrect_count=0,
-            flashcard=Flashcard.objects.get(id=1),
-            user=self.user,
+        self.assertTrue(
+            Answer.objects.filter(
+                user_id=self.user.id, flashcard=flashcard, date=self.current_date
+            ).exists()
         )
-        data = {"is_correct": answer, "flashcard_id": self.flashcard_id}
-        flashcard = Flashcard.objects.get(id=self.flashcard_id)
-        if answer == "true":
-            answer_count_before = Answer.objects.get(
-                user_id=self.user.id, flashcard=flashcard
-            ).correct_count
-        elif answer == "false":
-            answer_count_before = Answer.objects.get(
-                user_id=self.user.id, flashcard=flashcard
-            ).incorrect_count
-        response = self.client.post("/learning/save_answer/", data=data, follow=True)
-        self.assertEquals(response.status_code, 200)
-        if answer == "true":
-            answer_count_after = Answer.objects.get(
-                user_id=self.user.id, flashcard=flashcard
-            ).correct_count
-        elif answer == "false":
-            answer_count_after = Answer.objects.get(
-                user_id=self.user.id, flashcard=flashcard
-            ).incorrect_count
-        self.assertEquals(answer_count_before + 1, answer_count_after)
 
     def test_get_right_answer(self):
         data = {"flashcard_id": self.flashcard_id}
@@ -98,7 +75,41 @@ class LearningTest(TestCase):
         self.assertEquals(responseData["answer"], flashcard.translated)
 
     def test_save_correct_answer(self):
-        self.save_user_answer("true")
+        Answer.objects.create(
+            correct_count=0,
+            incorrect_count=0,
+            flashcard=Flashcard.objects.get(id=1),
+            user=self.user,
+            date=self.current_date,
+        )
+        data = {"is_correct": "true", "flashcard_id": self.flashcard_id}
+        flashcard = Flashcard.objects.get(id=self.flashcard_id)
+        answer_count_before = Answer.objects.get(
+            user_id=self.user.id, flashcard=flashcard
+        ).correct_count
+        response = self.client.post("/learning/save_answer/", data=data, follow=True)
+        self.assertEquals(response.status_code, 200)
+        answer_count_after = Answer.objects.get(
+            user_id=self.user.id, flashcard=flashcard
+        ).correct_count
+        self.assertEquals(answer_count_before + 1, answer_count_after)
 
     def test_save_incorrect_answer(self):
-        self.save_user_answer("false")
+        Answer.objects.create(
+            correct_count=0,
+            incorrect_count=0,
+            flashcard=Flashcard.objects.get(id=1),
+            user=self.user,
+            date=self.current_date,
+        )
+        data = {"is_correct": "false", "flashcard_id": self.flashcard_id}
+        flashcard = Flashcard.objects.get(id=self.flashcard_id)
+        answer_count_before = Answer.objects.get(
+            user_id=self.user.id, flashcard=flashcard
+        ).incorrect_count
+        response = self.client.post("/learning/save_answer/", data=data, follow=True)
+        self.assertEquals(response.status_code, 200)
+        answer_count_after = Answer.objects.get(
+            user_id=self.user.id, flashcard=flashcard
+        ).incorrect_count
+        self.assertEquals(answer_count_before + 1, answer_count_after)
