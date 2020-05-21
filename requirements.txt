@@ -1,7 +1,8 @@
 Django==3.0.5
 psycopg2==2.8.5
 uWSGI==2.0.18
-
+celery==4.4.2
+redis==3.5.2
 # development & testing tools
 black==19.10b0
 coverage==5.1
