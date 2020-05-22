@@ -18,16 +18,18 @@ def upload(request):
         return render(request, "upload.html", {"translated_words": translated_words})
     return render(request, "upload.html")
 
+
 @login_required
 def insert(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         form = WordsForm(request.POST)
         if form.is_valid():
-            words = form.cleaned_data['field'].split()
+            words = form.cleaned_data["field"].split()
             translated_words = translator.translate(words)
             print(words)
-            return render(request, 'input.html', {'form': form, "translated_words": translated_words})
+            return render(
+                request, "input.html", {"form": form, "translated_words": translated_words}
+            )
     else:
         form = WordsForm()
-        return render(request, 'input.html', {'form': form})
-
+        return render(request, "input.html", {"form": form})
