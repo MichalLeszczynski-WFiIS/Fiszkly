@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "learning.apps.LearningConfig",
     "accounts.apps.AccountsConfig",
+    "words.apps.WordsConfig",
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+    <div id="menu"></div>
+    <script src="/static/frontend/nav.js"></script>
+    <link rel="stylesheet" href="/static/words/style.css">
+
+    <div class="content">
+        <form action="{% url 'upload' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file" name="words_file">
+            <input type="submit" value="submit" />
+          </form>
+    
+
+        {% if translated_words %}
+            <h1>Words:</h1>
+            <table>
+                <thead>
+                    <th>Original</th>
+                    <th>Translated</th>
+                    <th>Original language</th>
+                </thead>
+                <tbody>
+                {% for word in translated_words %}
+                    <tr>
+                        <td>{{ word.original }}</td>
+                        <td>{{ word.translated }}</td>
+                        <td>{{ word.original_language }}</td>
+                    </tr>    
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+
+{% endblock %}

@@ -21,6 +21,7 @@ from django.views.generic import TemplateView
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("learning/", include("learning.urls")),
+    path("words/", include("words.urls")),
     path("", include("accounts.urls")),
     path("", TemplateView.as_view(template_name="landing.html")),
 ]
