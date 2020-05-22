@@ -1,24 +1,75 @@
 import requests
-import os
+import abc
+from typing import List
 from collections import namedtuple
 
-word_set = namedtuple('word_set', 'original translated original_language')
+WordSet = namedtuple("word_set", "original translated original_language")
 
-class Translator:
-    def __init__(self):
-        self.API_KEY = os.environ.get("GCP_API_KEY")
+class ITranslator(abc.ABC):
+    def __init__(self, api_key):
+        self.API_KEY = api_key
         self.url = "https://translation.googleapis.com/language/translate/v2"
 
-    def translate(self, words):
+    def translate(self, words: List[str]) -> List[WordSet]:
+        """ Returns words with their translations and original languages detected """
 
-        data = {'q': words, 'target': 'pl'}
-        params = {'key': self.API_KEY}
-        
+    def get_translations(self, words: List[str], dest_language: str) -> List[WordSet]:
+        """ Returns words translated to specified language (pl or eng) """
+
+    def detect(self, words: List[str]) -> List[WordSet]:
+        """ Returns languages detected of given words """
+
+
+class Translator(ITranslator):
+    def __init__(self, api_key: str):
+        super().__init__(api_key)
+
+    def translate(self, words: List[str]) -> List[WordSet]:
+
+        detections = self.detect(words)
+        en_words = [word.original for word in detections if word.original_language=="en"]
+        pl_words = [word.original for word in detections if word.original_language=="pl"]
+
+        return self.get_translations(en_words, "pl") + self.get_translations(pl_words, "en")
+
+    def get_translations(self, words: List[str], dest_language: str) -> List[WordSet]:
+        if not words:
+            return []
+
+        data = {"q": words, "target": dest_language}
+        params = {"key": self.API_KEY}
+
         response = requests.post(self.url, params=params, data=data)
         translated = response.json()["data"]["translations"]
 
+        return [
+            WordSet(word, translation["translatedText"], "pl" if dest_language=="en" else "en")
+            for word, translation in zip(words, translated)
+        ]
 
-        for word, translation in zip(words, translated): 
-            print(f"{word} \t<-->\t {translation['translatedText']}")
+    def detect(self, words: List[str]) -> List[WordSet]:
+        if not words:
+            return []
+        data = {"q": words}
+        params = {"key": self.API_KEY}
 
-        return [word_set(word, translation['translatedText'], "pl") for word, translation in zip(words, translated)]
+        response = requests.post(f"{self.url}/detect", params=params, data=data)
+        detected = response.json()["data"]["detections"]
+
+        return [
+            WordSet(word, "", "en" if detection[0]["language"]=="en" else "pl")
+            for word, detection in zip(words, detected)
+        ]
+
+class MockTranslator(ITranslator):
+    def __init__(self, api_key):
+        super().__init__(api_key)
+
+    def translate(self, words: List[str]) -> List[WordSet]:
+        return [WordSet(word, f"<mock> {word}", "<mock>") for word in words]
+
+    def get_translations(self, words: List[str], dest_language: str) -> List[WordSet]:
+        pass
+
+    def detect(self, words: List[str]) -> List[WordSet]:
+        pass
