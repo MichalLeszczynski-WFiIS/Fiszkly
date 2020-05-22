@@ -2,9 +2,6 @@
 
 {% block content %}
     {% if user %}
-
-        <div id="menu"></div>
-        <script src="/static/frontend/nav.js"></script>
         <link rel="stylesheet" href="/static/learning/style.css">
 
         <div class="content">
@@ -16,11 +13,19 @@
 
     {% else %}
 
-        <div id="site-title" class="animate-reveal animate-first">Fiszkly</div>
-        <div id="site-desc" class="animate-reveal animate-second">Let's learn something from your flashcards</div>
-    
-        <div id="homepage"></div>
-        <script src="/static/frontend/home_page.js"></script>
+        <div class="box">
+            <div id="site-title" class="animate-reveal animate-first">Fiszkly</div>
+            <div id="site-desc" class="animate-reveal animate-second">Let's learn something from your flashcards</div>
+
+            <div class="animate-reveal animate-third">
+                <div class="buttons-panel"> <a class="btn" href="{% url 'login'%}">Log in</a></div>
+                <div class="buttons-panel"><div id="site-desc">or</div></div>
+                    <div class="buttons-panel"><a class="btn" href="{% url 'register'%}">Register</a></div>
+            </div>
+
+            <div id="site-desc" class="animate-reveal animate-fourth">to start!</div>
+
+        </div>
     {% endif %}
 
 {% endblock %}
