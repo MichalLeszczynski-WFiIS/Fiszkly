@@ -1,0 +1,10 @@
+{% extends "words_base.html" %}
+
+
+{% block words_content %}
+    <form class="WordsForm" method="post">
+        {% csrf_token %}
+        <p>{{ form.field }}</p>
+        <input type="submit" value="Submit" />
+    </form>        
+{% endblock %}
