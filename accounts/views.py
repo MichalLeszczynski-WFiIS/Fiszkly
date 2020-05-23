@@ -80,24 +80,25 @@ def profilePage(request):
         data['percentage'].append(correct_sum / (correct_sum+incorrect_sum) * 100)        
 
 
-    answers = Answer.objects.filter(Q(user=request.user.id) & (~Q(correct_count = 0) | ~Q(incorrect_count = 0)))
-    
+    answers = Answer.objects.values('flashcard_id').filter(Q(user=request.user.id) & (~Q(correct_count = 0) | ~Q(incorrect_count = 0))).annotate(correct=Sum('correct_count')).annotate(incorrect=Sum('incorrect_count'))
     answers = list(answers)
-    answers.sort(key=lambda answer: answer.correct_count / (answer.correct_count + answer.incorrect_count))
+    print(answers)
+    answers.sort(key=lambda answer: answer['correct'] / (answer['correct'] + answer['incorrect']))
     if len(answers) > 3:
         answers = answers[:3]
     
     flashcards, flashcards_answers = [], []
 
     for el in answers:
-        obj = Flashcard.objects.get(id=el.flashcard.id)
+        obj = Flashcard.objects.get(id=el['flashcard_id'])
         flashcards.append(model_to_dict(obj))
-        flashcards_answers.append(model_to_dict(el))
+        flashcards_answers.append(el)
     
     flashcards_info = []
     for i in range(len(flashcards)):
-        correct = flashcards_answers[i]['correct_count']
-        incorrect = flashcards_answers[i]['incorrect_count']
+        print(flashcards_answers[i])
+        correct = flashcards_answers[i]['correct']
+        incorrect = flashcards_answers[i]['incorrect']
         
         flashcards_info.append({
             'original': flashcards[i]['original'],
