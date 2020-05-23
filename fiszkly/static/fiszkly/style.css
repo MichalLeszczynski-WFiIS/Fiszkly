@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Noto+Sans:400,400i,700,700i&subset=greek-ext');
 
 body {
-    background: #eeeeee;
+    background: #f0f0f0;
     height: 100%;
     min-height: 100%;
     margin: 0;
@@ -16,12 +16,16 @@ ul {
 }
 
 #links{
-    margin-top: 400px;
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 1em;
+    width: 100%;
+    text-align: center;
 }
 
 #git {
-    margin-left: 45%;
     height: 15px;
+    color: #fefefe;
 }
 footer {
     position:absolute;
@@ -38,44 +42,49 @@ footer {
     left:50%;
     top:50%;
     transform: translate(-50%,-50%);
-    background-color: rgb(255, 255, 255);
+    background-color: #fefefe;
     border-radius:3px;
     padding:70px 100px;
     opacity: 0.8;
 }
 
 .btn{
-    background-color: #f9fbff;
-    outline: none;
-    color: #6968AB;
-    font-size: 0.8em;
-    text-align:center;
-    border:0.1em solid #6968AB;
+    position:relative;
+    border:0.1em solid #359c25;
     padding:10px 20px;
-    text-transform:uppercase;
     border-radius:0.4em;
     cursor:pointer;
-    position:relative;
+    background-color: #fefefe;
+    outline: none;
+    color: #359c25;
+    font-size: 0.8em;
+    text-align:center;
+    text-transform:uppercase;
     text-decoration: none;
+}
+label {
+    display: inline-block;
+    
+}
+
+.btn:hover {
+    background-color: #f5f5f5;
 }
 
 #site-title {
-    text-shadow: 0px 0px 7px #8e888d;
     display: block;
+    text-align: center;
+    margin-bottom: 50px;
     font-size: 5em;
     font-weight: 300;
-    text-align: center;
-    color: #6968AB;
     font-family: 'Lato', 'Lucida Grande', 'Lucida Sans Unicode', Tahoma, Sans-Serif, serif;
-    margin-bottom: 50px;
+    color: #359c25;
 }
 
 #site-desc {
-    text-shadow: 0px 0px 7px #bbc3cd;
     display: block;
-    -webkit-font-smoothing: antialiased;
     font-family: 'Lato', 'Lucida Grande', 'Lucida Sans Unicode', Tahoma, Sans-Serif, serif;
-    color: #6968AB;
+    color: #359c25;
     text-align: center;
     font-size: 1.5em;
     margin-bottom: 50px;
@@ -196,7 +205,7 @@ footer {
 /*--------Navigaton--------*/
 
 .menu-wrap {
-    background-color: #6968AB;
+    background-color: #359c25;
     position: fixed;
     top: 0;
     height: 100%;
@@ -209,7 +218,7 @@ footer {
 }
 .menu-show {
     margin-left: 0;
-    box-shadow: 4px 2px 15px 1px #B9ADAD;
+    box-shadow: 4px 2px 15px 1px #a7f09c;
 }
 .menu-sidebar {
     margin: 75px 0 80px 0;
@@ -305,4 +314,16 @@ footer {
     border-color: #fff;
     transform: rotate(-45deg) translate(7px, -7px);
     transition: .5s;
+}
+
+.content{
+    position:absolute;
+    left:30%;
+    padding: 1em;
+    margin-top: 1em;
+    border-radius: 3px;
+    width: 800px;
+    background-color: #fefefe;
+    text-align:center;
+    color: #333;
 }

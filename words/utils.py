@@ -12,13 +12,13 @@ class ITranslator(abc.ABC):
         self.url = "https://translation.googleapis.com/language/translate/v2"
 
     def translate(self, words: List[str]) -> List[WordSet]:
-        """ Returns words with their translations and original languages detected as WordSet"""
+        """Returns words with their translations and original languages detected as WordSet."""
 
-    def get_translations(self, words: List[str], dest_language: str) -> List[WordSet]:
-        """ Returns words translated to specified language (pl or eng) as WordSet"""
+    def get_translations(self, words: List[str], target_language: str) -> List[WordSet]:
+        """Returns words translated to specified language (pl or eng) as WordSet."""
 
     def detect(self, words: List[str]) -> List[WordSet]:
-        """ Returns languages detected of given words """
+        """Returns languages detected for given word list."""
 
 
 class Translator(ITranslator):
@@ -33,18 +33,18 @@ class Translator(ITranslator):
 
         return self.get_translations(en_words, "pl") + self.get_translations(pl_words, "en")
 
-    def get_translations(self, words: List[str], dest_language: str) -> List[WordSet]:
+    def get_translations(self, words: List[str], target_language: str) -> List[WordSet]:
         if not words:
             return []
 
-        data = {"q": words, "target": dest_language}
+        data = {"q": words, "target": target_language}
         params = {"key": self.API_KEY}
 
         response = requests.post(self.url, params=params, data=data)
         translated = response.json()["data"]["translations"]
 
         return [
-            WordSet(word, translation["translatedText"], "pl" if dest_language == "en" else "en")
+            WordSet(word, translation["translatedText"], "pl" if target_language == "en" else "en")
             for word, translation in zip(words, translated)
         ]
 
@@ -56,8 +56,6 @@ class Translator(ITranslator):
 
         response = requests.post(f"{self.url}/detect", params=params, data=data)
         detected = response.json()["data"]["detections"]
-        for d in detected:
-            print(d)
 
         return [
             WordSet(word, "", "en" if detection[0]["language"] == "en" else "pl")
@@ -72,7 +70,7 @@ class MockTranslator(ITranslator):
     def translate(self, words: List[str]) -> List[WordSet]:
         return [WordSet(word, f"<mock> {word}", "<mock>") for word in words]
 
-    def get_translations(self, words: List[str], dest_language: str) -> List[WordSet]:
+    def get_translations(self, words: List[str], target_language: str) -> List[WordSet]:
         pass
 
     def detect(self, words: List[str]) -> List[WordSet]:

@@ -1,9 +1,8 @@
-.content{
-    background-color: aliceblue;
-    border-radius: 25px;
-    padding:50px;
-    text-align:center;
-    left:45%; 
-    position:absolute; 
-    top:40%;
+.inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
 }

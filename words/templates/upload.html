@@ -1,10 +1,45 @@
-{% extends "words_base.html" %}
+{% extends "base.html" %}
+{% block content %}
+<link rel="stylesheet" href="/static/words/style.css">
+<div class="content">
+    <h3>Type in the words you wish to learn</h3>
+    <div id="textarea_upload">
+        <form action="{% url 'words:upload' %}" class="WordsForm" method="post">
+            {% csrf_token %}
+            <p>{{ form.field }}</p>
+            <input class="btn" type="submit" value="submit" />
+        </form>
+    </div>
+
+    <div id="file_upload">
+        <h3>Or upload a file</h3>
+        <form action="{% url 'words:upload' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input class="inputfile" type="file" name="words_file" id="words_file">
+            <label class="btn" for="words_file">Choose a file</label>
+            <input class="btn" type="submit" value="submit"/>
+        </form>
+    </div>
 
 
-{% block words_content %}
-    <form action="{% url 'upload' %}" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <input type="file" name="words_file">
-        <input type="submit" value="submit" />
-    </form>
+    {% if translated_words %}
+        <h1>Words:</h1>
+        <table>
+            <thead>
+                <th>Original</th>
+                <th>Translated</th>
+                <th>Original language</th>
+            </thead>
+            <tbody>
+            {% for word in translated_words %}
+                <tr>
+                    <td>{{ word.original }}</td>
+                    <td>{{ word.translated }}</td>
+                    <td>{{ word.original_language }}</td>
+                </tr>    
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</div>
 {% endblock %}

@@ -1,11 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <link rel="stylesheet" href="/static/learning/style.css">
-
-    <div class="content">
-        <button type="button">
-            <a href="{% url 'check_user_skills' id=flashcard.id%}">Check your skills</a>
-        </button>
-    </div>
+<link rel="stylesheet" href="/static/learning/style.css">
+<div class="content">
+    <button type="button">
+        <a href="{% url 'learning:check_user_skills' id=flashcard.id%}">Check your skills</a>
+    </button>
+</div>
 {% endblock %}

@@ -13,7 +13,7 @@
 
                 <div class="box">
                     <form>
-                        <span class="text-center">login</span>
+                        <span class="text-center">Log in</span>
                         <div class="input-container">
                             <input type="text" name="username" required="" placeholder="Username"/>
                         </div>
@@ -21,10 +21,10 @@
                             <input type="password"  name="password" required="" placeholder="Password"/>
                         </div>
 
-                        <button type="submit" class="btn" type="submit">submit</button>
+                        <button type="submit" class="btn" type="submit">Log in</button>
 
-                        <p>
-                        <a class="message" href="{% url 'register' %}">Don't have an account? Register!<a/>
+                        <p class="message">
+                        Don't have an account? <a href="{% url 'register' %}">Register!</a>
                         </p>
 
                     </form>

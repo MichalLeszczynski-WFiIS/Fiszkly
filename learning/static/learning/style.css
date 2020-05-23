@@ -10,9 +10,3 @@ body {
     background-color:yellow;
     display: inline-block
 }
-.content{
-    text-align:center;
-    left:45%; 
-    position:absolute; 
-    top:40%;
-}

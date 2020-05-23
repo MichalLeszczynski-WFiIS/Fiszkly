@@ -1,10 +1,12 @@
-from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 import json
-from .models import Flashcard, Answer
 import random
+
 from django.db.models import Sum
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
+from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
+
+from learning.models import Flashcard, Answer
 
 
 def index(request):
