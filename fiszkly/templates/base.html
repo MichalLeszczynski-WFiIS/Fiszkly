@@ -15,7 +15,7 @@
 
 <body>
 
-{% if user %}
+{% if user.is_authenticated %}
     {% block nav %}
         <header>
             <span class="toggle-button">
