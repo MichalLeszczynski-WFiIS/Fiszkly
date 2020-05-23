@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<link rel="stylesheet" href="/static/words/style.css">
+<div class="content">
+    <h3>Flashcards added by you</h3>
+
+    {% if user_words %}
+    <table class="table-custom">
+        <thead>
+            <th>Original</th>
+            <th>Translation</th>
+            <th>Language</th>
+        </thead>
+        <tbody>
+        {% for word in user_words %}
+            <tr>
+                <td>{{ word.original_word }}</td>
+                <td>{{ word.translated_word }}</td>
+                <td>
+                    {{ word.original_language }}
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    {{ word.translated_language }}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>You haven't added any flashcards yet.</p>
+    {% endif %}
+    
+    <a href="{% url 'words:upload_words' %}">Upload Flashcards</a>
+    {% for message in messages %}
+    <p>{{message}}</p>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -6,3 +6,31 @@
 	position: absolute;
 	z-index: -1;
 }
+
+.heading {
+	margin-top: 0.5em;
+	margin-bottom: 1em;
+}
+
+#file-label {
+	margin: 0;
+}
+
+.table-custom {
+	width: 100%;
+	border-collapse: collapse;
+	margin-bottom: 1em;
+}
+
+.table-custom th {
+	text-align: center;
+	background-color: #359c25;
+	color: #fefefe;
+}
+
+.table-custom td, .table-custom th {
+	border: 1px solid #ddd;
+	padding: 8px;
+  }
+
+.table-custom tr:nth-child(even){background-color: #f2f2f2;}

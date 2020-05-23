@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<link rel="stylesheet" href="/static/words/style.css">
+<div class="content">
+    <h3 class="heading">Type in the words you wish to learn</h3>
+    <div id="textarea_upload">
+        <form action="{% url 'words:upload_words' %}" class="WordsForm" method="post">
+            {% csrf_token %}
+            <p>{{ form.field }}</p>
+            <input class="btn" type="submit" value="submit" />
+        </form>
+    </div>
+<hr>
+    <div id="file_upload">
+        <h3 class="heading">Or upload a file</h3>
+        <form action="{% url 'words:upload_words' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input class="inputfile" type="file" name="words_file" id="words_file">
+            <label class="btn" for="words_file" id="file-label">Choose a file</label>
+            <input class="btn" type="submit" value="submit"/>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -7,10 +7,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from accounts.forms import CreateUserForm
-from learning.models import Answer, Flashcard
-
-
-# Create your views here.
+from learning.models import Answer
+from words.models import Flashcard
 
 
 def register_page(request):
@@ -21,7 +19,7 @@ def register_page(request):
         if form.is_valid():
             form.save()
             user = form.cleaned_data.get("username")
-            messages.success(request, "Account was created for user {}".format(user))
+            messages.success(request, f"Account was created for user {user}")
             return redirect("/login")
 
     context = {"form": form}
@@ -105,8 +103,8 @@ def profile_page(request):
 
         flashcards_info.append(
             {
-                "original": flashcards[i]["original"],
-                "translated": flashcards[i]["translated"],
+                "original": flashcards[i]["original_word"],
+                "translated": flashcards[i]["translated_word"],
                 "effectiveness": round(correct / (correct + incorrect) * 100, 2),
             }
         )
