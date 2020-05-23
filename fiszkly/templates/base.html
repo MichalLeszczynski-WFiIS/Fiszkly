@@ -1,28 +1,45 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <title>Fiszkly</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" href="/static/frontend/favicon.ico" type="image/x-icon">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/static/frontend/style.css">
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+        <script src="/static/frontend/script.js"></script>
+    </head>
+    <body>
+        {% if user.is_authenticated %}
+            {% block nav %}
+                <header>
+                    <span class="toggle-button">
+                        <div class="menu-bar menu-bar-top"></div>
+                        <div class="menu-bar menu-bar-middle"></div>
+                        <div class="menu-bar menu-bar-bottom"></div>
+                    </span>
+                    <div class="menu-wrap">
+                        <div class="menu-sidebar">
+                            <ul class="menu">
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="/static/frontend/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="/static/frontend/style.css">
-</head>
+                                <li class="text-center"><a href="{% url 'index' %}">Learning</a></li>
+                                <li class="text-center"><a href="{% url 'index' %}">Your statistics</a></li>
+                                <li class="text-center"><a href="{% url 'logout' %}">Logout</a></li>
 
-
-<body>
-
-    {% block content %}{% endblock %}
-
-    
-
-
-    <footer>
-        <a href="https://github.com/MichalLeszczynski-WFiIS/Fiszkly" target="_blank">
-            <img alt="Git" src="/static/frontend/github.png"
-                 width="35" height="35" id="git">
-            <i class="fa fa-github-square" aria-hidden="true"></i>
-        </a>
-    </footer>
-</body>
-
+                            </ul>
+                        </div>
+                        <div id="links">
+                            <a href="https://github.com/MichalLeszczynski-WFiIS/Fiszkly" target="_blank" id="git">
+                                <i class="fa fa-github-square" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </div>
+                </header>
+            {% endblock %}
+            {% block content %}{% endblock %}
+        {% else %}
+            {% block auth %}{% endblock %}
+        {% endif %}
+    </body>
 </html>

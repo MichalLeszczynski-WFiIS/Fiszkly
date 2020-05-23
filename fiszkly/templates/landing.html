@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block auth %}
+    <div class="box">
+        <div id="site-title" class="animate-reveal animate-first">Fiszkly</div>
+        <div id="site-desc" class="animate-reveal animate-second">Let's learn something from your flashcards</div>
+
+        <div class="animate-reveal animate-third">
+            <div class="buttons-panel"> <a class="btn" href="{% url 'login'%}">Log in</a></div>
+            <div class="buttons-panel"><div id="site-desc">or</div></div>
+                <div class="buttons-panel"><a class="btn" href="{% url 'register'%}">Register</a></div>
+        </div>
+
+        <div id="site-desc" class="animate-reveal animate-fourth">to start!</div>
+
+    </div>
+{% endblock %}
+
+{% block content %}
+{% endblock %}

@@ -1,14 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
 
-        <div id="menu"></div>
-        <script src="/static/frontend/nav.js"></script>
-
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src ="../../static/learning/learning.js"></script>
     <link rel="stylesheet" href="/static/learning/style.css">
-<div class="content">
+    <div class="content">
     {% if info %}      
           
         Correct: {{info.correct_answers}} <br> <br>
