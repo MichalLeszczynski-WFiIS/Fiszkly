@@ -135,10 +135,6 @@ db/
 
 # Production settings and files
 docker-compose.production.yml
-frontend/static/
-
-#React
-/frontend/node_modules/
 
 # vs code
 .vscode/

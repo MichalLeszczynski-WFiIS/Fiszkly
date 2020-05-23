@@ -1,6 +1,4 @@
-
 $(document).ready(function() {
-
     const $toggleButton = $('.toggle-button'),
         $menuWrap = $('.menu-wrap'),
         $sidebarArrow = $('.sidebar-menu-arrow');
