@@ -12,6 +12,7 @@ from accounts.forms import CreateUserForm
 from learning.models import Answer, Flashcard
 from django.db.models import Sum, Q
 from django.forms.models import model_to_dict
+import json
 
 # Create your views here.
 
@@ -39,7 +40,7 @@ def loginPage(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect("/")
+            return redirect("/learning")
         else:
             messages.info(request, "Username or password is incorect.")
 
@@ -49,7 +50,7 @@ def loginPage(request):
 
 def logoutUser(request):
     logout(request)
-    return redirect("/")
+    return redirect("/login")
 
 @login_required(login_url="/login")
 def profilePage(request):
@@ -64,18 +65,23 @@ def profilePage(request):
         .aggregate(Sum("incorrect_count"))["incorrect_count__sum"]
     )
 
+
+    result = Answer.objects.values('date').filter(user=request.user).order_by('date').annotate(correct=Sum('correct_count')).annotate(incorrect=Sum('incorrect_count'))
+    result = list(result)
+    data = {'dates': [], 'correct': [], 'incorrect': [], 'all': [], 'percentage': []}
+    correct_sum, incorrect_sum = 0, 0
+    for el in result:
+        correct_sum += el['correct']
+        incorrect_sum += el['incorrect']
+        data['dates'].append(str(el['date']))
+        data['correct'].append(correct_sum)        
+        data['incorrect'].append(incorrect_sum)
+        data['all'].append(correct_sum + incorrect_sum)
+        data['percentage'].append(correct_sum / (correct_sum+incorrect_sum) * 100)        
+
+
     answers = Answer.objects.filter(Q(user=request.user.id) & (~Q(correct_count = 0) | ~Q(incorrect_count = 0)))
     
-    # for p in Answer.objects.raw('SELECT * FROM learning_answer l WHERE user=%s AND (correct_count != 0 OR incorrect_count != 0)', [request.user]):
-    #     print(p)
-    # for p in Answer.objects.raw(''' SELECT * FROM learning_answer 
-    #                                 JOIN learning_flashcard using (flashcard_id, id)
-    #                                 WHERE user_id = %s AND (correct_count != 0 OR incorrect_count != 0)''', [request.user.id]):
-    #     print(model_to_dict(p))
-    # a = Answer.objects.raw('SELECT * FROM learning_answer l WHERE user=%s AND (correct_count != 0 OR incorrect_count != 0)', [request.user])
-    # a = Answer.objects.raw('SELECT * FROM learning_answer')
-    # print(a)
-
     answers = list(answers)
     answers.sort(key=lambda answer: answer.correct_count / (answer.correct_count + answer.incorrect_count))
     if len(answers) > 3:
@@ -110,6 +116,7 @@ def profilePage(request):
             'incorrect_answers': incorrect_answers
         },
         'flashcards': flashcards_info,
+        'statistics': json.dumps(data)
     }
 
 

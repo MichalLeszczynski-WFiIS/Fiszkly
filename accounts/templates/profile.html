@@ -1,75 +1,106 @@
 {% extends "base.html" %}
 {% block content %}
-
-        <div id="menu"></div>
-        <script src="/static/frontend/nav.js"></script>
+        <link rel="stylesheet" href="../static/css/accounts.css">
         <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
         <script>
+                    var chart_to_show = 1;
+                    const charts_number = 2;
                     window.onload = function() {
-                         new Chart(document.getElementById("line-chart"), {
+                         var data = {{ statistics|safe }}
+                         new Chart(document.getElementById("chart-1"), {
                             type: 'line',
                             data: {
-                                labels: [1500,1600,1700,1750,1800,1850,1900,1950,1999,2050],
+                                labels: data.dates,
                                 datasets: [{ 
-                                    data: [86,114,106,106,107,111,133,221,783,2478],
-                                    label: "Africa",
-                                    borderColor: "#3e95cd",
+                                    data: data.correct,
+                                    label: "Correct answers",
+                                    borderColor: "#66ff66",
                                     fill: false
                                 }, { 
-                                    data: [282,350,411,502,635,809,947,1402,3700,5267],
-                                    label: "Asia",
-                                    borderColor: "#8e5ea2",
+                                    data: data.incorrect,
+                                    label: "Incorrect answers",
+                                    borderColor: "#ff1a1a",
                                     fill: false
-                                }, { 
-                                    data: [168,170,178,190,203,276,408,547,675,734],
-                                    label: "Europe",
-                                    borderColor: "#3cba9f",
+                                }, {
+                                    data: data.all,
+                                    label: "All answers",
+                                    borderColor: "#000000",
                                     fill: false
-                                }, { 
-                                    data: [40,20,10,16,24,38,74,167,508,784],
-                                    label: "Latin America",
-                                    borderColor: "#e8c3b9",
-                                    fill: false
-                                }, { 
-                                    data: [6,3,2,2,7,26,82,172,312,433],
-                                    label: "North America",
-                                    borderColor: "#c45850",
-                                    fill: false
-                                }
-                                ]
+                                }]
                             },
                             options: {
                                 title: {
-                                display: true,
-                                text: 'World population per region (in millions)'
+                                    display: true,
+                                    text: 'Your answers'
                                 }
                             }
                             });
+                         new Chart(document.getElementById("chart-2"), {
+                            type: 'line',
+                            data: {
+                                labels: data.dates,
+                                datasets: [{ 
+                                    data: data.percentage,
+                                    label: "Your effectiveness",
+                                    borderColor: "#3366ff",
+                                    fill: false
+                                }]
+                            }
+                        });
+                        $('#chart-1').css("display", "block"); 
+                        $('#chart-2').css("display", "none"); 
+                    }
+
+                    function changeChart(direction) {
+                        if (direction === 'left' && chart_to_show > 1) {
+                            $('#chart-' + chart_to_show).css("display", "none"); 
+                            chart_to_show--;
+                            $('#chart-' + chart_to_show).css("display", "block"); 
+                        }
+                        else if (direction === 'right' && chart_to_show < charts_number) {
+                            $('#chart-' + chart_to_show).css("display", "none"); 
+                            chart_to_show++;
+                            $('#chart-' + chart_to_show).css("display", "block"); 
+                        }
                     }
 
         </script>
-    
-    <link rel="stylesheet" href="/static/learning/style.css">
+
+    <div class="content">
+        email: {{user.email}} <br>
+        Your username: {{user.username}} <br>
+        Correct answers: {{answers.correct_answers}} <br>
+        Incorrect answers: {{answers.incorrect_answers}} <br>
+        
+
+        <br><br> Your worse flashcards: <br>
+        {% for flashcard in flashcards %}
+        Original: {{flashcard.original}}, translated: {{flashcard.translated}}, effectiveness: {{flashcard.effectiveness}}% <br>
+        {% endfor %}
+        
+        <div class="d-flex flex-row justify-content-around align-items-center">
+            <i onClick="changeChart('left')" class="fa fa-chevron-left side-icon" aria-hidden="true"></i>
+            <div class="card col-md-8">
+                <div class="card-body">
+                    <div>Original: <b>{{flashcards.0.original}}</b></div>
+                    <div>Translated: {% for i in flashcards.0.translated %} <b>{{i}}</b> {% endfor %} </div>
+                    <div>Percentage: <b>{{flashcards.0.effectiveness}}%</b> </div>
+                </div>
+            </div>
+            <i onClick="changeChart('right')" class="fa fa-chevron-right side-icon" aria-hidden="true"></i>
+        </div>
 
 
-aaaaaaaaaaaaaaa
-<div class="content">
-    Your email: {{user.email}} <br>
-    Your username: {{user.username}} <br>
-    Correct answers: {{answers.correct_answers}} <br>
-    Incorrect answers: {{answers.incorrect_answers}} <br>
-    
-    <br><br> Your worse flashcards: <br>
-    
-    {% for flashcard in flashcards %}
-     Original: {{flashcard.original}}, translated: {{flashcard.translated}}, effectiveness: {{flashcard.effectiveness}}% <br>
-    {% endfor %}
 
-    <canvas id="line-chart" width="800" height="450"></canvas>
-
-</div>
-
-    <div id="homepage"></div>
+        <div class="d-flex flex-row justify-content-around align-items-center">
+            <i onClick="changeChart('left')" class="fa fa-chevron-left side-icon" aria-hidden="true"></i>
+            <div class="col-md-8">
+                <canvas id="chart-1" width="300" height="200"></canvas>
+                <canvas id="chart-2" width="300" height="200"></canvas>
+            </div>
+            <i onClick="changeChart('right')" class="fa fa-chevron-right side-icon" aria-hidden="true"></i>
+        </div>
+    </div>
 
 
 {% endblock %}
