@@ -28,7 +28,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "learning.apps.LearningConfig",
     "accounts.apps.AccountsConfig",
-    "frontend",
+    "words.apps.WordsConfig",
 ]
 
 MIDDLEWARE = [
