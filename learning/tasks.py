@@ -12,13 +12,14 @@ from django.contrib.sites.models import Site
 def send_email_notifications():
     email_subject = "Notification"
     site_domain = Site.objects.get_current().domain
-    for user in  User.objects.all():
+    for user in User.objects.all():
         message = render_to_string(
-            "notifications_mail_template.html",
-            {'user':user, 'domain':site_domain},
+            "notifications_mail_template.html", {"user": user, "domain": site_domain}
         )
-        if (timezone.now() - user.last_login).days > 0 :
-            if os.environ.get('SENDGRID_API_KEY'):
-                send_mail(email_subject, message, 'fiszkly@gmail.com', [user.email], fail_silently=False)
+        if (timezone.now() - user.last_login).days > 0:
+            if os.environ.get("SENDGRID_API_KEY"):
+                send_mail(
+                    email_subject, message, "fiszkly@gmail.com", [user.email], fail_silently=False
+                )
             else:
                 print(message)

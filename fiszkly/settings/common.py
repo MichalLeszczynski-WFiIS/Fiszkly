@@ -84,10 +84,10 @@ CELERY_BEAT_SCHEDULE = {}
 CELERY_IMPORTS = ("learning.tasks",)
 
 CELERY_BEAT_SCHEDULE = {
-    'task-number-one': {
-        'task': 'learning.tasks.send_email_notifications',
-        'schedule': crontab(minute=59, hour=23),
-    },
+    "task-number-one": {
+        "task": "learning.tasks.send_email_notifications",
+        "schedule": crontab(minute=59, hour=23),
+    }
 }
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
