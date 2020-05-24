@@ -16,10 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.shortcuts import redirect
 from django.urls import path, include
+from django.views.generic import TemplateView
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path("learning/", include("learning.urls")),
     path("", include("accounts.urls")),
-    path("", lambda request: redirect("learning/", permanent=True)),
+    path("", TemplateView.as_view(template_name="landing.html")),
+    path("admin/", admin.site.urls),
+    path("learning/", include("learning.urls", namespace="learning")),
+    path("words/", include("words.urls", namespace="words")),
 ]

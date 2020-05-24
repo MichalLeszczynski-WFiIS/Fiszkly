@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block content %}
+{% block auth %}
     <head>
         <link rel="stylesheet" href="{% static 'css/accounts.css' %}">
     </head>
@@ -34,8 +34,8 @@
 
                                 <div><input class="btn" type="submit" value="Register" name="Create user"> </div>
 
-                                <p>
-                                    <a class="message" href="{% url 'login' %}">Already have an account? Log in here!<a/>
+                                <p class = message>
+                                Already have an account? <a href="{% url 'login' %}">Log in here!</a>
                                 </p>
 
                             </form>

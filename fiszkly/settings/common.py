@@ -30,7 +30,7 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "learning.apps.LearningConfig",
     "accounts.apps.AccountsConfig",
-    "frontend",
+    "words.apps.WordsConfig",
 ]
 
 SITE_ID = 1
