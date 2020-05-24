@@ -22,7 +22,7 @@ def upload(request):
             if form.is_valid():
                 words = form.cleaned_data["field"].split()
                 translated_words = translator.translate(words)
-        return render(request, "upload.html", {"form": form, "translated_words": translated_words,})
+        return render(request, "upload.html", {"form": form, "translated_words": translated_words})
     else:
         form = WordsForm()
         return render(request, "upload.html", {"form": form})
