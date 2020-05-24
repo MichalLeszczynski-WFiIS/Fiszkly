@@ -27,10 +27,13 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.sites",
     "learning.apps.LearningConfig",
     "accounts.apps.AccountsConfig",
     "frontend",
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -83,7 +86,6 @@ CELERY_BEAT_SCHEDULE = {
     'task-number-one': {
         'task': 'learning.tasks.send_email_notifications',
         'schedule': crontab(minute=59, hour=23),
-        'schedule': timedelta(seconds=10),
     },
 }
 # Database
