@@ -26,3 +26,9 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: postgres
       POSTGRES_HOST: db
+
+  redis:
+    restart: always
+    image: redis:latest
+    ports:
+      - "6379:6379"

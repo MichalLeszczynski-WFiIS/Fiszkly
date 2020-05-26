@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+from celery.schedules import crontab
+from datetime import timedelta
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -26,10 +28,13 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.sites",
     "learning.apps.LearningConfig",
     "accounts.apps.AccountsConfig",
     "words.apps.WordsConfig",
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -61,7 +66,29 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "fiszkly.wsgi.application"
 
+SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
 
+EMAIL_HOST = "smtp.sendgrid.net"
+EMAIL_HOST_USER = "apikey"  # this is exactly the value 'apikey'
+EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+CELERY_BROKER_URL = "redis://redis:6379/0"
+CELERY_RESULT_BACKEND = "redis://redis:6379/0"
+CELERY_ACCEPT_CONTENT = ["application/json"]
+CELERY_RESULT_SERIALIZER = "json"
+CELERY_TASK_SERIALIZER = "json"
+CELERY_TIMEZONE = "Europe/Warsaw"
+CELERY_BEAT_SCHEDULE = {}
+CELERY_IMPORTS = ("accounts.tasks",)
+
+CELERY_BEAT_SCHEDULE = {
+    "task-number-one": {
+        "task": "accounts.tasks.send_email_notifications",
+        "schedule": crontab(minute=0, hour=9),
+    }
+}
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
