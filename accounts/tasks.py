@@ -14,7 +14,7 @@ def send_email_notifications():
     site_domain = Site.objects.get_current().domain
     for user in User.objects.all():
         message = render_to_string(
-            "notifications_mail_template.html", {"user": user, "domain": "fiszkly.pl"}
+            "notifications_mail_template.html", {"user": user, "domain": site_domain}
         )
         if (timezone.now() - user.last_login).days > 0:
             if os.environ.get("SENDGRID_API_KEY"):

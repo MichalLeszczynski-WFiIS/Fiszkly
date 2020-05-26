@@ -81,12 +81,12 @@ CELERY_RESULT_SERIALIZER = "json"
 CELERY_TASK_SERIALIZER = "json"
 CELERY_TIMEZONE = "Europe/Warsaw"
 CELERY_BEAT_SCHEDULE = {}
-CELERY_IMPORTS = ("learning.tasks",)
+CELERY_IMPORTS = ("accounts.tasks",)
 
 CELERY_BEAT_SCHEDULE = {
     "task-number-one": {
-        "task": "learning.tasks.send_email_notifications",
-        "schedule": crontab(minute=59, hour=23),
+        "task": "accounts.tasks.send_email_notifications",
+        "schedule": crontab(minute=0, hour=9),
     }
 }
 # Database
