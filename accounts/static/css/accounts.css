@@ -106,3 +106,8 @@ label{
 .margin-top-20 {
     margin-top: 20px;
 }
+
+.big-bold-text {
+    font-size: 18px;
+    font-weight: bold;
+}

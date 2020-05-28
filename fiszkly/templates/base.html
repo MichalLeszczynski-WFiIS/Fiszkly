@@ -12,7 +12,7 @@
         <script src="/static/fiszkly/script.js"></script>
     </head>
     <body>
-        {% if user.username %}
+        {% if user.is_authenticated %}
             {% block nav %}
                 <header>
                     <span class="toggle-button button-open">

@@ -85,7 +85,7 @@ def profilePage(request):
     print(answers)
     answers.sort(key=lambda answer: answer['correct'] / (answer['correct'] + answer['incorrect']))
     if len(answers) > 3:
-        answers = answers[:3]
+        answers = answers[:len(answers)]
     
     flashcards, flashcards_answers = [], []
 
@@ -103,13 +103,14 @@ def profilePage(request):
         flashcards_info.append({
             'original': flashcards[i]['original'],
             'translated': flashcards[i]['translated'],
-            'effectiveness': correct / (correct + incorrect) * 100
+            'effectiveness': round(correct / (correct + incorrect) * 100, 2)
 
         })
         
     context = {
         'user': {
             'username': request.user.username,
+            'is_authenticated': request.user.is_authenticated,
             'email': request.user.email, 
         },
         'answers': {

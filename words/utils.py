@@ -1,4 +1,4 @@
-# import requests
+import requests
 import abc
 from typing import List
 from collections import namedtuple
@@ -38,13 +38,13 @@ class Translator(ITranslator):
         data = {"q": words, "target": target_language}
         params = {"key": self.API_KEY}
 
-        # response = requests.post(self.url, params=params, data=data)
-        # translated = response.json()["data"]["translations"]
+        response = requests.post(self.url, params=params, data=data)
+        translated = response.json()["data"]["translations"]
 
-        # return [
-        #     WordSet(word, translation["translatedText"], "pl" if target_language == "en" else "en")
-        #     for word, translation in zip(words, translated)
-        # ]
+        return [
+            WordSet(word, translation["translatedText"], "pl" if target_language == "en" else "en")
+            for word, translation in zip(words, translated)
+        ]
 
     def detect(self, words: List[str]) -> List[WordSet]:
         if not words:
@@ -52,13 +52,13 @@ class Translator(ITranslator):
         data = {"q": words}
         params = {"key": self.API_KEY}
 
-        # response = requests.post(f"{self.url}/detect", params=params, data=data)
-        # detected = response.json()["data"]["detections"]
+        response = requests.post(f"{self.url}/detect", params=params, data=data)
+        detected = response.json()["data"]["detections"]
 
-        # return [
-        #     WordSet(word, "", "en" if detection[0]["language"] == "en" else "pl")
-        #     for word, detection in zip(words, detected)
-        # ]
+        return [
+            WordSet(word, "", "en" if detection[0]["language"] == "en" else "pl")
+            for word, detection in zip(words, detected)
+        ]
 
 
 class MockTranslator(ITranslator):

@@ -14,6 +14,7 @@
                             $('#flashcard-original').html("<div>Original: <b>" + flashcards[0].original + "</b></div>");
                             $('#flashcard-translated').html("<div>Translated: <b>" + flashcards[0].translated.join(', ') + "</b></div>");
                             $('#flashcard-effectiveness').html("<div>Effectiveness: <b>" + flashcards[0].effectiveness + "%</b></div>");
+                            $('#flashcard-nr').html(`&nbsp;1 / ${flashcards.length}`)
                         }
                         else {
                             $('.flashcards').css("display", "none");
@@ -61,6 +62,7 @@
                         });
                         $('#chart-1').css("display", "block"); 
                         $('#chart-2').css("display", "none"); 
+                        $('#chart-nr').html(`&nbsp;1 / 2`)
                     }
                     function changeFlashcard(direction) {
                         if (direction === 'left' && flashcards && flashcard_to_show > 0) {
@@ -73,6 +75,7 @@
                         $('#flashcard-original').html("<div>Original: <b>" + flashcards[f].original + "</b></div>");
                         $('#flashcard-translated').html("<div>Translated: <b>" + flashcards[f].translated.join(', ') + "</b></div>");
                         $('#flashcard-effectiveness').html("<div>Effectiveness: <b>" + flashcards[f].effectiveness + "%</b></div>");
+                        $('#flashcard-nr').html(`&nbsp;${flashcard_to_show + 1} / ${flashcards.length}`)
                     }
                     function changeChart(direction) {
                         $('#chart-' + chart_to_show).css("display", "none"); 
@@ -83,6 +86,7 @@
                             chart_to_show++;
                         }
                         $('#chart-' + chart_to_show).css("display", "block"); 
+                        $('#chart-nr').html(`&nbsp;${chart_to_show} / ${charts_number}`)
                     }
 
         </script>
@@ -96,6 +100,9 @@
         <div class="d-flex flex-row justify-content-around align-items-center flashcards margin-top-20">
             <i onClick="changeFlashcard('left')" class="fa fa-chevron-left side-icon" aria-hidden="true"></i>
             <div class="card col-md-8">
+                <div class="card-title d-flex flex-row justify-content-center big-bold-text">
+                    Your worse flashcards <div id="flashcard-nr"></div>
+                </div>
                 <div class="card-body">
                     <div id="flashcard-original"></div>
                     <div id="flashcard-translated"></div>
@@ -105,7 +112,9 @@
             <i onClick="changeFlashcard('right')" class="fa fa-chevron-right side-icon" aria-hidden="true"></i>
         </div> 
 
-
+        <div class="margin-top-20 big-bold-text d-flex flex-row justify-content-center">
+            Charts of your progress <div id="chart-nr"></div>
+        </div>
         <div class="d-flex flex-row justify-content-around align-items-center margin-top-20">
             <i onClick="changeChart('left')" class="fa fa-chevron-left side-icon" aria-hidden="true"></i>
             <div class="col-md-8">
