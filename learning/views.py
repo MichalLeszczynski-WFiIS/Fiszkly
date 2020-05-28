@@ -9,6 +9,7 @@ from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 
 from learning.models import Flashcard, Answer
 
+
 def index(request):
     user = None
     if request.user.is_authenticated:
@@ -55,7 +56,13 @@ def save_answer(request):
     current_date = datetime.date(datetime.now())
     answer = Answer.objects.filter(user_id=request.user.id, flashcard=flashcard, date=current_date)
     if len(answer) == 0:
-        a = Answer(user=request.user, flashcard=flashcard, correct_count=0, incorrect_count=0, date=current_date)
+        a = Answer(
+            user=request.user,
+            flashcard=flashcard,
+            correct_count=0,
+            incorrect_count=0,
+            date=current_date,
+        )
         a.save()
     answer = Answer.objects.get(user=request.user, flashcard=flashcard, date=current_date)
 
