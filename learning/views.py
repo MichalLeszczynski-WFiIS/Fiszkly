@@ -52,8 +52,7 @@ def get_answer(request):
 def save_answer(request):
     is_correct = request.POST["is_correct"]
     flashcard = Flashcard.objects.get(id=request.POST["flashcard_id"])
-    answer = Answer.objects.filter(user_id=request.user.id, flashcard=flashcard)
-    if len(answer) == 0:
+    if not Answer.objects.filter(user_id=request.user.id, flashcard=flashcard).exists():
         a = Answer(user=request.user, flashcard=flashcard, correct_count=0, incorrect_count=0)
         a.save()
     answer = Answer.objects.get(user=request.user, flashcard=flashcard)
