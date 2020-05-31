@@ -12,7 +12,7 @@ class Flashcard(models.Model):
 class Answer(models.Model):
     correct_count = models.IntegerField()
     incorrect_count = models.IntegerField()
-
+    date = models.DateField(blank=True, null=True)
     flashcard = models.ForeignKey(
         "learning.Flashcard", on_delete=models.CASCADE, related_name="answers"
     )

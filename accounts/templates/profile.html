@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% block content %}
+        <link rel="stylesheet" href="../static/css/accounts.css">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+        <script>
+                    var chart_to_show = 1;
+                    const charts_number = 2;
+                    var flashcard_to_show = 0;
+                    const flashcards = {{ flashcards | safe }};
+
+                    window.onload = function() {
+                        var data = {{ statistics|safe }}
+                        if (flashcards[0] && flashcards[0].translated && flashcards[0].translated.join) {
+                            $('#flashcard-original').html("<div>Original: <b>" + flashcards[0].original + "</b></div>");
+                            $('#flashcard-translated').html("<div>Translated: <b>" + flashcards[0].translated.join(', ') + "</b></div>");
+                            $('#flashcard-effectiveness').html("<div>Effectiveness: <b>" + flashcards[0].effectiveness + "%</b></div>");
+                            $('#flashcard-nr').html(`&nbsp;1 / ${flashcards.length}`)
+                        }
+                        else {
+                            $('.flashcards').css("display", "none");
+                        }
+                        
+                        new Chart(document.getElementById("chart-1"), {
+                            type: 'line',
+                            data: {
+                                labels: data.dates,
+                                datasets: [{ 
+                                    data: data.correct,
+                                    label: "Correct answers",
+                                    borderColor: "#66ff66",
+                                    fill: false
+                                }, { 
+                                    data: data.incorrect,
+                                    label: "Incorrect answers",
+                                    borderColor: "#ff1a1a",
+                                    fill: false
+                                }, {
+                                    data: data.all,
+                                    label: "All answers",
+                                    borderColor: "#000000",
+                                    fill: false
+                                }]
+                            },
+                            options: {
+                                title: {
+                                    display: true,
+                                    text: 'Your answers'
+                                }
+                            }
+                            });
+                         new Chart(document.getElementById("chart-2"), {
+                            type: 'line',
+                            data: {
+                                labels: data.dates,
+                                datasets: [{ 
+                                    data: data.percentage,
+                                    label: "Your effectiveness",
+                                    borderColor: "#3366ff",
+                                    fill: false
+                                }]
+                            }
+                        });
+                        $('#chart-1').css("display", "block"); 
+                        $('#chart-2').css("display", "none"); 
+                        $('#chart-nr').html(`&nbsp;1 / 2`)
+                    }
+                    function changeFlashcard(direction) {
+                        if (direction === 'left' && flashcards && flashcard_to_show > 0) {
+                            flashcard_to_show--;
+                        }
+                        else if (direction === 'right' && flashcards && flashcard_to_show < flashcards.length - 1) {
+                            flashcard_to_show++;
+                        }
+                        const f = flashcard_to_show;
+                        $('#flashcard-original').html("<div>Original: <b>" + flashcards[f].original + "</b></div>");
+                        $('#flashcard-translated').html("<div>Translated: <b>" + flashcards[f].translated.join(', ') + "</b></div>");
+                        $('#flashcard-effectiveness').html("<div>Effectiveness: <b>" + flashcards[f].effectiveness + "%</b></div>");
+                        $('#flashcard-nr').html(`&nbsp;${flashcard_to_show + 1} / ${flashcards.length}`)
+                    }
+                    function changeChart(direction) {
+                        $('#chart-' + chart_to_show).css("display", "none"); 
+                        if (direction === 'left' && chart_to_show > 1) {
+                            chart_to_show--;
+                        }
+                        else if (direction === 'right' && chart_to_show < charts_number) {
+                            chart_to_show++;
+                        }
+                        $('#chart-' + chart_to_show).css("display", "block"); 
+                        $('#chart-nr').html(`&nbsp;${chart_to_show} / ${charts_number}`)
+                    }
+
+        </script>
+
+    <div class="content">
+        email: <b>{{user.email}}</b> <br>
+        Your username: <b>{{user.username}}</b> <br>
+        Correct answers: <b>{{answers.correct_answers}}</b> <br>
+        Incorrect answers: <b>{{answers.incorrect_answers}}</b> <br>
+                
+        <div class="d-flex flex-row justify-content-around align-items-center flashcards margin-top-20">
+            <i onClick="changeFlashcard('left')" class="fa fa-chevron-left side-icon" aria-hidden="true"></i>
+            <div class="card col-md-8">
+                <div class="card-title d-flex flex-row justify-content-center big-bold-text">
+                    Your worse flashcards <div id="flashcard-nr"></div>
+                </div>
+                <div class="card-body">
+                    <div id="flashcard-original"></div>
+                    <div id="flashcard-translated"></div>
+                    <div id="flashcard-effectiveness"></div>
+                </div>
+            </div>
+            <i onClick="changeFlashcard('right')" class="fa fa-chevron-right side-icon" aria-hidden="true"></i>
+        </div> 
+
+        <div class="margin-top-20 big-bold-text d-flex flex-row justify-content-center">
+            Charts of your progress <div id="chart-nr"></div>
+        </div>
+        <div class="d-flex flex-row justify-content-around align-items-center margin-top-20">
+            <i onClick="changeChart('left')" class="fa fa-chevron-left side-icon" aria-hidden="true"></i>
+            <div class="col-md-8">
+                <canvas id="chart-1" width="300" height="200"></canvas>
+                <canvas id="chart-2" width="300" height="200"></canvas>
+            </div>
+            <i onClick="changeChart('right')" class="fa fa-chevron-right side-icon" aria-hidden="true"></i>
+        </div>
+    </div>
+
+
+{% endblock %}
