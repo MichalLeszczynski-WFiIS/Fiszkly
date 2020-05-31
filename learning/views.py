@@ -1,5 +1,6 @@
 import json
 import random
+from datetime import datetime
 
 from django.db.models import Sum
 from django.contrib.auth.decorators import login_required
@@ -52,11 +53,18 @@ def get_answer(request):
 def save_answer(request):
     is_correct = request.POST["is_correct"]
     flashcard = Flashcard.objects.get(id=request.POST["flashcard_id"])
-    answer = Answer.objects.filter(user_id=request.user.id, flashcard=flashcard)
+    current_date = datetime.date(datetime.now())
+    answer = Answer.objects.filter(user_id=request.user.id, flashcard=flashcard, date=current_date)
     if len(answer) == 0:
-        a = Answer(user=request.user, flashcard=flashcard, correct_count=0, incorrect_count=0)
+        a = Answer(
+            user=request.user,
+            flashcard=flashcard,
+            correct_count=0,
+            incorrect_count=0,
+            date=current_date,
+        )
         a.save()
-    answer = Answer.objects.get(user=request.user, flashcard=flashcard)
+    answer = Answer.objects.get(user=request.user, flashcard=flashcard, date=current_date)
 
     if is_correct == "true":
         answer.correct_count += 1
