@@ -1,12 +1,85 @@
 body {
     font-family: 'sans-serif';
 }
+
+#learn-panel{
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.btn-check{
+    position:relative;
+    border:0.1em solid #fefefe;
+    padding:20px 30px;
+    border-radius:0.4em;
+    cursor:pointer;
+    background-color: #359c25;
+    outline: none;
+    text-align:center;
+    text-transform:uppercase;
+}
+
+.btn-check a {
+    text-decoration: none;
+    color: #fefefe;
+    font-size: 1.1em;
+    text-shadow: 4px 2px 15px 1px #a7f09c;
+}
+
+.btn-check:hover {
+    background-color: #44b735;
+}
+
 .is_correct_answer{
     display:none;
+    font-family: 'Lato', 'Lucida Grande', 'Lucida Sans Unicode', Tahoma, Sans-Serif, serif;
+    font-size: 0.9em;
+    color: #000000;
+    height: 70px;
 }
+
 .flashcard{
     padding:50px;
-    width:100px;
-    background-color:yellow;
-    display: inline-block
+    width:300px;
+    display: inline-block;
+    font-family: 'Lato', 'Lucida Grande', 'Lucida Sans Unicode', Tahoma, Sans-Serif, serif;
+    color: #359c25;
+    text-align: center;
+    font-size: 1.6em;
+}
+
+.flash-desc{
+    font-size: 0.8em;
+    color: #000000;
+}
+
+.stats{
+    font-family: 'Lato', 'Lucida Grande', 'Lucida Sans Unicode', Tahoma, Sans-Serif, serif;
+    color: #000000;
+    text-align: left;
+    padding-top: 50px;
+    padding-left: 25px;
+    border-left: 2px solid #c8c8c8;;
+    height: 250px;
+}
+
+.grid-container{
+    display: grid;
+    grid-template-columns: auto auto;
+    height: 300px;
+}
+
+.btn{
+    position:relative;
+    border:0.1em solid #359c25;
+    padding:10px 20px;
+    border-radius:0.4em;
+    cursor:pointer;
+    background-color: #fefefe;
+    outline: none;
+    color: #359c25;
+    font-size: 0.8em;
+    text-align:center;
+    text-transform:uppercase;
+    text-decoration: none;
 }

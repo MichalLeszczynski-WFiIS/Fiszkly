@@ -4,8 +4,6 @@ services:
   db:
     image: postgres
     container_name: fiszkly_db
-    volumes:
-      - ./db:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres

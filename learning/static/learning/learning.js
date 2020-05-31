@@ -8,7 +8,7 @@ function get_answer(flashcard_id){
             headers: { "X-CSRFToken": getCookie("csrftoken") },
             success: function(data){
                 var parse_data = JSON.parse(data)
-                $(".check_button").css("display", "none");
+                $(".checker").css("display", "none");
                 $(".is_correct_answer").css("display", "block");
                 text = "";
                 for (var key in parse_data.answer)
