@@ -1,23 +1,19 @@
+import json
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
-
-from django.shortcuts import redirect
-
-from django.contrib.auth.decorators import login_required
-from django.contrib import messages
-from accounts.forms import CreateUserForm
-
-from learning.models import Answer, Flashcard
 from django.db.models import Sum, Q
 from django.forms.models import model_to_dict
-import json
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
+from accounts.forms import CreateUserForm
+from learning.models import Answer, Flashcard
+
 
 # Create your views here.
 
 
-def registerPage(request):
+def register_page(request):
     form = CreateUserForm()
 
     if request.method == "POST":
@@ -32,7 +28,7 @@ def registerPage(request):
     return render(request, "register.html", context)
 
 
-def loginPage(request):
+def login_page(request):
     if request.method == "POST":
         username = request.POST.get("username")
         password = request.POST.get("password")
@@ -48,13 +44,13 @@ def loginPage(request):
     return render(request, "login.html", context)
 
 
-def logoutUser(request):
+def logout_user(request):
     logout(request)
     return redirect("/login")
 
 
 @login_required(login_url="/login")
-def profilePage(request):
+def profile_page(request):
     correct_answers = (
         Answer.objects.all()
         .filter(user=request.user)
@@ -92,10 +88,8 @@ def profilePage(request):
         .annotate(incorrect=Sum("incorrect_count"))
     )
     answers = list(answers)
-    print(answers)
     answers.sort(key=lambda answer: answer["correct"] / (answer["correct"] + answer["incorrect"]))
-    if len(answers) > 3:
-        answers = answers[: len(answers)]
+    answers = answers[: len(answers)]
 
     flashcards, flashcards_answers = [], []
 
@@ -106,7 +100,6 @@ def profilePage(request):
 
     flashcards_info = []
     for i in range(len(flashcards)):
-        print(flashcards_answers[i])
         correct = flashcards_answers[i]["correct"]
         incorrect = flashcards_answers[i]["incorrect"]
 
