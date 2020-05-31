@@ -258,6 +258,21 @@ label {
     font-family: 'Lato', 'Lucida Grande', 'Lucida Sans Unicode', Tahoma, Sans-Serif, serif;
 }
 
+.subnav:hover .subnav-content {
+    display: inline-block;
+    position: relative;
+    background-color: #359c25;
+    padding-left: 30px;
+}
+
+.subnav-content {
+    display: none;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    z-index: 1;
+}
+
 /*--------Hamburger button--------*/
 
 .toggle-button {
