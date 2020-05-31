@@ -27,15 +27,9 @@ class Translator(ITranslator):
 
     def translate(self, words: List[str]) -> List[WordSet]:
         detections = self.detect(words)
-        en_words = [
-            word.original for word in detections if word.original_language == "en"
-        ]
-        pl_words = [
-            word.original for word in detections if word.original_language == "pl"
-        ]
-        return self.get_translations(en_words, "pl") + self.get_translations(
-            pl_words, "en"
-        )
+        en_words = [word.original for word in detections if word.original_language == "en"]
+        pl_words = [word.original for word in detections if word.original_language == "pl"]
+        return self.get_translations(en_words, "pl") + self.get_translations(pl_words, "en")
 
     def get_translations(self, words: List[str], target_language: str) -> List[WordSet]:
         if not words:
@@ -48,11 +42,7 @@ class Translator(ITranslator):
         translated = response.json()["data"]["translations"]
 
         return [
-            WordSet(
-                word,
-                translation["translatedText"],
-                "pl" if target_language == "en" else "en",
-            )
+            WordSet(word, translation["translatedText"], "pl" if target_language == "en" else "en")
             for word, translation in zip(words, translated)
         ]
 
