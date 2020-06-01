@@ -53,3 +53,27 @@ class MockTranslator(ITranslator):
         return [
             {"original": word, "translation": f"t_{word}", "sl": "en", "tl": "pl"} for word in words
         ]
+
+
+def get_dictionary_entry(word):
+    language_code = "en"
+    url = f"https://api.dictionaryapi.dev/api/v1/entries/{language_code}/{word}"
+
+    response = requests.get(url, timeout=31)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        return []
+
+
+def save_flashcard(word):
+    flashcard = Flashcard()
+
+    flashcard.original_word = word["original"]
+    flashcard.translated_word = word["translation"]
+    flashcard.original_language = word["sl"]
+    flashcard.translated_language = word["tl"]
+    flashcard.dictionary_entry = word["dictionary_entry"]
+    flashcard.author = word["author"]
+
+    flashcard.save()
