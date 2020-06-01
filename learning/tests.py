@@ -1,10 +1,10 @@
+import json
+from datetime import datetime
+
 from django.test import TestCase
 from django.contrib.auth.models import User
-from .models import Flashcard, Answer
-from datetime import datetime
-import json
-
-# Create your tests here.
+from words.models import Flashcard
+from learning.models import Answer
 
 
 class LoginSecurityTest(TestCase):
