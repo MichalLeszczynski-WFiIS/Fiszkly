@@ -2,6 +2,7 @@ import requests
 import abc
 from typing import List
 from collections import namedtuple
+from words.models import Flashcard
 
 WordSet = namedtuple("word_set", "original translated original_language")
 
