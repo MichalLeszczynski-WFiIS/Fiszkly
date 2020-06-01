@@ -71,5 +71,3 @@ def verify_words(request):
         # display translated words
         translated_words = request.session["translated_words"]
         return render(request, "verify_words.html", {"translated_words": translated_words})
-
-
