@@ -6,3 +6,12 @@
 	position: absolute;
 	z-index: -1;
 }
+
+input, button {
+	font-size: inherit;
+	padding: inherit;
+	margin: inherit;
+	-moz-box-sizing: content-box;
+	-webkit-box-sizing: content-box;
+	box-sizing: content-box;
+}
