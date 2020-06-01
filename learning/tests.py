@@ -72,7 +72,7 @@ class LearningTest(TestCase):
         response = self.client.post("/learning/get_answer/", data=data, follow=True)
         self.assertEquals(response.status_code, 200)
         responseData = json.loads(response.content)
-        self.assertEquals(responseData["answer"], flashcard.translated)
+        self.assertEquals(responseData["answer"], flashcard.translated_word)
 
     def test_save_correct_answer(self):
         Answer.objects.create(
