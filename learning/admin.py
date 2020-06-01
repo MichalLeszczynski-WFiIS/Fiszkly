@@ -1,6 +1,4 @@
 from django.contrib import admin
-from learning.models import Flashcard, Answer
+from learning.models import Answer
 
-
-admin.site.register(Flashcard)
 admin.site.register(Answer)

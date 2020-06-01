@@ -11,53 +11,33 @@ class ITranslator(abc.ABC):
         self.API_KEY = api_key
         self.url = "https://translation.googleapis.com/language/translate/v2"
 
-    def translate(self, words: List[str]) -> List[WordSet]:
-        """Returns words with their translations and original languages detected as WordSet."""
-
-    def get_translations(self, words: List[str], target_language: str) -> List[WordSet]:
-        """Returns words translated to specified language (pl or eng) as WordSet."""
-
-    def detect(self, words: List[str]) -> List[WordSet]:
-        """Returns languages detected for given word list."""
+    def translate(self, words, source_language, target_language):
+        """Returns a dictionary with translated words."""
 
 
 class Translator(ITranslator):
     def __init__(self, api_key: str):
         super().__init__(api_key)
 
-    def translate(self, words: List[str]) -> List[WordSet]:
-        detections = self.detect(words)
-        en_words = [word.original for word in detections if word.original_language == "en"]
-        pl_words = [word.original for word in detections if word.original_language == "pl"]
-        return self.get_translations(en_words, "pl") + self.get_translations(pl_words, "en")
-
-    def get_translations(self, words: List[str], target_language: str) -> List[WordSet]:
+    def translate(self, words, source_language, target_language):
         if not words:
             return []
+        words = list(set(words))
 
-        data = {"q": words, "target": target_language}
+        data = {"q": words, "source": source_language, "target": target_language}
         params = {"key": self.API_KEY}
 
         response = requests.post(self.url, params=params, data=data)
         translated = response.json()["data"]["translations"]
 
         return [
-            WordSet(word, translation["translatedText"], "pl" if target_language == "en" else "en")
+            {
+                "original": word,
+                "translation": translation["translatedText"],
+                "sl": source_language,
+                "tl": target_language,
+            }
             for word, translation in zip(words, translated)
-        ]
-
-    def detect(self, words: List[str]) -> List[WordSet]:
-        if not words:
-            return []
-        data = {"q": words}
-        params = {"key": self.API_KEY}
-
-        response = requests.post(f"{self.url}/detect", params=params, data=data)
-        detected = response.json()["data"]["detections"]
-
-        return [
-            WordSet(word, "", "en" if detection[0]["language"] == "en" else "pl")
-            for word, detection in zip(words, detected)
         ]
 
 
@@ -65,11 +45,35 @@ class MockTranslator(ITranslator):
     def __init__(self, api_key):
         super().__init__(api_key)
 
-    def translate(self, words: List[str]) -> List[WordSet]:
-        return [WordSet(word, f"<mock> {word}", "<mock>") for word in words]
+    def translate(self, words, source_language, target_language):
+        if not words:
+            return []
+        words = list(set(words))
 
-    def get_translations(self, words: List[str], target_language: str) -> List[WordSet]:
-        pass
+        return [
+            {"original": word, "translation": f"t_{word}", "sl": "en", "tl": "pl"} for word in words
+        ]
 
-    def detect(self, words: List[str]) -> List[WordSet]:
-        pass
+
+def get_dictionary_entry(word):
+    language_code = "en"
+    url = f"https://api.dictionaryapi.dev/api/v1/entries/{language_code}/{word}"
+
+    response = requests.get(url, timeout=31)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        return []
+
+
+def save_flashcard(word):
+    flashcard = Flashcard()
+
+    flashcard.original_word = word["original"]
+    flashcard.translated_word = word["translation"]
+    flashcard.original_language = word["sl"]
+    flashcard.translated_language = word["tl"]
+    flashcard.dictionary_entry = word["dictionary_entry"]
+    flashcard.author = word["author"]
+
+    flashcard.save()

@@ -7,7 +7,8 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
 from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 
-from learning.models import Flashcard, Answer
+from words.models import Flashcard
+from learning.models import Answer
 
 
 def index(request):
@@ -44,7 +45,7 @@ def check_user_skills(request, id):
 def get_answer(request):
     flashcard_id = request.POST["flashcard_id"]
     flashcard = Flashcard.objects.get(id=flashcard_id)
-    data = json.dumps({"answer": flashcard.translated})
+    data = json.dumps({"answer": flashcard.translated_word})
     return HttpResponse(data)
 
 
@@ -75,5 +76,5 @@ def save_answer(request):
     answer.save()
 
     next_flashcard = random.choice(Flashcard.objects.all())
-    data = json.dumps({"next_url": "/learning/check_user_skills/{}".format(next_flashcard.id)})
+    data = json.dumps({"next_url": f"/learning/check_user_skills/{next_flashcard.id}"})
     return HttpResponse(data)

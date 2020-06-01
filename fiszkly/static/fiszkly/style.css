@@ -54,7 +54,7 @@ footer {
     padding:10px 20px;
     border-radius:0.4em;
     cursor:pointer;
-    background-color: #fefefe;
+    background-color: #fcfcfc;
     outline: none;
     color: #359c25;
     font-size: 0.8em;
@@ -68,7 +68,9 @@ label {
 }
 
 .btn:hover {
-    background-color: #f5f5f5;
+    background-color: #ffffff;
+    color: #359c25;
+    text-shadow:0px 0px 1px #359c25;
 }
 
 #site-title {
@@ -258,20 +260,6 @@ label {
     font-family: 'Lato', 'Lucida Grande', 'Lucida Sans Unicode', Tahoma, Sans-Serif, serif;
 }
 
-.subnav:hover .subnav-content {
-    display: inline-block;
-    position: relative;
-    background-color: #359c25;
-    padding-left: 30px;
-}
-
-.subnav-content {
-    display: none;
-    position: absolute;
-    left: 0;
-    width: 100%;
-    z-index: 1;
-}
 
 /*--------Hamburger button--------*/
 
@@ -338,7 +326,13 @@ label {
     margin-top: 1em;
     border-radius: 3px;
     width: 800px;
-    background-color: #fefefe;
+    background-color: #fcfcfc;
     text-align:center;
     color: #333;
+}
+
+.grid-container{
+    display: grid;
+    grid-template-columns: auto auto;
+    height: 300px;
 }

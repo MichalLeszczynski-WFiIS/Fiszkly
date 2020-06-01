@@ -10,19 +10,15 @@ function get_answer(flashcard_id){
                 var parse_data = JSON.parse(data)
                 $(".checker").css("display", "none");
                 $(".is_correct_answer").css("display", "block");
-                text = "";
-                for (var key in parse_data.answer)
-                {
-                    text += parse_data.answer[key] + '<br>';
-                }
+                text = parse_data.answer;
                 $(".flashcard").html(text);
             },
             statusCode:{
                 401: function(responseObject, textStatus, jqXHR) {
-                    $(".flashcard").html("Have to log in ")
+                    $(".flashcard").html("401 You have to be logged in.")
                 },
                 500:function(responseObject, textStatus, jqXHR){
-                    $(".flashcard").html("Server error")
+                    $(".flashcard").html("500 Server error")
                 }
             },
         });
@@ -42,10 +38,10 @@ function save_answer(is_correct, flashcard_id){
             },
             statusCode:{
                 401: function(responseObject, textStatus, jqXHR) {
-                    $(".flashcard").html("Have to log in ")
+                    $(".flashcard").html("401 You have to be logged in.")
                 },
                 500:function(responseObject, textStatus, jqXHR){
-                    $(".flashcard").html("Server error")
+                    $(".flashcard").html("500 Server error")
                 }
             },
         });

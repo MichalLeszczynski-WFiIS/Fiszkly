@@ -8,3 +8,5 @@ requests==2.22.0
 # development & testing tools
 black==19.10b0
 coverage==5.1
+django-extensions==2.2.9
+pydotplus==2.0.2

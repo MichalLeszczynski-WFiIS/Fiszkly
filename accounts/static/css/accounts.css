@@ -50,24 +50,8 @@ body{
     border-bottom:1px solid #b7bfc9;
 }
 
-.btn{
-    position:relative;
-    margin: 50px -35% 30px 30%;
-    border:0.1em solid #359c25;
-    padding:10px 20px;
-    border-radius:0.4em;
-    cursor:pointer;
-    background-color: #fefefe;
-    outline: none;
-    color: #359c25;
-    font-size: 0.8em;
-    text-align:center;
-    text-transform:uppercase;
-    text-decoration: none;
-}
-
-.btn:hover {
-    background-color: #f5f5f5;
+.btn-wrapper {
+    text-align: center;
 }
 
 .input-container input:focus ~ label, #email
@@ -108,5 +92,14 @@ label{
 
 .big-bold-text {
     font-size: 18px;
+    font-weight: bold;
+}
+
+.profile-data p {
+    margin:0;
+    padding: 0;
+}
+
+.profile-data span {
     font-weight: bold;
 }

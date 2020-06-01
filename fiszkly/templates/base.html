@@ -24,18 +24,9 @@
                         <div class="menu-sidebar">
                             <ul class="menu">
                                 <li class="text-center"><a href="{% url 'learning:index' %}">Learning</a></li>
-                                <div class="subnav">
-                                    <li class="text-center">
-                                      <a href="{% url 'words:upload' %}">Words <i class="fa fa-caret-down"></i></a>
-                                    </li>
-                                    <div class="subnav-content">
-                                        <li class="text-center">
-                                          <a href="{% url 'words:upload' %}">Upload</a>
-                                        </li>
-                                    </div>
-                                </div>
-                                <li class="text-center"><a href="{% url 'learning:index' %}">Your statistics</a></li>
-                                <li class="text-center"><a href="{% url 'profile' %}">Your profile</a></li>
+                                <li class="text-center"><a href="{% url 'words:browse_words' %}">Words</a></li>
+                                <li class="text-center"><a href="#">statistics</a></li>
+                                <li class="text-center"><a href="{% url 'profile' %}">profile</a></li>
                                 <li class="text-center"><a href="{% url 'logout' %}">Logout</a></li>
                             </ul>
                         </div>

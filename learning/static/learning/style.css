@@ -63,12 +63,6 @@ body {
     height: 250px;
 }
 
-.grid-container{
-    display: grid;
-    grid-template-columns: auto auto;
-    height: 300px;
-}
-
 .btn{
     position:relative;
     border:0.1em solid #359c25;
