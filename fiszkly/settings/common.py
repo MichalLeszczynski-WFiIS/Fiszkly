@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import os
 from celery.schedules import crontab
 from datetime import timedelta
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -30,10 +29,25 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.sites",
     "django_extensions",
+    'social_django',
+    'django.core',
     "learning.apps.LearningConfig",
     "accounts.apps.AccountsConfig",
     "words.apps.WordsConfig",
 ]
+
+SOCIAL_AUTH_FACEBOOK_KEY = os.getenv("FACEBOOK_KEY")        # App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = os.getenv("FACEBOOK_SECRET")  # App Secret
+
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
+    'fields': 'id,name,email', 
+}
+
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'learning:index'
+LOGOUT_URL = 'logout'
+LOGOUT_REDIRECT_URL = 'login'
 
 SITE_ID = 1
 
@@ -46,7 +60,10 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
-
+AUTHENTICATION_BACKENDS = [
+    'social_core.backends.facebook.FacebookOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+]
 ROOT_URLCONF = "fiszkly.urls"
 
 TEMPLATES = [

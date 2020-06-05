@@ -3,6 +3,8 @@
 
 {% block auth %}
 <link rel="stylesheet" href="{% static 'css/accounts.css' %}">
+
+
 <div>
     <form method="POST" action="">
         {% csrf_token %}
@@ -24,6 +26,14 @@
                 Don't have an account? <a href="{% url 'register' %}">Register!</a>
                 </p>
             </form>
+                <p class="message">
+                    OR
+                </p>
+                <div class="fb-wrapper">
+                    <a class="fb-btn" href="{% url 'social:begin' 'facebook' %}"> 
+                            Login with Facebook         
+                    </a>
+                </div>
             {% for message in messages %}
             <p>{{message}}</p>
             {% endfor %}
