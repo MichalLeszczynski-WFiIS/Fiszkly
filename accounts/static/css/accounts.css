@@ -54,6 +54,7 @@ body{
     text-align: center;
 }
 
+
 .input-container input:focus ~ label, #email
 .input-container input:valid ~ label, #email{
     top:-12px;
@@ -65,13 +66,14 @@ body{
     margin-top: 30px;
     display: block;
     color: #359c25;
+    text-align:center;
 }
 
 .message>a{
     text-decoration: underline;
     color: #359c25;
+    
 }
-
 label{
     width: 200px;
 }
@@ -108,4 +110,22 @@ label{
 
 .profile-data span {
     font-weight: bold;
+}
+.fb-wrapper{
+    text-align: center;
+}
+.fb-btn{
+    text-align: center;
+    background-color: #3b5998;
+    color:white;
+    padding:10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 25px;
+    text-decoration: none;
+    display: inline-block;
+}
+.fb-btn:hover{
+    text-decoration: none;
+    color:white;
 }
