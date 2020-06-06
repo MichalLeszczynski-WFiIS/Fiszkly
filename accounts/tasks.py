@@ -16,10 +16,9 @@ def send_email_notifications():
         message = render_to_string(
             "notifications_mail_template.html", {"user": user, "domain": "fiszkly.pl"}
         )
-        if (timezone.now() - user.last_login).days > 0:
-            if os.environ.get("SENDGRID_API_KEY"):
-                send_mail(
-                    email_subject, message, "fiszkly@gmail.com", [user.email], fail_silently=False
-                )
-            else:
-                print(message)
+        if (timezone.now() - user.last_login).days > 0 and os.environ.get("SENDGRID_API_KEY"):
+            send_mail(
+                email_subject, message, "fiszkly@gmail.com", [user.email], fail_silently=False
+            )
+        else:
+            return message
