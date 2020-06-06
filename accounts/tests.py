@@ -30,6 +30,21 @@ class LogInTest(TestCase):
         self.assertFalse(response.context["user"].is_authenticated)
 
 
+class LogOutTest(TestCase):
+    def setUp(self):
+        self.credentials = {"username": "testuser", "password": "secret"}
+        User.objects.create_user(
+            username=self.credentials.get("username"), password=self.credentials.get("password")
+        )
+        response = self.client.post("/login/", self.credentials, follow=True)
+        self.assertEquals(response.status_code, 200)
+
+    def test_logout(self):
+        response = self.client.post("/logout/", self.credentials, follow=True)
+        self.assertEquals(response.status_code, 200)
+        self.assertTrue(not response.context["user"].is_authenticated)
+
+
 class CeleryTest(TestCase):
     def setUp(self):
         self.credentials = {"username": "testuser", "password": "secret"}
@@ -43,5 +58,3 @@ class CeleryTest(TestCase):
         message = send_email_notifications()
         self.assertIn("testuser", message)
         self.assertIn("fiszkly.pl", message)
-
- 
