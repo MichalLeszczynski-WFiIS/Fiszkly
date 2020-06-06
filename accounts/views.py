@@ -13,7 +13,6 @@ from words.models import Flashcard
 
 def register_page(request):
     form = CreateUserForm()
-
     if request.method == "POST":
         form = CreateUserForm(request.POST)
         if form.is_valid():
