@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from accounts.tasks import send_email_notifications
 from django.contrib.auth.forms import UserCreationForm
 
+
 class LogInTest(TestCase):
     def setUp(self):
         self.credentials = {"username": "testuser", "password": "secret"}
@@ -47,9 +48,15 @@ class LogOutTest(TestCase):
 
 class RegisterTest(TestCase):
     def setUp(self):
-        self.register_data = {"username": "testuser", "password1": "Siema_123", "password2": "Siema_123", "email": "test@gmail.com", "Create_user": ['Register']}
+        self.register_data = {
+            "username": "testuser",
+            "password1": "Siema_123",
+            "password2": "Siema_123",
+            "email": "test@gmail.com",
+            "Create_user": ["Register"],
+        }
         self.credentials = {"username": "testuser", "password": "Siema_123"}
-        
+
     def test_register(self):
         response = self.client.post("/register/", self.register_data, follow=True)
         self.assertEquals(response.status_code, 200)
