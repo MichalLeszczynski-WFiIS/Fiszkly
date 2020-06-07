@@ -59,7 +59,6 @@ def get_answer(request):
 @login_required(login_url="/login")
 @require_http_methods(["POST"])
 def save_answer(request):
-    print(request.POST)
     is_correct = request.POST["is_correct"]
     flashcard = Flashcard.objects.get(id=request.POST["flashcard_id"])
     current_date = datetime.date(datetime.now())
