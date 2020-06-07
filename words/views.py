@@ -21,19 +21,24 @@ def browse_groups(request):
 
     user_count = Flashcard.objects.filter(author=request.user).count()
     all_count = Flashcard.objects.all().count()
-    
-    return render(request, "browse_groups.html", {"flashcard_groups": flashcard_groups, "user_count": user_count, "all_count": all_count})
+
+    return render(
+        request,
+        "browse_groups.html",
+        {"flashcard_groups": flashcard_groups, "user_count": user_count, "all_count": all_count},
+    )
+
 
 @login_required(login_url="/login")
-def browse_words(request, filter="all"):
-    if filter == "all":
+def browse_words(request, category="all"):
+    if category == "all":
         words = Flashcard.objects.all()
-    elif filter == "user":
+    elif category == "user":
         words = Flashcard.objects.filter(author=request.user)
     else:
-        words = Flashcard.objects.filter(flashcardgroup__name=filter)
+        words = Flashcard.objects.filter(flashcardgroup__name=category)
 
-    return render(request, "browse_words.html", {"words": words, "filter": filter})
+    return render(request, "browse_words.html", {"words": words, "category": category})
 
 
 @login_required(login_url="/login")

@@ -14,6 +14,7 @@ class Flashcard(models.Model):
     )
     timestamp = models.DateTimeField(auto_now_add=True)
 
+
 class FlashcardGroup(models.Model):
     name = models.CharField(max_length=50)
     flashcards = models.ManyToManyField(Flashcard)

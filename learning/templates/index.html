@@ -5,11 +5,11 @@
     <h3>Choose a category</h3>
 
     <ul class="list">
-        <li><a class="link" href="{% url 'learning:learn' filter='all' %}">All</a></li>
-        <li><a class="link" href="{% url 'learning:learn' filter='user' %}">Added by you</a></li>
+        <li><a class="link" href="{% url 'learning:learn' category='all' %}">All</a></li>
+        <li><a class="link" href="{% url 'learning:learn' category='user' %}">Added by you</a></li>
         <hr>
         {% for group in flashcard_groups %}
-        <li><a class="link" href="{% url 'learning:learn' filter=group.name %}">{{ group.name }}</a></li>
+        <li><a class="link" href="{% url 'learning:learn' category=group.name %}">{{ group.name }}</a></li>
         {% endfor %}
     </ul>
 

@@ -11,16 +11,16 @@
         </thead>
         <tbody>
             <tr>
-                <td><a class="link" href="{% url 'words:browse_words' filter='all' %}">All</a></td>
+                <td><a class="link" href="{% url 'words:browse_words' category='all' %}">All</a></td>
                 <td>{{ all_count }}</td>
             </tr>
             <tr>
-                <td><a class="link" href="{% url 'words:browse_words' filter='user' %}">Added by you</a></td>
+                <td><a class="link" href="{% url 'words:browse_words' category='user' %}">Added by you</a></td>
                 <td>{{ user_count }}</td>
             </tr>
         {% for group in flashcard_groups %}
             <tr>
-                <td><a class="link" href="{% url 'words:browse_words' filter=group.name %}">{{ group.name }}</a></td>
+                <td><a class="link" href="{% url 'words:browse_words' category=group.name %}">{{ group.name }}</a></td>
                 <td>{{ group.count }}</td>
             </tr>
         {% endfor %}

@@ -8,5 +8,5 @@ urlpatterns = [
     path("", views.index, name="index"),
     path("save_answer/", views.save_answer),
     path("get_answer/", views.get_answer),
-    path("learn/<slug:filter>", views.learn, name="learn"),
+    path("learn/<slug:category>", views.learn, name="learn"),
 ]

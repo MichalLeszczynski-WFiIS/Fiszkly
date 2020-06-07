@@ -2,12 +2,12 @@
 {% block content %}
 <link rel="stylesheet" href="/static/words/style.css">
 <div class="content">
-    {% if filter == "user" %}
+    {% if category == "user" %}
     <h3>Flashcards added by you</h3>
-    {% elif filter == "all" %}
+    {% elif category == "all" %}
     <h3>All Flashcards</h3>
     {% else %}
-    <h3>{{ filter }}</h3>
+    <h3>{{ category }}</h3>
     {% endif %}
 
 

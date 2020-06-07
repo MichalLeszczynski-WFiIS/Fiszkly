@@ -10,10 +10,12 @@ from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 from words.models import Flashcard, FlashcardGroup
 from learning.models import Answer
 
+
 @login_required(login_url="/login")
 def index(request):
     flashcard_groups = FlashcardGroup.objects.all()
     return render(request, "index.html", {"flashcard_groups": flashcard_groups})
+
 
 @login_required(login_url="/login")
 def learn(request, category):
@@ -23,9 +25,8 @@ def learn(request, category):
         flashcards = Flashcard.objects.filter(author=request.user)
     else:
         flashcards = Flashcard.objects.filter(flashcardgroup__name=category)
-    
-    flashcard = random.choice(flashcards)
 
+    flashcard = random.choice(flashcards)
 
     # answers
     correct_answers = (
@@ -41,7 +42,6 @@ def learn(request, category):
     correct_answers = 0 if correct_answers == None else correct_answers
     incorrect_answers = 0 if incorrect_answers == None else incorrect_answers
     info = {"correct_answers": correct_answers, "incorrect_answers": incorrect_answers}
-
 
     context = {"flashcard": flashcard, "category": category, "info": info}
     return render(request, "learn.html", context)
@@ -59,6 +59,7 @@ def get_answer(request):
 @login_required(login_url="/login")
 @require_http_methods(["POST"])
 def save_answer(request):
+    print(request.POST)
     is_correct = request.POST["is_correct"]
     flashcard = Flashcard.objects.get(id=request.POST["flashcard_id"])
     current_date = datetime.date(datetime.now())
@@ -72,13 +73,15 @@ def save_answer(request):
             date=current_date,
         )
         a.save()
+
     answer = Answer.objects.get(user=request.user, flashcard=flashcard, date=current_date)
 
     if is_correct == "true":
         answer.correct_count += 1
-
     else:
         answer.incorrect_count += 1
-    
+
     answer.save()
-    return HttpResponse()
+    next_url = f"/learning/learn/{request.POST['category']}"
+    data = json.dumps({"next_url": next_url})
+    return HttpResponse(data)
