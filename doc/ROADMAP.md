@@ -17,4 +17,3 @@
 | 06.17                                                                             |                                                                  |                                                   |
 | Social media integration:                                                         |                                                                  |                                                   |
 | User can publish their results to social media like Facebook, Instagram, Twitter. |                                                                  |                                                   |
-| User sometimes can solve a quiz to get more ranking points (optional).            |                                                                  |                                                   |

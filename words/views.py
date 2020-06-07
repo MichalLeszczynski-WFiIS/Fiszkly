@@ -7,16 +7,33 @@ from django.contrib.auth.decorators import login_required
 
 from words.forms import WordsForm
 from words.utils import Translator, MockTranslator, get_dictionary_entry, save_flashcard
-from words.models import Flashcard
+from words.models import Flashcard, FlashcardGroup
 
 key = os.environ.get("GCP_API_KEY")
 translator = Translator(key) if key else MockTranslator("Mock")
 
 
 @login_required(login_url="/login")
-def browse_words(request):
-    user_words = Flashcard.objects.filter(author=request.user)
-    return render(request, "browse_words.html", {"user_words": user_words})
+def browse_groups(request):
+    flashcard_groups = FlashcardGroup.objects.all()
+    for group in flashcard_groups:
+        group.count = group.flashcards.count()
+
+    user_count = Flashcard.objects.filter(author=request.user).count()
+    all_count = Flashcard.objects.all().count()
+    
+    return render(request, "browse_groups.html", {"flashcard_groups": flashcard_groups, "user_count": user_count, "all_count": all_count})
+
+@login_required(login_url="/login")
+def browse_words(request, filter="all"):
+    if filter == "all":
+        words = Flashcard.objects.all()
+    elif filter == "user":
+        words = Flashcard.objects.filter(author=request.user)
+    else:
+        words = Flashcard.objects.filter(flashcardgroup__name=filter)
+
+    return render(request, "browse_words.html", {"words": words, "filter": filter})
 
 
 @login_required(login_url="/login")

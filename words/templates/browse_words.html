@@ -2,9 +2,16 @@
 {% block content %}
 <link rel="stylesheet" href="/static/words/style.css">
 <div class="content">
+    {% if filter == "user" %}
     <h3>Flashcards added by you</h3>
+    {% elif filter == "all" %}
+    <h3>All Flashcards</h3>
+    {% else %}
+    <h3>{{ filter }}</h3>
+    {% endif %}
 
-    {% if user_words %}
+
+    {% if words %}
     <table class="table-custom">
         <thead>
             <th>Original</th>
@@ -12,7 +19,7 @@
             <th>Language</th>
         </thead>
         <tbody>
-        {% for word in user_words %}
+        {% for word in words %}
             <tr>
                 <td>{{ word.original_word }}</td>
                 <td>{{ word.translated_word }}</td>
@@ -25,11 +32,8 @@
         {% endfor %}
         </tbody>
     </table>
-    {% else %}
-    <p>You haven't added any flashcards yet.</p>
     {% endif %}
-    
-    <a href="{% url 'words:upload_words' %}">Upload Flashcards</a>
+
     {% for message in messages %}
     <p>{{message}}</p>
     {% endfor %}

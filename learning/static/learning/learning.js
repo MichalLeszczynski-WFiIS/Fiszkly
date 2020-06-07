@@ -1,6 +1,5 @@
 function get_answer(flashcard_id){
     var data = {flashcard_id: flashcard_id}
-        console.log(data);
         $.ajax({
             type: 'POST',
             url: "/learning/get_answer/",
@@ -24,17 +23,17 @@ function get_answer(flashcard_id){
         });
 }
 
-function save_answer(is_correct, flashcard_id){
+function save_answer(is_correct, flashcard_id, filter){
     var data = {is_correct: is_correct, flashcard_id: flashcard_id}
-        console.log(data);
+        next_url = "/learning/learn/" + filter
         $.ajax({
             type: 'POST',
             url: "/learning/save_answer/",
             data: data,
             headers: { "X-CSRFToken": getCookie("csrftoken") },
             success: function(data){
-                var parse_data = JSON.parse(data)
-                window.location.href = parse_data.next_url
+                window.location.href = next_url
+                console.log(next_url)
             },
             statusCode:{
                 401: function(responseObject, textStatus, jqXHR) {
