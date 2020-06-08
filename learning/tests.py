@@ -16,6 +16,7 @@ class LoginSecurityTest(TestCase):
         response = self.client.post("/learning/save_answer", follow=True)
         self.assertRedirects(response, "/login/?next=/learning/save_answer/", status_code=301)
 
+
 class LearningTest(TestCase):
     def setUp(self):
         self.credentials = {"username": "testuser", "password": "secret"}
