@@ -4,6 +4,7 @@ from datetime import datetime
 
 from django.db.models import Sum
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.views.decorators.http import require_http_methods
 from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 
@@ -25,6 +26,10 @@ def learn(request, category):
         flashcards = Flashcard.objects.filter(author=request.user)
     else:
         flashcards = Flashcard.objects.filter(flashcardgroup__name=category)
+
+    if not flashcards:
+        messages.info(request, "Firstly, you need to add some flashcards.")
+        return redirect("../")
 
     flashcard = random.choice(flashcards)
 
