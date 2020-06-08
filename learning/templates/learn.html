@@ -8,7 +8,8 @@
 
         <div class="grid">
             <div class="flashcard">
-                <div class="flash-desc">Your word is: </div> {{flashcard.original_word}}
+                <div class="flash-desc">Your word is:</div>
+                {{ flashcard.original_word }}
             </div>
             <br><br>
             <div class="checker">
@@ -18,16 +19,16 @@
                 Is your answer correct?
                 <br>
                 <br>
-                    <button class="btn" id="save_button_true" onclick="save_answer(true, '{{flashcard.id}}')">True</button>
-                    <button class="btn" id="save_button_false" onclick="save_answer(false, '{{flashcard.id}}')">False</button>
+                    <button class="btn" id="save_button_true" onclick="save_answer(true, '{{flashcard.id}}', '{{category}}')">True</button>
+                    <button class="btn" id="save_button_false" onclick="save_answer(false, '{{flashcard.id}}', '{{category}}')">False</button>
             </div>
         </div>
 
         {% if info %}
             <div class="grid">
                 <div class="stats">
-                    Correct: {{info.correct_answers}} <br><br>
-                    Incorrect: {{info.incorrect_answers}} <br><br>
+                    Correct: {{ info.correct_answers }} <br><br>
+                    Incorrect: {{ info.incorrect_answers }} <br><br>
                 </div>
             </div>
         {% endif %}

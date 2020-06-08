@@ -13,3 +13,8 @@ class Flashcard(models.Model):
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True
     )
     timestamp = models.DateTimeField(auto_now_add=True)
+
+
+class FlashcardGroup(models.Model):
+    name = models.CharField(max_length=50)
+    flashcards = models.ManyToManyField(Flashcard)
