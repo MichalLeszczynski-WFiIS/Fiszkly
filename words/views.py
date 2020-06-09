@@ -6,7 +6,13 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
 from words.forms import WordsForm
-from words.utils import Translator, MockTranslator, get_dictionary_entry, save_flashcard
+from words.utils import (
+    Translator,
+    MockTranslator,
+    get_dictionary_entry,
+    save_flashcard,
+    save_categorized_flashcard,
+)
 from words.models import Flashcard, FlashcardGroup
 
 key = os.environ.get("GCP_API_KEY")
@@ -81,9 +87,20 @@ def verify_words(request):
             word["author"] = request.user
             word["dictionary_entry"] = get_dictionary_entry(word["original"])
 
+        # add to categories
+        if request.POST.get("category", 0):
+            category = FlashcardGroup(name=request.POST["category"])
+            category.save()
+            categorized = True
+        else:
+            categorized = False
+
         # submit to database
         for word in confirmed_translated_words:
-            save_flashcard(word)
+            if categorized:
+                save_categorized_flashcard(word, category)
+            else:
+                save_flashcard(word)
 
         # return
         request.session.pop("translated_words", None)

@@ -18,3 +18,6 @@ class Flashcard(models.Model):
 class FlashcardGroup(models.Model):
     name = models.CharField(max_length=50)
     flashcards = models.ManyToManyField(Flashcard)
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True
+    )

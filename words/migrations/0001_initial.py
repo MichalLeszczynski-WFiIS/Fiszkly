@@ -180,6 +180,15 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 ("name", models.CharField(max_length=50)),
+                (
+                    "author",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
                 ("flashcards", models.ManyToManyField(to="words.Flashcard")),
             ],
         ),
