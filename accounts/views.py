@@ -120,3 +120,23 @@ def profile_page(request):
     }
 
     return render(request, "profile.html", context)
+
+@login_required(login_url="/login")
+def statistics_page(request):
+    ranking =   Answer.objects.values('user__username', 'user_id') \
+                .annotate(correct=Sum('correct_count')) \
+                .annotate(incorrect=Sum('incorrect_count')) \
+                .order_by('-correct')
+    ranking = list(ranking)
+    
+    position = None
+    for i, el in enumerate(ranking):
+        if el['user_id'] == request.user.id:
+            position = i + 1
+            break
+    
+    context = {
+        "ranking": ranking,
+        "position": position
+    }
+    return render(request, "statistics.html", context)

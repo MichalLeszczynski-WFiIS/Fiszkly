@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+       
+    <div class="content">
+        <table>
+            <tr>
+                <th>#</th>
+                <th>username</th>
+                <th>Correct answers</th>
+                <th>Incorrect answers</th>
+            </tr>
+        
+        {% for user in ranking %}
+            <tr>
+                <td> {{ forloop.counter }} </td>
+                <td> {{ user.user__username }} </td>
+                <td>{{ user.correct }} </td>
+                <td>{{ user.incorrect }} </td>
+            </tr>
+        {% endfor %} 
+        
+        </table>
+    
+        <div>
+            Your ranking is {{ position }} / {{ ranking|length }}
+        </div>
+    
+    </div>
+
+
+{% endblock %}
