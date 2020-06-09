@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <link rel="stylesheet" href="/static/words/style.css">
+<script src ="../../static/words/words.js"></script>
 <div class="content">
     <h3 class="heading">Verify that the translations are correct</h3>
     {% if translated_words %}
@@ -28,6 +29,13 @@
             {% endfor %}
             </tbody>
         </table>
+
+        <div id="category-field">
+            <input type="checkbox" name="toggle-category" id="toggle-category">
+            <label for="category">Category</label>
+            <input type="text" name="category" id="category" disabled="true">
+        </div>
+
         <input class="btn" type="submit" value="submit"/>
     </form>
     {% endif %}

@@ -34,3 +34,11 @@
   }
 
 .table-custom tr:nth-child(even){background-color: #f2f2f2;}
+
+#category-field {
+	margin:1em;
+}
+
+#category-field label {
+	margin-right: 0.5em;
+}
