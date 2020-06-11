@@ -52,7 +52,7 @@ class MockTranslator(ITranslator):
         words = list(set(words))
 
         return [
-            {"original": word, "translation": f"t_{word}", "sl": "en", "tl": "pl"} for word in words
+            {"original": word, "translation": f"t_{word}", "sl": source_language, "tl": target_language} for word in words
         ]
 
 

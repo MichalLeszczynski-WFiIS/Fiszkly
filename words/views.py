@@ -54,16 +54,18 @@ def upload_words(request):
             words = [
                 word.decode("ascii") for word in request.FILES["words_file"].read().splitlines()
             ]
-            translated_words = translator.translate(
-                words, source_language="en", target_language="pl"
-            )
+            source_language = request.POST.get("language")
         else:
             form = WordsForm(request.POST)
             if form.is_valid():
                 words = form.cleaned_data["field"].split()
-                translated_words = translator.translate(
-                    words, source_language="en", target_language="pl"
-                )
+                source_language = form.cleaned_data["language"]
+                print(f"\n\n{source_language}\n\n")
+
+        target_language = "en" if source_language=="pl" else "pl"
+        translated_words = translator.translate(
+                words, source_language=source_language, target_language=target_language
+        )
 
         request.session["translated_words"] = translated_words
         return redirect("/words/verify-words/")
