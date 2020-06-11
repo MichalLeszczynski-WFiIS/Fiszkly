@@ -1,29 +1,143 @@
 {% extends "base.html" %}
 {% block content %}
-       
+    <link rel="stylesheet" href="../static/css/accounts.css">
+    <script>
+        const ANSWERS_RANKING = 0;
+        const WORDS_RANKING = 1;
+        let selectedRanking = ANSWERS_RANKING;
+        const position = {{ position }}
+        const wordsPosition = {{ words_position }}
+        const wholeRanking = {{ ranking|safe }};
+        const wholeWordsRanking = {{ words_ranking|safe }};
+        const pageSize = 10;
+        const pagesNumber = Math.ceil(wholeRanking.length / pageSize);
+        const pagesWordsRanking = Math.ceil(wholeWordsRanking.length / pageSize);
+        let currentPage = 1;
+
+        window.onload = () => {
+            loadUserPosition();
+            updateCurrentPageInformation();
+            loadTableHeader();
+            loadPage(1);
+        }
+
+        function updateCurrentPageInformation() {
+            if (selectedRanking === ANSWERS_RANKING) {
+                $('#current-page-information').html(`Page ${currentPage} / ${pagesNumber}`)
+            }
+            else if (selectedRanking === WORDS_RANKING) {
+                $('#current-page-information').html(`Page ${currentPage} / ${pagesWordsRanking}`)
+            }
+        }
+
+        function loadUserPosition() {
+            if (selectedRanking === ANSWERS_RANKING && position !== 0) {
+                $('#logged-user-position-area').html(`Your ranking is ` + position + ` / ${wholeRanking.length}`)
+            }
+            else if (selectedRanking === WORDS_RANKING && wordsPosition !== 0) {
+                $('#logged-user-position-area').html(`Your ranking is ` + wordsPosition + ` / ${wholeWordsRanking.length}`)
+            }
+            else {
+                $('#logged-user-position-area').html(``)
+            }
+        }
+
+        function changeRankingType(type) {
+            selectedRanking = type;
+            currentPage = 1;
+            loadUserPosition();
+            updateCurrentPageInformation();
+            loadTableHeader();
+            loadPage(1);
+
+        }
+
+        function loadTableHeader() {
+            if (selectedRanking === ANSWERS_RANKING) {
+                let tableHeader = '';
+                tableHeader += '<tr>';
+                tableHeader += '<td></td>';
+                tableHeader += '<td>username</td>';
+                tableHeader += '<td>Correct answers</td>';
+                tableHeader += '<td>Incorrect answers</td>';
+                tableHeader += '<td>Effectiveness</td>';
+                tableHeader += '</tr>';
+                $('#table-header').html(tableHeader)
+            }
+            else if (selectedRanking === WORDS_RANKING) {
+                let tableHeader = '';
+                tableHeader += '<tr>';
+                tableHeader += '<td></td>';
+                tableHeader += '<td>username</td>';
+                tableHeader += '<td>Flashcards added</td>';
+                tableHeader += '</tr>';
+                $('#table-header').html(tableHeader)
+            }
+            
+        }
+
+        function loadPage(pageNumber) {
+            if (selectedRanking === ANSWERS_RANKING) {
+                const selectedPageRanking = wholeRanking.slice((pageNumber-1) * pageSize, pageNumber * pageSize);
+                let tableBody = '';
+                selectedPageRanking.forEach(user => {
+                    const effectiveness = 100 * user.correct / (user.correct + user.incorrect);
+                    
+                    tableBody += '<tr>';
+                    tableBody += `<td> ${user.position} </td>`;
+                    tableBody += `<td> ${user.user__username} </td>`;
+                    tableBody += `<td> ${user.correct} </td>`;
+                    tableBody += `<td> ${user.incorrect} </td>`;
+                    tableBody += `<td> ${effectiveness.toFixed(2)} % </td>`;
+                    tableBody += '</tr>';
+                })
+                $('#table-content').html(tableBody)
+            }
+            else if (selectedRanking === WORDS_RANKING) {
+                const selectedPageRanking = wholeWordsRanking.slice((pageNumber-1) * pageSize, pageNumber * pageSize);
+                let tableBody = '';
+                selectedPageRanking.forEach(user => {                    
+                    tableBody += '<tr>';
+                    tableBody += `<td> ${user.position} </td>`;
+                    tableBody += `<td> ${user.author__username} </td>`;
+                    tableBody += `<td> ${user.flashcards_added} </td>`;
+                    tableBody += '</tr>';
+                })
+                $('#table-content').html(tableBody)
+            }
+        } 
+
+        function changePage(direction) {
+            if (direction === 'left' && currentPage - 1 > 0) {
+                currentPage -= 1;
+            }
+            if (direction === 'right' && currentPage + 1 <= pagesNumber) {
+                currentPage += 1;
+            }
+            loadPage(currentPage);
+            updateCurrentPageInformation();
+        }
+
+    </script>
+
     <div class="content">
-        <table>
-            <tr>
-                <th>#</th>
-                <th>username</th>
-                <th>Correct answers</th>
-                <th>Incorrect answers</th>
-            </tr>
+        <a class="btn" onclick="changeRankingType(ANSWERS_RANKING)"> Answers ranking </a>
+        <a class="btn" onclick="changeRankingType(WORDS_RANKING)"> Words added ranking </a>
         
-        {% for user in ranking %}
-            <tr>
-                <td> {{ forloop.counter }} </td>
-                <td> {{ user.user__username }} </td>
-                <td>{{ user.correct }} </td>
-                <td>{{ user.incorrect }} </td>
-            </tr>
-        {% endfor %} 
-        
+        <table class="table margin-top-20">
+            <thead id="table-header"></thead>
+            <tbody id="table-content"></tbody>
         </table>
-    
-        <div>
-            Your ranking is {{ position }} / {{ ranking|length }}
+
+        <div class="d-flex justify-content-center">
+            <div class="d-flex flex-row col-md-4 justify-content-between align-items-center">
+                <i onClick="changePage('left')" class="fa fa-chevron-left pagination-icon" aria-hidden="true"></i>
+                <div id="current-page-information"></div>
+                <i onClick="changePage('right')" class="fa fa-chevron-right pagination-icon" aria-hidden="true"></i>
+            </div>
         </div>
+
+        <div id="logged-user-position-area"></div>
     
     </div>
 

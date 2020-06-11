@@ -86,6 +86,12 @@ label{
     font-size: 25px;
 }
 
+.pagination-icon {
+    cursor: pointer;
+    color: grey;
+    font-size: 20px;
+}
+
 .margin-top-20 {
     margin-top: 20px;
 }

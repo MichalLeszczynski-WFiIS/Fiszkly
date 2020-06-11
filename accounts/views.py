@@ -1,7 +1,7 @@
 import json
 from django.contrib import messages
 from django.shortcuts import render, redirect
-from django.db.models import Sum, Q
+from django.db.models import Sum, Count, Q
 from django.forms.models import model_to_dict
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
@@ -129,14 +129,33 @@ def statistics_page(request):
                 .order_by('-correct')
     ranking = list(ranking)
     
-    position = None
-    for i, el in enumerate(ranking):
-        if el['user_id'] == request.user.id:
-            position = i + 1
-            break
+    ranking_words_added =   Flashcard.objects.values('author__username', 'author__id') \
+                            .annotate(flashcards_added=Count('author')) \
+                            .order_by('-flashcards_added')
     
+    ranking_words_added = list(ranking_words_added)
+    
+
+    logged_user_position = None
+    for i, el in enumerate(ranking):
+        el['position'] = i + 1
+        if el['user_id'] == request.user.id:
+            logged_user_position = i + 1
+    
+    ranking_words_added.remove({'author__username': None, 'author__id': None, 'flashcards_added': 0})
+
+    logged_user_position_words = None
+    for i, el in enumerate(ranking_words_added):
+        el['position'] = i + 1
+        if el['author__id'] == request.user.id:
+            logged_user_position_words = i + 1
+
+    print(logged_user_position_words)
+
     context = {
-        "ranking": ranking,
-        "position": position
+        "ranking": json.dumps(ranking),
+        "words_ranking": json.dumps(ranking_words_added),
+        "position": logged_user_position if logged_user_position else 0,
+        "words_position": logged_user_position_words if logged_user_position_words else 0
     }
     return render(request, "statistics.html", context)
