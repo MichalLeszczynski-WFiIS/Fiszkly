@@ -156,8 +156,6 @@ def statistics_page(request):
         if el["author__id"] == request.user.id:
             logged_user_position_words = i + 1
 
-    print(logged_user_position_words)
-
     context = {
         "ranking": json.dumps(ranking),
         "words_ranking": json.dumps(ranking_words_added),
