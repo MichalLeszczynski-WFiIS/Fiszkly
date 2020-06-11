@@ -62,9 +62,9 @@ def upload_words(request):
                 source_language = form.cleaned_data["language"]
                 print(f"\n\n{source_language}\n\n")
 
-        target_language = "en" if source_language=="pl" else "pl"
+        target_language = "en" if source_language == "pl" else "pl"
         translated_words = translator.translate(
-                words, source_language=source_language, target_language=target_language
+            words, source_language=source_language, target_language=target_language
         )
 
         request.session["translated_words"] = translated_words
