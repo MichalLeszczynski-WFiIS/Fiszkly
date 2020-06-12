@@ -9,6 +9,15 @@ from words.utils import (
 from words.models import Flashcard, FlashcardGroup
 from fiszkly.tests_common import HaveFlashcardTestTemplate, LoggedInTestTemplate
 
+WORD = {
+    "original": "test",
+    "translation": "t_test",
+    "sl": "en",
+    "tl": "pl",
+    "dictionary_entry": r"[example_dictionary_entry]",
+    "author": None,
+}
+
 
 class MockTranslatorTest(TestCase):
     def setUp(self):
@@ -36,15 +45,7 @@ class TranslatorTest(TestCase):
 
 class SaveFlashcardTest(TestCase):
     def test_save_flashcard(self):
-        word = {
-            "original": "test",
-            "translation": "t_test",
-            "sl": "en",
-            "tl": "pl",
-            "dictionary_entry": r"[example_dictionary_entry]",
-            "author": None,
-        }
-        save_flashcard(word)
+        save_flashcard(WORD)
         flashcard = Flashcard.objects.get(original_word="test")
         self.assertEqual(flashcard.translated_word, "t_test")
         self.assertEqual(flashcard.original_language, "en")
@@ -52,17 +53,9 @@ class SaveFlashcardTest(TestCase):
         self.assertEqual(flashcard.author, None)
 
     def test_save_categorized_flashcard(self):
-        word = {
-            "original": "test",
-            "translation": "t_test",
-            "sl": "en",
-            "tl": "pl",
-            "dictionary_entry": r"[example_dictionary_entry]",
-            "author": None,
-        }
         category = FlashcardGroup(name="TestCategory")
         category.save()
-        save_categorized_flashcard(word, category)
+        save_categorized_flashcard(WORD, category)
 
         flashcard = Flashcard.objects.filter(flashcardgroup__name="TestCategory")[0]
         self.assertEqual(flashcard.translated_word, "t_test")
@@ -97,17 +90,9 @@ class BrowseWordsViewTest(HaveFlashcardTestTemplate):
         self.assertTrue(len(response.context["words"]) == 0)
 
     def test_browse_words_specific(self):
-        word = {
-            "original": "test",
-            "translation": "t_test",
-            "sl": "en",
-            "tl": "pl",
-            "dictionary_entry": r"[example_dictionary_entry]",
-            "author": None,
-        }
         category = FlashcardGroup(name="TestCategory")
         category.save()
-        save_categorized_flashcard(word, category)
+        save_categorized_flashcard(WORD, category)
         response = self.client.post("/words/browse-words/TestCategory", {}, follow=True)
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed("browse_words.html")
@@ -118,41 +103,42 @@ class BrowseWordsViewTest(HaveFlashcardTestTemplate):
 class VerifyWordsViewTest(LoggedInTestTemplate):
     def test_verify_words(self):
         session = self.client.session
-        word = {
-            "original": "test",
-            "translation": "t_test",
-            "sl": "en",
-            "tl": "pl",
-            "dictionary_entry": r"[example_dictionary_entry]",
-            "author": None,
-        }
         session["translated_words"] = [
-            word,
+            WORD,
         ]
         session.save()
         response = self.client.post(
-            "/words/verify-words/", {"confirmed_words": [word,]}, follow=True
+            "/words/verify-words/", {"confirmed_words": [WORD["original"]]}, follow=True
         )
         print(response.context)
         self.assertEquals(response.status_code, 200)
-        # translated_words = response.context["translated_words"][0]
-        # self.assertEquals(translated_words["original"], "test")
-        # self.assertEquals(translated_words["sl"], "en")
+        self.assertIsNotNone(response.context["flashcard_groups"])
+        self.assertIsNotNone(response.context["messages"])
+        self.assertIsNotNone(response.context["user_count"])
+
+    def test_verify_words_category(self):
+        session = self.client.session
+        session["translated_words"] = [
+            WORD,
+        ]
+        session.save()
+        response = self.client.post(
+            "/words/verify-words/",
+            {"confirmed_words": [WORD["original"]], "category": "test"},
+            follow=True,
+        )
+        print(response.context)
+        self.assertEquals(response.status_code, 200)
+        self.assertIsNotNone(response.context["flashcard_groups"])
+        self.assertIsNotNone(response.context["messages"])
+        self.assertIsNotNone(response.context["user_count"])
 
 
 # class UploadWordsViewTest(LoggedInTestTemplate):
 #     def test_upload_words(self):
 #         session = self.client.session
-#         word = {
-#             "original": "test",
-#             "translation": "t_test",
-#             "sl": "en",
-#             "tl": "pl",
-#             "dictionary_entry": r"[example_dictionary_entry]",
-#             "author": None,
-#         }
 #         session["translated_words"] = [
-#             word,
+#             WORD,
 #         ]
 #         session.save()
 #         response = self.client.post("/words/upload-words", {}, follow=True)
