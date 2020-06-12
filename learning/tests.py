@@ -18,7 +18,30 @@ class LoginSecurityTest(TestCase):
         self.assertRedirects(response, "/login/?next=/learning/save_answer/", status_code=301)
 
 
-class LearningTest(LoggedInTestTemplate):
+class LearningViewTest(LoggedInTestTemplate):
+    def test_learning_all(self):
+        response = self.client.post("/learning/learn/all", follow=True)
+        self.assertEquals(response.status_code, 200)
+        self.assertEqual(response.context["category"], "all")
+        self.assertIsNotNone(response.context["flashcard"])
+
+    def test_learning_user(self):
+        response = self.client.post("/learning/learn/user", follow=True)
+        self.assertEquals(response.status_code, 200)
+        self.assertIsNotNone(response.context["flashcard_groups"])
+
+    def test_learning_group(self):
+        response = self.client.post("/learning/learn/test", follow=True)
+        self.assertEquals(response.status_code, 200)
+        self.assertIsNotNone(response.context["flashcard_groups"])
+
+    def test_learning_not_existing_group(self):
+        response = self.client.post("/learning/learn/test123blabla", follow=True)
+        self.assertEquals(response.status_code, 200)
+        self.assertIsNotNone(response.context["messages"])
+
+
+class GetAnswerViewTest(LoggedInTestTemplate):
     def setUp(self):
         super().setUp()
         self.flashcard_id = 1
@@ -32,9 +55,17 @@ class LearningTest(LoggedInTestTemplate):
         responseData = json.loads(response.content)
         self.assertEquals(responseData["answer"], flashcard.translated_word)
 
-    def test_learning(self):
-        response = self.client.post("/learning/learn/all", follow=True)
-        self.assertEquals(response.status_code, 200)
-        print(response.context)
-        self.assertEqual(response.context["category"], "all")
-        self.assertIsNotNone(response.context["flashcard"])
+
+# class SaveAnswerViewTest(LoggedInTestTemplate):
+#     def setUp(self):
+#         super().setUp()
+#         self.flashcard_id = 1
+#         self.current_date = datetime.date(datetime.now())
+
+#     def test_get_right_answer(self):
+#         data = {"flashcard_id": self.flashcard_id}
+#         flashcard = Flashcard.objects.get(id=self.flashcard_id)
+#         response = self.client.post("/learning/get_answer/", data=data, follow=True)
+#         self.assertEquals(response.status_code, 200)
+#         responseData = json.loads(response.content)
+#         self.assertEquals(responseData["answer"], flashcard.translated_word)
