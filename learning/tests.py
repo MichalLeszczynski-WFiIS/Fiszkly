@@ -62,8 +62,15 @@ class SaveAnswerViewTest(LoggedInTestTemplate):
         self.flashcard_id = 1
         self.current_date = datetime.date(datetime.now())
 
-    def test_save_answer(self):
-        data = {"flashcard_id": self.flashcard_id, "is_correct": True, "category": "all"}
+    def test_save_answer_correct(self):
+        data = {"flashcard_id": self.flashcard_id, "is_correct": "true", "category": "all"}
+        flashcard = Flashcard.objects.get(id=self.flashcard_id)
+        response = self.client.post("/learning/save_answer/", data=data, follow=True)
+        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.content, b'{"next_url": "/learning/learn/all"}')
+
+    def test_save_answer_false(self):
+        data = {"flashcard_id": self.flashcard_id, "is_correct": "false", "category": "all"}
         flashcard = Flashcard.objects.get(id=self.flashcard_id)
         response = self.client.post("/learning/save_answer/", data=data, follow=True)
         self.assertEquals(response.status_code, 200)
