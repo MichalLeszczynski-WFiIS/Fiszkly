@@ -110,8 +110,8 @@ class VerifyWordsViewTest(LoggedInTestTemplate):
         response = self.client.post(
             "/words/verify-words/", {"confirmed_words": [WORD["original"]]}, follow=True
         )
-        print(response.context)
         self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed("verift_words.html")
         self.assertIsNotNone(response.context["flashcard_groups"])
         self.assertIsNotNone(response.context["messages"])
         self.assertIsNotNone(response.context["user_count"])
@@ -127,22 +127,36 @@ class VerifyWordsViewTest(LoggedInTestTemplate):
             {"confirmed_words": [WORD["original"]], "category": "test"},
             follow=True,
         )
-        print(response.context)
         self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed("verift_words.html")
         self.assertIsNotNone(response.context["flashcard_groups"])
         self.assertIsNotNone(response.context["messages"])
         self.assertIsNotNone(response.context["user_count"])
 
+    def test_verify_words_get(self):
+        session = self.client.session
+        session["translated_words"] = [
+            WORD,
+        ]
+        session.save()
+        response = self.client.get("/words/verify-words/", follow=True)
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed("verift_words.html")
+        self.assertIsNotNone(response.context["translated_words"])
+        self.assertIsNotNone(response.context["messages"])
 
-# class UploadWordsViewTest(LoggedInTestTemplate):
-#     def test_upload_words(self):
-#         session = self.client.session
-#         session["translated_words"] = [
-#             WORD,
-#         ]
-#         session.save()
-#         response = self.client.post("/words/upload-words", {}, follow=True)
-#         self.assertEquals(response.status_code, 200)
-#         translated_words = response.context["translated_words"][0]
-#         self.assertEquals(translated_words["original"], "test")
-#         self.assertEquals(translated_words["sl"], "en")
+
+class UploadWordsViewTest(LoggedInTestTemplate):
+    def test_upload_words_form(self):
+        response = self.client.post(
+            "/words/upload-words/", {"language": ["pl"], "field": ["test"]}, follow=True
+        )
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed("upload_words.html")
+        self.assertIsNotNone(response.context["translated_words"])
+
+    def test_upload_words_get(self):
+        response = self.client.get("/words/upload-words", follow=True)
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed("upload_words.html")
+        self.assertIsNotNone(response.context["form"])
