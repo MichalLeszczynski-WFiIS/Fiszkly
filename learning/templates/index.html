@@ -1,9 +1,18 @@
 {% extends "base.html" %}
-
 {% block content %}
 <div id="fb-root"></div>
 <link rel="stylesheet" href="/static/learning/style.css">
 <div class="content">
+    <h3>Choose a category</h3>
+
+    <ul class="list">
+        <li><a class="link" href="{% url 'learning:learn' category='all' %}">All</a></li>
+        <li><a class="link" href="{% url 'learning:learn' category='user' %}">Added by you</a></li>
+        <hr>
+        {% for group in flashcard_groups %}
+        <li><a class="link" href="{% url 'learning:learn' category=group.name %}">{{ group.name }}</a></li>
+        {% endfor %}
+    </ul>
 
     <div id="learn-panel">
         <button class="btn-check" >
@@ -24,5 +33,8 @@
                     data-href="https://fiszkly.pl"
                     data-layout="button" data-size="large">
                 </div>
+    {% for message in messages %}
+    <p>{{message}}</p>
+    {% endfor %}
 </div>
 {% endblock %}

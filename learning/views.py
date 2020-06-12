@@ -4,25 +4,36 @@ from datetime import datetime
 
 from django.db.models import Sum
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.views.decorators.http import require_http_methods
 from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 
-from words.models import Flashcard
+from words.models import Flashcard, FlashcardGroup
 from learning.models import Answer
 
 
+@login_required(login_url="/login")
 def index(request):
-    user = None
-    if request.user.is_authenticated:
-        user = request.user
-    next_flashcard = random.choice(Flashcard.objects.all())
-    context = {"user": user, "flashcard": next_flashcard}
-    return render(request, "index.html", context)
+    flashcard_groups = FlashcardGroup.objects.all()
+    return render(request, "index.html", {"flashcard_groups": flashcard_groups})
 
 
 @login_required(login_url="/login")
-def check_user_skills(request, id):
-    flashcard = get_object_or_404(Flashcard, id=id)
+def learn(request, category):
+    if category == "all":
+        flashcards = Flashcard.objects.all()
+    elif category == "user":
+        flashcards = Flashcard.objects.filter(author=request.user)
+    else:
+        flashcards = Flashcard.objects.filter(flashcardgroup__name=category)
+
+    if not flashcards:
+        messages.info(request, "Firstly, you need to add some flashcards.")
+        return redirect("../")
+
+    flashcard = random.choice(flashcards)
+
+    # answers
     correct_answers = (
         Answer.objects.all()
         .filter(user=request.user)
@@ -36,8 +47,9 @@ def check_user_skills(request, id):
     correct_answers = 0 if correct_answers == None else correct_answers
     incorrect_answers = 0 if incorrect_answers == None else incorrect_answers
     info = {"correct_answers": correct_answers, "incorrect_answers": incorrect_answers}
-    context = {"flashcard": flashcard, "info": info}
-    return render(request, "check_user_skills.html", context)
+
+    context = {"flashcard": flashcard, "category": category, "info": info}
+    return render(request, "learn.html", context)
 
 
 @login_required(login_url="/login")
@@ -65,16 +77,15 @@ def save_answer(request):
             date=current_date,
         )
         a.save()
+
     answer = Answer.objects.get(user=request.user, flashcard=flashcard, date=current_date)
 
     if is_correct == "true":
         answer.correct_count += 1
-
     else:
         answer.incorrect_count += 1
 
     answer.save()
-
-    next_flashcard = random.choice(Flashcard.objects.all())
-    data = json.dumps({"next_url": f"/learning/check_user_skills/{next_flashcard.id}"})
+    next_url = f"/learning/learn/{request.POST['category']}"
+    data = json.dumps({"next_url": next_url})
     return HttpResponse(data)

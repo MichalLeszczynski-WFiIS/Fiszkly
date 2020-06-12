@@ -356,3 +356,16 @@ label {
     color:white;
     cursor: pointer;
 }
+a.link {
+    color: #359c25;
+}
+
+a.link:hover {
+    color: #26721a;
+    text-decoration: underline;
+}
+
+ul.list {
+    list-style-type: none;
+    text-align: left;
+}

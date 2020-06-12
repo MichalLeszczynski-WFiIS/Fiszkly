@@ -52,7 +52,13 @@ class MockTranslator(ITranslator):
         words = list(set(words))
 
         return [
-            {"original": word, "translation": f"t_{word}", "sl": "en", "tl": "pl"} for word in words
+            {
+                "original": word,
+                "translation": f"t_{word}",
+                "sl": source_language,
+                "tl": target_language,
+            }
+            for word in words
         ]
 
 
@@ -78,3 +84,14 @@ def save_flashcard(word):
     flashcard.author = word["author"]
 
     flashcard.save()
+
+
+def save_categorized_flashcard(word, category):
+    category.flashcards.create(
+        original_word=word["original"],
+        translated_word=word["translation"],
+        original_language=word["sl"],
+        translated_language=word["tl"],
+        dictionary_entry=["dictionary_entry"],
+        author=word["author"],
+    )
