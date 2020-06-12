@@ -83,7 +83,6 @@ class ProfileTest(HaveAnswerTestTemplate):
 class StatisticsTest(HaveAnswerTestTemplate):
     def test_statistics_view(self):
         response = self.client.post("/statistics/", {}, follow=True)
-        print(response.context)
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed("statistics.html")
         self.assertIsNotNone(response.context["ranking"])
