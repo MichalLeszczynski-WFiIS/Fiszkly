@@ -20,6 +20,10 @@ class MockTranslatorTest(TestCase):
         for word in words:
             self.assertEqual(word["translation"], f"t_{word['original']}")
 
+    def test_empty_mock_translate(self):
+        words = self.translator.translate([], "en", "pl")
+        self.assertEqual(words, [])
+
 
 class DictionaryEntryTest(TestCase):
     def test_dictionary_entry(self):
@@ -64,13 +68,46 @@ class SaveFlashcardTest(TestCase):
         self.assertEqual(flashcard.translated_language, "pl")
         self.assertEqual(flashcard.author, None)
 
+class BrowseGroupsViewTest(HaveFlashcardTestTemplate):
+    def test_browse_words_specific(self):
+        category = FlashcardGroup(name="TestCategory")
+        category.save()
+        response = self.client.post("/words", {}, follow=True)
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed("browse_groups.html")
+        self.assertTrue(len(response.context["flashcard_groups"]) > 0)
 
 class BrowseWordsViewTest(HaveFlashcardTestTemplate):
-    def test_browse_words(self):
+    def test_browse_words_all(self):
         response = self.client.post("/words/browse-words/all", {}, follow=True)
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed("browse_words.html")
         self.assertEqual(response.context["category"], "all")
+        self.assertTrue(len(response.context["words"]) > 0)
+
+    def test_browse_words_user(self):
+        response = self.client.post("/words/browse-words/user", {}, follow=True)
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed("browse_words.html")
+        self.assertEqual(response.context["category"], "user")
+        self.assertTrue(len(response.context["words"]) == 0)
+    
+    def test_browse_words_specific(self):
+        word = {
+            "original": "test",
+            "translation": "t_test",
+            "sl": "en",
+            "tl": "pl",
+            "dictionary_entry": r"[example_dictionary_entry]",
+            "author": None,
+        }
+        category = FlashcardGroup(name="TestCategory")
+        category.save()
+        save_categorized_flashcard(word, category)
+        response = self.client.post("/words/browse-words/TestCategory", {}, follow=True)
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed("browse_words.html")
+        self.assertEqual(response.context["category"], "TestCategory")
         self.assertTrue(len(response.context["words"]) > 0)
 
 
