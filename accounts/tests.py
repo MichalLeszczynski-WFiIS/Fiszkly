@@ -1,6 +1,11 @@
 from django.test import TestCase
 from accounts.tasks import send_email_notifications
-from fiszkly.tests_common import UserCreatedTestTemplate, LoggedInTestTemplate, HaveAnswerTestTemplate
+from fiszkly.tests_common import (
+    UserCreatedTestTemplate,
+    LoggedInTestTemplate,
+    HaveAnswerTestTemplate,
+)
+
 
 class LogInTest(UserCreatedTestTemplate):
     def test_login(self):

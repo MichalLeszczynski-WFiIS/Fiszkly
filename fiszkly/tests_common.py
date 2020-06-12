@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from words.models import Flashcard
 from learning.models import Answer
 
+
 class UserCreatedTestTemplate(TestCase):
     def setUp(self):
         self.credentials = {"username": "testuser", "password": "secret"}
@@ -10,11 +11,13 @@ class UserCreatedTestTemplate(TestCase):
             username=self.credentials.get("username"), password=self.credentials.get("password")
         )
 
+
 class LoggedInTestTemplate(UserCreatedTestTemplate):
     def setUp(self):
         super().setUp()
         response = self.client.post("/login/", self.credentials, follow=True)
         self.assertEquals(response.status_code, 200)
+
 
 class HaveFlashcardTestTemplate(LoggedInTestTemplate):
     def setUp(self):
@@ -26,7 +29,8 @@ class HaveFlashcardTestTemplate(LoggedInTestTemplate):
             translated_language="pl",
             dictionary_entry=r"[example_dictionary_entry]",
         )
-        
+
+
 class HaveAnswerTestTemplate(HaveFlashcardTestTemplate):
     def setUp(self):
         super().setUp()
@@ -36,4 +40,3 @@ class HaveAnswerTestTemplate(HaveFlashcardTestTemplate):
             flashcard=Flashcard.objects.get(id="1"),
             user=User.objects.get(username="testuser"),
         )
-        
