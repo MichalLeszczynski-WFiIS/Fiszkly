@@ -130,12 +130,15 @@ class VerifyWordsViewTest(LoggedInTestTemplate):
             word,
         ]
         session.save()
-        response = self.client.post("/words/verify-words/", {"confirmed_words": [word,]}, follow=True)
+        response = self.client.post(
+            "/words/verify-words/", {"confirmed_words": [word,]}, follow=True
+        )
         print(response.context)
         self.assertEquals(response.status_code, 200)
         # translated_words = response.context["translated_words"][0]
         # self.assertEquals(translated_words["original"], "test")
         # self.assertEquals(translated_words["sl"], "en")
+
 
 # class UploadWordsViewTest(LoggedInTestTemplate):
 #     def test_upload_words(self):
