@@ -33,18 +33,6 @@ class TranslatorTest(TestCase):
         words = self.translator.translate([], "en", "pl")
         self.assertEqual(words, [])
 
-
-class DictionaryEntryTest(TestCase):
-    def test_dictionary_entry(self):
-        entry = get_dictionary_entry("dog")[0]["meaning"]
-        self.assertIn("noun", entry)
-        self.assertIn("transitive verb", entry)
-
-    def test_empty_dictionary_entry(self):
-        entry = get_dictionary_entry("dogsdfkjvn5555555sdfljv")
-        self.assertEqual(entry, [])
-
-
 class SaveFlashcardTest(TestCase):
     def test_save_flashcard(self):
         word = {
