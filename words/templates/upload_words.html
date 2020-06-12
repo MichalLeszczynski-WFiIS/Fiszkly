@@ -6,6 +6,7 @@
     <div id="textarea_upload">
         <form action="{% url 'words:upload_words' %}" class="WordsForm" method="post">
             {% csrf_token %}
+            <p>{{ form.language.label_tag }} {{ form.language }}</p>
             <p>{{ form.field }}</p>
             <input class="btn" type="submit" value="submit" />
         </form>
@@ -15,6 +16,13 @@
         <h3 class="heading">Or upload a file</h3>
         <form action="{% url 'words:upload_words' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
+            <p>
+                <label>Origin language</label>
+                <select name = "language">
+                <option value = "pl">Polski</option>
+                <option value = "en">English</option>
+                </select>
+            </p>
             <input class="inputfile" type="file" name="words_file" id="words_file">
             <label class="btn" for="words_file" id="file-label">Choose a file</label>
             <input class="btn" type="submit" value="submit"/>
