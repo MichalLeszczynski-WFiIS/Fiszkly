@@ -60,7 +60,6 @@ def upload_words(request):
             if form.is_valid():
                 words = form.cleaned_data["field"].split()
                 source_language = form.cleaned_data["language"]
-                print(f"\n\n{source_language}\n\n")
 
         target_language = "en" if source_language == "pl" else "pl"
         translated_words = translator.translate(
@@ -87,7 +86,9 @@ def verify_words(request):
         # get dictionary entries & user
         for word in confirmed_translated_words:
             word["author"] = request.user
-            word["dictionary_entry"] = get_dictionary_entry(word["original"])
+            word["dictionary_entry"] = get_dictionary_entry(
+                word["original"] if word["sl"] == "en" else word["translation"]
+            )
 
         # add to categories
         if request.POST.get("category", 0):
