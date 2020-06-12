@@ -68,6 +68,7 @@ class SaveFlashcardTest(TestCase):
         self.assertEqual(flashcard.translated_language, "pl")
         self.assertEqual(flashcard.author, None)
 
+
 class BrowseGroupsViewTest(HaveFlashcardTestTemplate):
     def test_browse_words_specific(self):
         category = FlashcardGroup(name="TestCategory")
@@ -76,6 +77,7 @@ class BrowseGroupsViewTest(HaveFlashcardTestTemplate):
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed("browse_groups.html")
         self.assertTrue(len(response.context["flashcard_groups"]) > 0)
+
 
 class BrowseWordsViewTest(HaveFlashcardTestTemplate):
     def test_browse_words_all(self):
@@ -91,7 +93,7 @@ class BrowseWordsViewTest(HaveFlashcardTestTemplate):
         self.assertTemplateUsed("browse_words.html")
         self.assertEqual(response.context["category"], "user")
         self.assertTrue(len(response.context["words"]) == 0)
-    
+
     def test_browse_words_specific(self):
         word = {
             "original": "test",
