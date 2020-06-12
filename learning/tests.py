@@ -56,16 +56,15 @@ class GetAnswerViewTest(LoggedInTestTemplate):
         self.assertEquals(responseData["answer"], flashcard.translated_word)
 
 
-# class SaveAnswerViewTest(LoggedInTestTemplate):
-#     def setUp(self):
-#         super().setUp()
-#         self.flashcard_id = 1
-#         self.current_date = datetime.date(datetime.now())
+class SaveAnswerViewTest(LoggedInTestTemplate):
+    def setUp(self):
+        super().setUp()
+        self.flashcard_id = 1
+        self.current_date = datetime.date(datetime.now())
 
-#     def test_get_right_answer(self):
-#         data = {"flashcard_id": self.flashcard_id}
-#         flashcard = Flashcard.objects.get(id=self.flashcard_id)
-#         response = self.client.post("/learning/get_answer/", data=data, follow=True)
-#         self.assertEquals(response.status_code, 200)
-#         responseData = json.loads(response.content)
-#         self.assertEquals(responseData["answer"], flashcard.translated_word)
+    def test_save_answer(self):
+        data = {"flashcard_id": self.flashcard_id, "is_correct": True, "category": "all"}
+        flashcard = Flashcard.objects.get(id=self.flashcard_id)
+        response = self.client.post("/learning/save_answer/", data=data, follow=True)
+        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.content, b'{"next_url": "/learning/learn/all"}')
