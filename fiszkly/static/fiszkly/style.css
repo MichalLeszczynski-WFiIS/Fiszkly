@@ -350,3 +350,23 @@ ul.list {
     list-style-type: none;
     text-align: left;
 }
+
+.fb-wrapper{
+    text-align: center;
+}
+.fb-btn{
+    text-align: center;
+    background-color: #3b5998;
+    color:white;
+    padding:10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 25px;
+    text-decoration: none;
+    display: inline-block;
+}
+.fb-btn:hover{
+    text-decoration: none;
+    color:white;
+    cursor: pointer;
+}
