@@ -31,7 +31,6 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "django_extensions",
     "social_django",
-    "django_social_share",
     "django.core",
     "learning.apps.LearningConfig",
     "accounts.apps.AccountsConfig",
