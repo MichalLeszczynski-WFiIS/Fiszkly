@@ -33,6 +33,7 @@ class TranslatorTest(TestCase):
         words = self.translator.translate([], "en", "pl")
         self.assertEqual(words, [])
 
+
 class SaveFlashcardTest(TestCase):
     def test_save_flashcard(self):
         word = {
