@@ -7,6 +7,7 @@ from words.utils import (
     save_categorized_flashcard,
 )
 from words.models import Flashcard, FlashcardGroup
+from fiszkly.tests_common import HaveFlashcardTestTemplate, LoggedInTestTemplate
 
 
 class MockTranslatorTest(TestCase):
@@ -64,11 +65,29 @@ class SaveFlashcardTest(TestCase):
         self.assertEqual(flashcard.author, None)
 
 
-class BrowseWordsViewTest(TestCase):
+class BrowseWordsViewTest(HaveFlashcardTestTemplate):
     def test_browse_words(self):
-        pass
+        response = self.client.post("/words/browse-words/all", {}, follow=True)
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed("browse_words.html")
+        self.assertEqual(response.context["category"], "all")
+        self.assertTrue(len(response.context["words"]) > 0) 
 
-
-class VerifyWordsViewTest(TestCase):
+class VerifyWordsViewTest(LoggedInTestTemplate):
     def test_verify_words(self):
-        pass
+        session = self.client.session
+        word = {
+            "original": "test",
+            "translation": "t_test",
+            "sl": "en",
+            "tl": "pl",
+            "dictionary_entry": r"[example_dictionary_entry]",
+            "author": None,
+        }
+        session['translated_words'] = [word,]
+        session.save()
+        response = self.client.post("/words/verify-words", {}, follow=True)
+        self.assertEquals(response.status_code, 200)
+        translated_words = response.context["translated_words"][0] 
+        self.assertEquals(translated_words["original"], "test")
+        self.assertEquals(translated_words["sl"], "en")

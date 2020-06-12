@@ -1,18 +1,8 @@
 from django.test import TestCase
-from django.contrib.auth.models import User
 from accounts.tasks import send_email_notifications
-from django.contrib.auth.forms import UserCreationForm
-from words.models import Flashcard
-from learning.models import Answer
+from fiszkly.tests_common import UserCreatedTestTemplate, LoggedInTestTemplate, HaveAnswerTestTemplate
 
-
-class LogInTest(TestCase):
-    def setUp(self):
-        self.credentials = {"username": "testuser", "password": "secret"}
-        User.objects.create_user(
-            username=self.credentials.get("username"), password=self.credentials.get("password")
-        )
-
+class LogInTest(UserCreatedTestTemplate):
     def test_login(self):
         response = self.client.post("/login/", self.credentials, follow=True)
         self.assertEquals(response.status_code, 200)
@@ -33,15 +23,7 @@ class LogInTest(TestCase):
         self.assertFalse(response.context["user"].is_authenticated)
 
 
-class LogOutTest(TestCase):
-    def setUp(self):
-        self.credentials = {"username": "testuser", "password": "secret"}
-        User.objects.create_user(
-            username=self.credentials.get("username"), password=self.credentials.get("password")
-        )
-        response = self.client.post("/login/", self.credentials, follow=True)
-        self.assertEquals(response.status_code, 200)
-
+class LogOutTest(LoggedInTestTemplate):
     def test_logout(self):
         response = self.client.post("/logout/", self.credentials, follow=True)
         self.assertEquals(response.status_code, 200)
@@ -73,44 +55,14 @@ class RegisterTest(TestCase):
         self.assertTemplateUsed("register.html")
 
 
-class CeleryTest(TestCase):
-    def setUp(self):
-        self.credentials = {"username": "testuser", "password": "secret"}
-        User.objects.create_user(
-            username=self.credentials.get("username"), password=self.credentials.get("password")
-        )
-        response = self.client.post("/login/", self.credentials, follow=True)
-        self.assertEquals(response.status_code, 200)
-
+class CeleryTest(LoggedInTestTemplate):
     def test_send_email_message(self):
         message = send_email_notifications()
         self.assertIn("testuser", message)
         self.assertIn("fiszkly.pl", message)
 
 
-class ProfileTest(TestCase):
-    def setUp(self):
-        self.credentials = {"username": "testuser", "password": "secret"}
-        User.objects.create_user(
-            username=self.credentials.get("username"), password=self.credentials.get("password")
-        )
-        response = self.client.post("/login/", self.credentials, follow=True)
-        self.assertEquals(response.status_code, 200)
-
-        Flashcard.objects.create(
-            original_word="encouragement",
-            translated_word="zachęta",
-            original_language="en",
-            translated_language="pl",
-            dictionary_entry=r"[example_dictionary_entry]",
-        )
-        Answer.objects.create(
-            incorrect_count=6,
-            correct_count=8,
-            flashcard=Flashcard.objects.get(id="1"),
-            user=User.objects.get(username="testuser"),
-        )
-
+class ProfileTest(HaveAnswerTestTemplate):
     def test_profile_view(self):
         response = self.client.post("/profile/", {}, follow=True)
         self.assertEquals(response.status_code, 200)
