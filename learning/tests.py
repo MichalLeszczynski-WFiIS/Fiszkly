@@ -5,6 +5,7 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 from words.models import Flashcard
 from learning.models import Answer
+from fiszkly.tests_common import LoggedInTestTemplate
 
 
 class LoginSecurityTest(TestCase):
@@ -17,14 +18,10 @@ class LoginSecurityTest(TestCase):
         self.assertRedirects(response, "/login/?next=/learning/save_answer/", status_code=301)
 
 
-class LearningTest(TestCase):
+class LearningTest(LoggedInTestTemplate):
     def setUp(self):
-        self.credentials = {"username": "testuser", "password": "secret"}
-        self.user = User.objects.create_user(
-            username=self.credentials.get("username"), password=self.credentials.get("password")
-        )
+        super().setUp()
         self.flashcard_id = 1
-        logged_in = self.client.login(**self.credentials)
         self.current_date = datetime.date(datetime.now())
 
     def test_get_right_answer(self):
@@ -34,3 +31,10 @@ class LearningTest(TestCase):
         self.assertEquals(response.status_code, 200)
         responseData = json.loads(response.content)
         self.assertEquals(responseData["answer"], flashcard.translated_word)
+
+    def test_learning(self):
+        response = self.client.post("/learning/learn/all", follow=True)
+        self.assertEquals(response.status_code, 200)
+        print(response.context)
+        self.assertEqual(response.context["category"], "all")
+        self.assertIsNotNone(response.context["flashcard"])
