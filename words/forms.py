@@ -1,9 +1,6 @@
 from django import forms
 
-LANGUAGE_CHOICES = [
-    ("pl", "Polski"),
-    ("en", "English"),
-]
+LANGUAGE_CHOICES = [("pl", "Polski"), ("en", "English")]
 
 
 class WordsForm(forms.Form):
