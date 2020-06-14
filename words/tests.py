@@ -126,9 +126,7 @@ class VerifyWordsViewTest(LoggedInTestTemplate):
             "dictionary_entry": r"[example_dictionary_entry]",
             "author": None,
         }
-        session["translated_words"] = [
-            word,
-        ]
+        session["translated_words"] = [word]
         session.save()
         response = self.client.post("/words/verify-words", {}, follow=True)
         self.assertEquals(response.status_code, 200)

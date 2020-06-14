@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
 <link rel="stylesheet" href="/static/learning/style.css">
+
+<div id="fb-root"></div>
+
 <div class="content">
     <h3>Choose a category</h3>
 
@@ -12,9 +15,22 @@
         <li><a class="link" href="{% url 'learning:learn' category=group.name %}">{{ group.name }}</a></li>
         {% endfor %}
     </ul>
+    
+    <script>
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+
+    <div class="fb-share-button" data-href="https://fiszkly.pl" data-layout="button" data-size="large"></div>
 
     {% for message in messages %}
     <p>{{message}}</p>
     {% endfor %}
+
 </div>
 {% endblock %}

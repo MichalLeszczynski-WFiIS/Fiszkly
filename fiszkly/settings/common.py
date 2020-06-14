@@ -30,10 +30,23 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.sites",
     "django_extensions",
+    "social_django",
+    "django.core",
     "learning.apps.LearningConfig",
     "accounts.apps.AccountsConfig",
     "words.apps.WordsConfig",
 ]
+
+SOCIAL_AUTH_FACEBOOK_KEY = os.getenv("SOCIAL_AUTH_FACEBOOK_KEY")
+SOCIAL_AUTH_FACEBOOK_SECRET = os.getenv("SOCIAL_AUTH_FACEBOOK_SECRET")
+
+SOCIAL_AUTH_FACEBOOK_SCOPE = ["email"]
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {"fields": "id, name, email"}
+
+LOGIN_URL = "login"
+LOGIN_REDIRECT_URL = "learning:index"
+LOGOUT_URL = "logout"
+LOGOUT_REDIRECT_URL = "login"
 
 SITE_ID = 1
 
@@ -46,7 +59,10 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
-
+AUTHENTICATION_BACKENDS = [
+    "social_core.backends.facebook.FacebookOAuth2",
+    "django.contrib.auth.backends.ModelBackend",
+]
 ROOT_URLCONF = "fiszkly.urls"
 
 TEMPLATES = [
@@ -60,6 +76,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "django.template.context_processors.request",
             ]
         },
     }
