@@ -35,7 +35,7 @@ def login_page(request):
             login(request, user)
             return redirect("/learning")
         else:
-            messages.info(request, "Username or password is incorect.")
+            messages.info(request, "Username or password is incorrect.")
 
     context = {}
     return render(request, "login.html", context)
