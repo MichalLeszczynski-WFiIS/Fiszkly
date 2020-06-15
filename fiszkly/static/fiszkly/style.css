@@ -8,7 +8,7 @@ body {
     background-repeat: no-repeat;
     background-attachment: fixed;
     text-rendering: geometricPrecision;
-    font-family: 'Noto Sans';
+    font-family: 'Lato', 'Lucida Grande', 'Lucida Sans Unicode', Tahoma, Sans-Serif, serif;
 }
 
 ul {
@@ -334,11 +334,13 @@ label {
 .grid-container{
     display: grid;
     grid-template-columns: auto auto;
-    height: 300px;
+    height: 350px;
 }
 
 a.link {
     color: #359c25;
+    font-family: 'Lato', 'Lucida Grande', 'Lucida Sans Unicode', Tahoma, Sans-Serif, serif;
+    padding-left: 50px;
 }
 
 a.link:hover {
@@ -349,6 +351,11 @@ a.link:hover {
 ul.list {
     list-style-type: none;
     text-align: left;
+    margin-top: 50px;
+}
+
+h3{
+    font-family: 'Lato', 'Lucida Grande', 'Lucida Sans Unicode', Tahoma, Sans-Serif, serif;
 }
 
 .fb-wrapper{

@@ -10,7 +10,11 @@ function get_answer(flashcard_id){
             $(".checker").css("display", "none");
             $(".is_correct_answer").css("display", "block");
             text = data.answer;
-            $(".flashcard").html(text);
+            text2 = data.dictionary_entry;
+            $(".answer").css("display", "block");
+            $(".definition").css("display", "block");
+            $(".definition").html(text2);
+            $(".answer").html(text);
         },
         statusCode:{
             401: function(responseObject, textStatus, jqXHR) {

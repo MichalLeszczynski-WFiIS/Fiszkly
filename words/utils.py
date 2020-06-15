@@ -67,8 +67,11 @@ def get_dictionary_entry(word):
     url = f"https://api.dictionaryapi.dev/api/v1/entries/{language_code}/{word}"
 
     response = requests.get(url, timeout=31)
+    res = response.json()[0]["meaning"]
+    keys = list(res.keys())
+    definition = res[keys[0]][0]["definition"]
     if response.status_code == 200:
-        return response.json()
+        return definition
     else:
         return []
 

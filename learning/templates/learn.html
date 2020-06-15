@@ -11,12 +11,17 @@
                 <div class="flash-desc">Your word is:</div>
                 {{ flashcard.original_word }}
             </div>
+
+
+            <div class="answer">
+            </div>
+
             <br><br>
             <div class="checker">
-                <button class="btn" id="check_button" onclick="get_answer('{{flashcard.id}}')">Check answer</button>
+                <button class="btn" id="check_button" onclick="get_answer('{{flashcard.id}}')">Show translation</button>
             </div>
             <div class="is_correct_answer">
-                Is your answer correct?
+                Is it correct?
                 <br>
                 <br>
                     <button class="btn" id="save_button_true" onclick="save_answer(true, '{{flashcard.id}}', '{{category}}')">True</button>
@@ -33,6 +38,11 @@
             </div>
         {% endif %}
     </div>
+
+    <div class="definition">
+        {{ flashcard.dictionary_entry }}
+    </div>
+
 </div>
 
 {% endblock %}

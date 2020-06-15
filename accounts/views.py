@@ -35,7 +35,7 @@ def login_page(request):
             login(request, user)
             return redirect("/learning")
         else:
-            messages.info(request, "Username or password is incorect.")
+            messages.info(request, "Username or password is incorrect.")
 
     context = {}
     return render(request, "login.html", context)
@@ -114,7 +114,7 @@ def profile_page(request):
             "is_authenticated": request.user.is_authenticated,
             "email": request.user.email,
         },
-        "answers": {"correct_answers": correct_answers, "incorrect_answers": incorrect_answers},
+        "answers": {"correct_answers": correct_answers, "incorrect_answers": incorrect_answers,},
         "flashcards": flashcards_info,
         "statistics": json.dumps(data),
     }

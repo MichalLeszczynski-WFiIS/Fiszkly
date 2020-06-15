@@ -31,7 +31,7 @@ def browse_groups(request):
     return render(
         request,
         "browse_groups.html",
-        {"flashcard_groups": flashcard_groups, "user_count": user_count, "all_count": all_count},
+        {"flashcard_groups": flashcard_groups, "user_count": user_count, "all_count": all_count,},
     )
 
 

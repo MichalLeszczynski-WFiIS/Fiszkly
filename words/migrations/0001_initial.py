@@ -5,6 +5,7 @@ import django.contrib.postgres.fields.jsonb
 from django.db import migrations, models
 import django.db.models.deletion
 from words.models import Flashcard, FlashcardGroup
+from words.utils import get_dictionary_entry
 
 
 def create_initial_data(apps, schema_editor):
@@ -22,35 +23,35 @@ def create_initial_data(apps, schema_editor):
         translated_word="morela",
         original_language="en",
         translated_language="pl",
-        dictionary_entry=r"[example_dictionary_entry]",
+        dictionary_entry="A juicy, soft fruit, resembling a small peach, of an orange-yellow color.",
     )
     fruits.flashcards.create(
         original_word="blackcurrant",
         translated_word="czarna porzeczka",
         original_language="en",
         translated_language="pl",
-        dictionary_entry=r"[example_dictionary_entry]",
+        dictionary_entry="A small round edible black berry that grows in loose hanging clusters.",
     )
     fruits.flashcards.create(
         original_word="peach",
         translated_word="brzoskwinia",
         original_language="en",
         translated_language="pl",
-        dictionary_entry=r"[example_dictionary_entry]",
+        dictionary_entry="A round stone fruit with juicy yellow flesh and downy pinkish-yellow skin.",
     )
     fruits.flashcards.create(
         original_word="quince",
         translated_word="pigwa",
         original_language="en",
         translated_language="pl",
-        dictionary_entry=r"[example_dictionary_entry]",
+        dictionary_entry="A hard, acid, pear-shaped fruit used in preserves or as flavoring.",
     )
     fruits.flashcards.create(
         original_word="plum",
         translated_word="śliwka",
         original_language="en",
         translated_language="pl",
-        dictionary_entry=r"[example_dictionary_entry]",
+        dictionary_entry="An oval fleshy fruit that is purple, reddish, or yellow when ripe and contains a flattish pointed pit.",
     )
 
     # adjectives
@@ -59,35 +60,35 @@ def create_initial_data(apps, schema_editor):
         translated_word="zwięzły",
         original_language="en",
         translated_language="pl",
-        dictionary_entry=r"[example_dictionary_entry]",
+        dictionary_entry="(Especially of something written or spoken) briefly and clearly expressed.",
     )
     adjectives.flashcards.create(
         original_word="viable",
         translated_word="wykonalny",
         original_language="en",
         translated_language="pl",
-        dictionary_entry=r"[example_dictionary_entry]",
+        dictionary_entry="Capable of working successfully; feasible.",
     )
     adjectives.flashcards.create(
         original_word="crude",
         translated_word="surowy",
         original_language="en",
         translated_language="pl",
-        dictionary_entry=r"[example_dictionary_entry]",
+        dictionary_entry="Capable of working successfully; feasible.",
     )
     adjectives.flashcards.create(
         original_word="inordinate",
         translated_word="nadmierny",
         original_language="en",
         translated_language="pl",
-        dictionary_entry=r"[example_dictionary_entry]",
+        dictionary_entry="In a natural or raw state; not yet processed or refined.",
     )
     adjectives.flashcards.create(
         original_word="sullen",
         translated_word="ponury",
         original_language="en",
         translated_language="pl",
-        dictionary_entry=r"[example_dictionary_entry]",
+        dictionary_entry="Bad-tempered and sulky; gloomy.",
     )
 
     # programming
@@ -96,35 +97,35 @@ def create_initial_data(apps, schema_editor):
         translated_word="współbieżność",
         original_language="en",
         translated_language="pl",
-        dictionary_entry=r"[example_dictionary_entry]",
+        dictionary_entry="The ability of different parts or units of a program, algorithm, or problem to be executed out-of-order or in partial order, without affecting the final outcome. ",
     )
     programming.flashcards.create(
         original_word="stack",
         translated_word="stos",
         original_language="en",
         translated_language="pl",
-        dictionary_entry=r"[example_dictionary_entry]",
+        dictionary_entry="A pile of objects, typically one that is neatly arranged.",
     )
     programming.flashcards.create(
         original_word="heap",
         translated_word="sterta",
         original_language="en",
         translated_language="pl",
-        dictionary_entry=r"[example_dictionary_entry]",
+        dictionary_entry="An untidy collection of things piled up haphazardly.",
     )
     programming.flashcards.create(
         original_word="tuple",
         translated_word="krotka",
         original_language="en",
         translated_language="pl",
-        dictionary_entry=r"[example_dictionary_entry]",
+        dictionary_entry="A finite ordered list (sequence) of elements.",
     )
     programming.flashcards.create(
         original_word="closure",
         translated_word="domknięcie",
         original_language="en",
         translated_language="pl",
-        dictionary_entry=r"[example_dictionary_entry]",
+        dictionary_entry="The act or process of closing something, especially an institution, thoroughfare, or frontier, or of being closed.",
     )
 
     # other
@@ -133,7 +134,7 @@ def create_initial_data(apps, schema_editor):
         translated_word="zachęta",
         original_language="en",
         translated_language="pl",
-        dictionary_entry=r"[example_dictionary_entry]",
+        dictionary_entry="The action of giving someone support, confidence, or hope.",
     )
 
 
@@ -148,7 +149,7 @@ class Migration(migrations.Migration):
                 (
                     "id",
                     models.AutoField(
-                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID"
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID",
                     ),
                 ),
                 ("original_word", models.CharField(max_length=50)),
@@ -174,7 +175,7 @@ class Migration(migrations.Migration):
                 (
                     "id",
                     models.AutoField(
-                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID"
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID",
                     ),
                 ),
                 ("name", models.CharField(max_length=50)),

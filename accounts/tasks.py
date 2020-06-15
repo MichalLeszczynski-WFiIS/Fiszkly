@@ -18,7 +18,7 @@ def send_email_notifications():
         )
         if (timezone.now() - user.last_login).days > 0 and os.environ.get("SENDGRID_API_KEY"):
             send_mail(
-                email_subject, message, "fiszkly@gmail.com", [user.email], fail_silently=False
+                email_subject, message, "fiszkly@gmail.com", [user.email], fail_silently=False,
             )
         else:
             return message
