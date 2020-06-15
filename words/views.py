@@ -31,7 +31,11 @@ def browse_groups(request):
     return render(
         request,
         "browse_groups.html",
-        {"flashcard_groups": flashcard_groups, "user_count": user_count, "all_count": all_count},
+        {
+            "flashcard_groups": flashcard_groups,
+            "user_count": user_count,
+            "all_count": all_count,
+        },
     )
 
 
@@ -52,7 +56,8 @@ def upload_words(request):
     if request.method == "POST":
         if request.FILES.get("words_file", False):
             words = [
-                word.decode("ascii") for word in request.FILES["words_file"].read().splitlines()
+                word.decode("ascii")
+                for word in request.FILES["words_file"].read().splitlines()
             ]
             source_language = request.POST.get("language")
         else:
@@ -112,4 +117,6 @@ def verify_words(request):
     else:
         # display translated words
         translated_words = request.session["translated_words"]
-        return render(request, "verify_words.html", {"translated_words": translated_words})
+        return render(
+            request, "verify_words.html", {"translated_words": translated_words}
+        )

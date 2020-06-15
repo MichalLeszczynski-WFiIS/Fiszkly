@@ -134,7 +134,7 @@ def create_initial_data(apps, schema_editor):
         translated_word="zachęta",
         original_language="en",
         translated_language="pl",
-        dictionary_entry="The action of giving someone support, confidence, or hope."
+        dictionary_entry="The action of giving someone support, confidence, or hope.",
     )
 
 
@@ -149,7 +149,10 @@ class Migration(migrations.Migration):
                 (
                     "id",
                     models.AutoField(
-                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID"
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
                     ),
                 ),
                 ("original_word", models.CharField(max_length=50)),
@@ -175,7 +178,10 @@ class Migration(migrations.Migration):
                 (
                     "id",
                     models.AutoField(
-                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID"
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
                     ),
                 ),
                 ("name", models.CharField(max_length=50)),

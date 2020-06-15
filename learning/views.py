@@ -67,7 +67,9 @@ def save_answer(request):
     is_correct = request.POST["is_correct"]
     flashcard = Flashcard.objects.get(id=request.POST["flashcard_id"])
     current_date = datetime.date(datetime.now())
-    answer = Answer.objects.filter(user_id=request.user.id, flashcard=flashcard, date=current_date)
+    answer = Answer.objects.filter(
+        user_id=request.user.id, flashcard=flashcard, date=current_date
+    )
     if len(answer) == 0:
         a = Answer(
             user=request.user,
@@ -78,7 +80,9 @@ def save_answer(request):
         )
         a.save()
 
-    answer = Answer.objects.get(user=request.user, flashcard=flashcard, date=current_date)
+    answer = Answer.objects.get(
+        user=request.user, flashcard=flashcard, date=current_date
+    )
 
     if is_correct == "true":
         answer.correct_count += 1
