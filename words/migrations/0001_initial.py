@@ -5,6 +5,7 @@ import django.contrib.postgres.fields.jsonb
 from django.db import migrations, models
 import django.db.models.deletion
 from words.models import Flashcard, FlashcardGroup
+from words.utils import get_dictionary_entry
 
 
 def create_initial_data(apps, schema_editor):
@@ -22,35 +23,35 @@ def create_initial_data(apps, schema_editor):
         translated_word="morela",
         original_language="en",
         translated_language="pl",
-        dictionary_entry=r"[example_dictionary_entry]",
+        dictionary_entry=get_dictionary_entry("apricot"),
     )
     fruits.flashcards.create(
         original_word="blackcurrant",
         translated_word="czarna porzeczka",
         original_language="en",
         translated_language="pl",
-        dictionary_entry=r"[example_dictionary_entry]",
+        dictionary_entry=get_dictionary_entry("blackcurrant"),
     )
     fruits.flashcards.create(
         original_word="peach",
         translated_word="brzoskwinia",
         original_language="en",
         translated_language="pl",
-        dictionary_entry=r"[example_dictionary_entry]",
+        dictionary_entry=get_dictionary_entry("peach"),
     )
     fruits.flashcards.create(
         original_word="quince",
         translated_word="pigwa",
         original_language="en",
         translated_language="pl",
-        dictionary_entry=r"[example_dictionary_entry]",
+        dictionary_entry=get_dictionary_entry("quince"),
     )
     fruits.flashcards.create(
         original_word="plum",
         translated_word="śliwka",
         original_language="en",
         translated_language="pl",
-        dictionary_entry=r"[example_dictionary_entry]",
+        dictionary_entry=get_dictionary_entry("plum"),
     )
 
     # adjectives
@@ -59,35 +60,35 @@ def create_initial_data(apps, schema_editor):
         translated_word="zwięzły",
         original_language="en",
         translated_language="pl",
-        dictionary_entry=r"[example_dictionary_entry]",
+        dictionary_entry=get_dictionary_entry("succinct"),
     )
     adjectives.flashcards.create(
         original_word="viable",
         translated_word="wykonalny",
         original_language="en",
         translated_language="pl",
-        dictionary_entry=r"[example_dictionary_entry]",
+        dictionary_entry=get_dictionary_entry("viable"),
     )
     adjectives.flashcards.create(
         original_word="crude",
         translated_word="surowy",
         original_language="en",
         translated_language="pl",
-        dictionary_entry=r"[example_dictionary_entry]",
+        dictionary_entry=get_dictionary_entry("crude"),
     )
     adjectives.flashcards.create(
         original_word="inordinate",
         translated_word="nadmierny",
         original_language="en",
         translated_language="pl",
-        dictionary_entry=r"[example_dictionary_entry]",
+        dictionary_entry=get_dictionary_entry("inordinate"),
     )
     adjectives.flashcards.create(
         original_word="sullen",
         translated_word="ponury",
         original_language="en",
         translated_language="pl",
-        dictionary_entry=r"[example_dictionary_entry]",
+        dictionary_entry=get_dictionary_entry("sullen"),
     )
 
     # programming
@@ -96,35 +97,35 @@ def create_initial_data(apps, schema_editor):
         translated_word="współbieżność",
         original_language="en",
         translated_language="pl",
-        dictionary_entry=r"[example_dictionary_entry]",
+        dictionary_entry=get_dictionary_entry("concurrency"),
     )
     programming.flashcards.create(
         original_word="stack",
         translated_word="stos",
         original_language="en",
         translated_language="pl",
-        dictionary_entry=r"[example_dictionary_entry]",
+        dictionary_entry=get_dictionary_entry("stack"),
     )
     programming.flashcards.create(
         original_word="heap",
         translated_word="sterta",
         original_language="en",
         translated_language="pl",
-        dictionary_entry=r"[example_dictionary_entry]",
+        dictionary_entry=get_dictionary_entry("heap"),
     )
     programming.flashcards.create(
         original_word="tuple",
         translated_word="krotka",
         original_language="en",
         translated_language="pl",
-        dictionary_entry=r"[example_dictionary_entry]",
+        dictionary_entry=get_dictionary_entry("tuple"),
     )
     programming.flashcards.create(
         original_word="closure",
         translated_word="domknięcie",
         original_language="en",
         translated_language="pl",
-        dictionary_entry=r"[example_dictionary_entry]",
+        dictionary_entry=get_dictionary_entry("closure"),
     )
 
     # other
@@ -133,7 +134,7 @@ def create_initial_data(apps, schema_editor):
         translated_word="zachęta",
         original_language="en",
         translated_language="pl",
-        dictionary_entry=r"[example_dictionary_entry]",
+        dictionary_entry=get_dictionary_entry("encouragement"),
     )
 
 

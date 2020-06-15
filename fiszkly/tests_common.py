@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 from words.models import Flashcard
 from learning.models import Answer
+from words.utils import get_dictionary_entry
 
 
 class UserCreatedTestTemplate(TestCase):
@@ -27,7 +28,7 @@ class HaveFlashcardTestTemplate(LoggedInTestTemplate):
             translated_word="zachęta",
             original_language="en",
             translated_language="pl",
-            dictionary_entry=r"[example_dictionary_entry]",
+            dictionary_entry=get_dictionary_entry("encouragement"),
         )
 
 
