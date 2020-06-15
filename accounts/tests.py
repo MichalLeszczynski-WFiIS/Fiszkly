@@ -78,3 +78,15 @@ class ProfileTest(HaveAnswerTestTemplate):
         )
         self.assertEquals(response.context["answers"]["correct_answers"], 8)
         self.assertEquals(response.context["answers"]["incorrect_answers"], 6)
+
+
+class StatisticsTest(HaveAnswerTestTemplate):
+    def test_statistics_view(self):
+        response = self.client.post("/statistics/", {}, follow=True)
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed("statistics.html")
+        self.assertIsNotNone(response.context["ranking"])
+        ranking = response.context["ranking"]
+        self.assertIn("test", ranking)
+        self.assertIn('"correct": 8', ranking)
+        self.assertIn('"incorrect": 6', ranking)
