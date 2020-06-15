@@ -334,7 +334,7 @@ label {
 .grid-container{
     display: grid;
     grid-template-columns: auto auto;
-    height: 300px;
+    height: 350px;
 }
 
 a.link {

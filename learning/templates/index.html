@@ -34,11 +34,11 @@
         }(document, 'script', 'facebook-jssdk'));
     </script>
 
-    <div class="fb-share-button" data-href="https://fiszkly.pl" data-layout="button" data-size="large"></div>
-
     {% for message in messages %}
-    <p>{{message}}</p>
+        <h3>{{message}}</h3>
     {% endfor %}
+
+    <div class="fb-share-button" data-href="https://fiszkly.pl" data-layout="button" data-size="large"></div>
 
 </div>
 {% endblock %}

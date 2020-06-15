@@ -10,7 +10,10 @@ function get_answer(flashcard_id){
             $(".checker").css("display", "none");
             $(".is_correct_answer").css("display", "block");
             text = data.answer;
-            $(".flashcard").html(text);
+            $(".answer").css("display", "block");
+            $(".definition").css("display", "block");
+            $(".definition").html("asdasdasdasdasdasd");
+            $(".answer").html(text);
         },
         statusCode:{
             401: function(responseObject, textStatus, jqXHR) {

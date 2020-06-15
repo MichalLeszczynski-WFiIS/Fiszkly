@@ -38,14 +38,24 @@ body {
     height: 70px;
 }
 
+.answer{
+    display:none;
+}
+
 .flashcard{
-    padding:50px;
+    padding:50px 50px 20px 50px;
     width:300px;
     display: inline-block;
     font-family: 'Lato', 'Lucida Grande', 'Lucida Sans Unicode', Tahoma, Sans-Serif, serif;
     color: #359c25;
     text-align: center;
     font-size: 1.6em;
+}
+
+.answer{
+    font-family: 'Lato', 'Lucida Grande', 'Lucida Sans Unicode', Tahoma, Sans-Serif, serif;
+    font-size: 1.6em;
+    color: #359c25;
 }
 
 .flash-desc{
@@ -59,9 +69,21 @@ body {
     text-align: left;
     padding-top: 50px;
     padding-left: 25px;
-    border-left: 2px solid #c8c8c8;;
+    border-left: 2px solid #c8c8c8;
     height: 250px;
 }
+
+.definition{
+    display: none;
+    height: 100px;
+    font-family: 'Lato', 'Lucida Grande', 'Lucida Sans Unicode', Tahoma, Sans-Serif, serif;
+    font-size: 0.8em;
+    color: #000000;
+    text-align: left;
+    margin-left: 50px;
+    font-size: 20px;
+}
+
 
 .btn{
     position:relative;
