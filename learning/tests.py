@@ -11,15 +11,11 @@ from fiszkly.tests_common import LoggedInTestTemplate
 class LoginSecurityTest(TestCase):
     def test_access_to_get_answer_without_login(self):
         response = self.client.post("/learning/get_answer", follow=True)
-        self.assertRedirects(
-            response, "/login/?next=/learning/get_answer/", status_code=301
-        )
+        self.assertRedirects(response, "/login/?next=/learning/get_answer/", status_code=301)
 
     def test_access_to_save_answer_without_login(self):
         response = self.client.post("/learning/save_answer", follow=True)
-        self.assertRedirects(
-            response, "/login/?next=/learning/save_answer/", status_code=301
-        )
+        self.assertRedirects(response, "/login/?next=/learning/save_answer/", status_code=301)
 
 
 class LearningViewTest(LoggedInTestTemplate):

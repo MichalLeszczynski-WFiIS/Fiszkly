@@ -85,9 +85,7 @@ def profile_page(request):
         .annotate(incorrect=Sum("incorrect_count"))
     )
     answers = list(answers)
-    answers.sort(
-        key=lambda answer: answer["correct"] / (answer["correct"] + answer["incorrect"])
-    )
+    answers.sort(key=lambda answer: answer["correct"] / (answer["correct"] + answer["incorrect"]))
     answers = answers[: len(answers)]
 
     flashcards, flashcards_answers = [], []
@@ -116,10 +114,7 @@ def profile_page(request):
             "is_authenticated": request.user.is_authenticated,
             "email": request.user.email,
         },
-        "answers": {
-            "correct_answers": correct_answers,
-            "incorrect_answers": incorrect_answers,
-        },
+        "answers": {"correct_answers": correct_answers, "incorrect_answers": incorrect_answers,},
         "flashcards": flashcards_info,
         "statistics": json.dumps(data),
     }
@@ -165,8 +160,6 @@ def statistics_page(request):
         "ranking": json.dumps(ranking),
         "words_ranking": json.dumps(ranking_words_added),
         "position": logged_user_position if logged_user_position else 0,
-        "words_position": logged_user_position_words
-        if logged_user_position_words
-        else 0,
+        "words_position": logged_user_position_words if logged_user_position_words else 0,
     }
     return render(request, "statistics.html", context)
