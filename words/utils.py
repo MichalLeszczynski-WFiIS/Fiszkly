@@ -95,6 +95,6 @@ def save_categorized_flashcard(word, category):
         translated_word=word["translation"],
         original_language=word["sl"],
         translated_language=word["tl"],
-        dictionary_entry=["dictionary_entry"],
+        dictionary_entry=word["dictionary_entry"],
         author=word["author"],
     )
