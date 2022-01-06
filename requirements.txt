@@ -1,7 +1,7 @@
 Django==3.0.7
 psycopg2==2.8.5
 uWSGI==2.0.18
-celery==4.4.2
+celery==5.2.2
 redis==3.5.2
 requests==2.22.0
 social-auth-app-django==3.4.0
